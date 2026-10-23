@@ -1,8 +1,12 @@
 # Actual local inference evidence
 
-All four records here came from real local model inference on authored synthetic inputs on 2026-10-23. They are not canned responses or test-server output. Files named `report.json` preserve raw response, parsed brief, input records/hash, model digest, request hash, options and measurements; `report.md` is the renderer's output. No private logs or personal paths are included.
+**Current behavior is v0.2.** Start with [quality comparison](../docs/quality-comparison.md), [current JUnit report](v2c-junit/report.md), [current lexical counterexample](v2c-lexical-trap/report.md), and [all v2-stage measurements](v2-evaluation.json). Final batch: 5 reports accepted, 9 paired literal quote options covering all 9 supplied failures, no operational recommendations. One accepted family label is misleading (documentation-only `KeyError` mention). This is traceability, not semantic entailment or diagnostic accuracy.
 
-[Local demo video](lazy-ci-triage-demo.mp4): 56 seconds, H.264, 1280×720, silent, 325,407 bytes. It is a clearly labeled edited walkthrough of these actual saved results, not a live terminal recording. Created with installed Pillow and FFmpeg 8.1.1; those are editing tools rather than application dependencies. Frames include the model, hardware, latency, source quote and limitations. No accounts or desktop windows were recorded. The script for an optional live recording is in `docs/demo-script.md`.
+`v2-*` and `v2b-*` retain earlier constrained-format attempts, including four model rejections. `v2c-*` uses the final finite-quote format. The four older folders without a v2 prefix are **historical v0.1 prose output**, and their old statuses are not claims of current acceptance. The current validator refuses that old prose schema. The historical measurements and initial limitations below are preserved for comparison.
+
+All records here came from real local model inference on authored synthetic inputs on 2026-10-23. They are not canned responses or test-server output. Files named `report.json` preserve raw response, accepted selection or rejection, input records/hash, model digest, request hash, options and measurements; `report.md` is the renderer's output. No private logs or personal paths are included.
+
+[Current local demo video](lazy-ci-triage-demo.mp4): a clearly labeled edited walkthrough of actual v0.2 saved results, not live terminal capture. The original 56-second v0.1 walkthrough is retained as `lazy-ci-triage-v0.1-demo.mp4`. Installed Pillow and FFmpeg 8.1.1 are editing tools, not application dependencies. No accounts or desktop windows were recorded. See `docs/demo-script.md` for a current live-recording plan.
 
 ## Environment
 
@@ -27,7 +31,7 @@ Wall time includes inventory, metadata checks, transport, generation and loading
 
 ## What the records actually establish
 
-For the three runs under the refined contract: **7/7 citations have existing, correctly paired IDs and exact quotes; 7/7 supplied failure records are covered once**. The saved records can be revalidated without a model:
+For the three runs under the **historical v0.1 refined contract**: **7/7 citations had existing, correctly paired IDs and exact quotes; 7/7 supplied failure records were covered once**. The saved source integrity and current rejection of old prose can be checked without a model, along with current v0.2 replay:
 
 ```powershell
 python -m unittest discover -s tests -p test_evidence.py -v

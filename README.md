@@ -1,93 +1,95 @@
 # Lazy CI Triage
 
-Turn a synthetic or reviewed public test failure file into a local troubleshooting brief. Each model finding links to an exact source quote and a paired test/log ID. Python checks those links before accepting the brief.
+An extractive local AI brief for synthetic or reviewed public CI failures. Python shows what the supplied file contains. A local model selects a literal source excerpt and a tentative failure-family label for each failed test. **It does not diagnose root causes or issue operational recommendations.**
 
-Built from scratch on October 23, 2026 for Hacktoberfest Week 3, **Slow and Steady**. The intended payoff is less hunting through a failure file before deciding where to investigate. No human time savings have been measured.
+New standalone project started October 23, 2026 for Hacktoberfest Week 3, **Slow and Steady**. The intended benefit is a small evidence index to start reviewing failures. No human time savings or diagnostic accuracy have been measured.
 
-## Try the deterministic inventory
+## Try it
 
-Requires Python 3.10+. No pip install or third-party Python packages needed. From this directory:
+Python 3.10+, standard library only; no pip install needed:
 
 ```powershell
 python -m unittest discover -s tests -v
 python -m lazy_ci_triage fixtures/junit.xml --format junit --mode inventory --public-data --output reports/inventory
 ```
 
-Open `reports/inventory/report.md`. Inventory mode extracts evidence only; it does **not** run AI. Each output directory must be new.
+Open `reports/inventory/report.md`. Inventory is explicitly deterministic; it does not run AI. Choose a new output directory for every run. `--public-data` acknowledges you reviewed the input for secrets/personal data; it is **not a scanner or redactor**. Use the authored synthetic fixtures for demonstrations.
 
-`--public-data` acknowledges that you checked the input is synthetic or public and contains no secrets or personal information. It is an acknowledgement, **not a secret scanner or redactor**. Use the supplied authored synthetic fixtures for the demo. The tool reads one explicitly named file and does not discover logs.
-
-## Run real local inference
-
-An existing local Ollama installation and an installed compatible model are required. The demonstrated model is **Qwen2.5-Coder 1.5B Instruct, Q4_K_M**, served by Ollama **0.18.0**. Its [Apache 2.0 license](https://ollama.com/library/qwen2.5-coder:1.5b/blobs/832dd9e00a68) is separate from this project's MIT license. The tested download is 986,062,089 bytes including supporting files, of which 986,048,576 bytes are weights. No weights are included in Git.
-
-If you already run Ollama with that model on its standard port:
+With an existing Ollama server and installed model on the default port:
 
 ```powershell
-python -m lazy_ci_triage fixtures/junit.xml --format junit --public-data --output reports/triage
+python -m lazy_ci_triage fixtures/junit.xml --format junit --public-data --output reports/junit
 ```
 
-For an isolated Windows setup using your existing Ollama executable, set these process-local values in a terminal and start the server. This does not install a runtime or alter global settings:
+The demonstrated setup uses Qwen2.5-Coder 1.5B Instruct Q4_K_M through Ollama 0.18.0. Its [Apache 2.0 model license](https://ollama.com/library/qwen2.5-coder:1.5b/blobs/832dd9e00a68) is separate from this project's MIT license. The initial build newly downloaded 986,062,089 bytes including support files, after reporting the need, exact size and license. Weights are excluded from Git; this revision reused those cached weights and downloaded nothing.
+
+To reuse the isolated cache on the build machine, start the already-installed runtime in a terminal:
 
 ```powershell
-New-Item -ItemType Directory -Force .runtime | Out-Null
 $env:OLLAMA_HOST = '127.0.0.1:11439'
 $env:OLLAMA_MODELS = Join-Path $PWD '.runtime/models'
 $env:OLLAMA_NO_CLOUD = '1'
 ollama serve
 ```
 
-In a second terminal, obtain the model only if you choose to download the size/license above, then run the CLI:
+In another terminal:
 
 ```powershell
-$env:OLLAMA_HOST = '127.0.0.1:11439'
-ollama pull qwen2.5-coder:1.5b
 python -m lazy_ci_triage fixtures/junit.xml --format junit --public-data --endpoint http://127.0.0.1:11439 --output reports/junit
 python -m lazy_ci_triage fixtures/pytest.log --format pytest --public-data --endpoint http://127.0.0.1:11439 --output reports/pytest
-python -m lazy_ci_triage fixtures/injection.xml --format junit --public-data --endpoint http://127.0.0.1:11439 --output reports/injection
+python -m lazy_ci_triage fixtures/injection.xml --format junit --public-data --endpoint http://127.0.0.1:11439 --output reports/hostile
+python -m lazy_ci_triage fixtures/ambiguous.log --format pytest --public-data --endpoint http://127.0.0.1:11439 --output reports/ambiguous
 ```
 
-The product never starts Ollama, pulls models, invokes tools, runs model suggestions, or patches files. It accepts only numeric IPv4 loopback HTTP endpoints; redirects and environment proxies are disabled. It has no paid API, account, or cloud inference integration. A human controls the local Ollama server and model selection.
+On another machine, install your own compatible local runtime/model only if you choose to accept its size and license. The application never starts a server, pulls weights or calls a paid API. Only `http://127.0.0.1:<port>` is allowed; proxies/redirects are disabled. No tools, shell commands, automatic fixes, account linking or cloud inference integration exist in the application.
 
-## Read the result
+## What the report means
 
-`report.md` provides tentative hypotheses, human inspections, uncertainties and evidence anchors. `report.json` includes source excerpts, source SHA-256, the raw model response, validation state, model digest, request hash, generation options and timings. Model latency is measured with a wall clock; Ollama's durations are nanoseconds and describe different parts of its request.
+Schema version 2 separates these fields:
 
-**An `ok` status means structural and citation validation passed. It does not prove the model's diagnosis.** IDs must exist and belong to the same source record, quotes must occur verbatim, each failure must appear exactly once across citations, and every finding must have citations. Interpretation and relevance still need human review. The first real run demonstrated this limitation: it used valid quotes beside weak hypotheses and repeated findings. That run remains in `evidence/junit-run`; the current validator rejects its repeated citations. The refined output is in `evidence/junit-refined`.
+| Field | Origin | Meaning |
+| --- | --- | --- |
+| `observed` | Python parser only | Input hash, extracted test names/locations, verbatim bounded source excerpts |
+| `model_hypotheses` | Validated model selections | Paired test/log IDs, one finite literal quote option, tentative family enum, fixed uncertainty marker |
+| `operational_recommendations` | Application policy | Always `refused`; no operational advice is issued |
+| `runtime`, `raw_response` | Inference audit | Model/version/digest, measured timings/tokens, untrusted raw output, including rejected responses |
+
+“Observed” means **present in the supplied text**, not independently verified test execution, file existence, source authenticity or root cause. Source text can itself be false, hostile or contain commands. It remains a labeled, escaped quote.
+
+The model can select `assertion_mismatch`, `missing_key`, `connection_refused` or `unclassified` (abstention). Names are tentative categories, not diagnoses. Every selection must reference an existing paired T/L ID, use one offered literal quote from that record, cover each extracted failure exactly once and carry `log_only_root_cause_unverified`. Non-abstention families require narrow textual cues in both full record and quote. The schema only offers families with cues somewhere in the input; paired-record checks run independently afterward.
+
+**Lexical eligibility is not semantic entailment.** An irrelevant documentation example can contain `KeyError` and still pass a missing-key label's cue checks. A model may select the wrong family or an unhelpful quote. A regression explicitly preserves this limitation. The tool cannot certify whether a label explains a failure.
+
+Model-authored observations, explanations, file/function fields, free-form recommendations and confirmation claims are refused. That closes the old prose channel that invented `round()`, SQL queries and an HTML file. It does not make source quotes or category selections true. Fixed tentative descriptions and generic human review questions come from application code and are labeled accordingly; they are not model recommendations.
+
+Markdown shows observations first and unverified selections separately. Blank-line-safe escaped `pre` blocks keep hostile HTML/Markdown inert. Raw JSON remains untrusted audit data; never execute text from it. Rejected model responses are not rendered as accepted advice.
+
+## States and limits
 
 | Status | Exit | Meaning |
 | --- | --- | --- |
-| `ok` | 0 | Real inference returned an accepted brief |
-| `inventory_only` | 0 | Explicit deterministic extraction; no AI |
-| `no_failures` | 0 | No failures extracted from supported input; no inference |
-| `model_unavailable` | 3 | Local server/model unavailable; no automatic pull |
-| `model_timeout` | 3 | A local request timed out |
-| `invalid_response` | 3 | Malformed, incomplete or oversized response |
-| `invalid_citation` | 3 | Brief schema, quote, pairing, repetition or coverage rejected |
-| `input_budget_exceeded` | 3 | Split evidence before inference |
-| Input/argument/output error | 2 | Read terminal error; output may be incomplete on write failure |
+| `ok` | 0 | Constrained selection contract passed; no semantic-truth guarantee |
+| `inventory_only` | 0 | Explicit deterministic extraction, no AI |
+| `no_failures` | 0 | No supported failures extracted; no inference and no independent test-success verification |
+| `model_unavailable`, `model_timeout` | 3 | Local server/model/request problem; no automatic pull or fallback |
+| `invalid_response` | 3 | Malformed, incomplete, oversized or invalid-Unicode response |
+| `invalid_citation` | 3 | Schema/quote/pairing/coverage/family/uncertainty contract refused |
+| `input_budget_exceeded` | 3 | Split input before inference |
+| Input/argument/output error | 2 | Read terminal error; a write failure can leave an incomplete output directory |
 
-Model errors create an error report rather than silently switching to deterministic output. Rejected raw responses are preserved when available. Source and model text are escaped inside blank-line-safe `pre` blocks in the Markdown; arbitrary Markdown links and HTML from logs remain inert. Raw JSON remains untrusted text: never paste it into a shell or execute suggested commands.
+- UTF-8 plain uncolored input: 1–262,144 bytes, at most 20 failures; control characters rejected.
+- JUnit `testsuite`/`testsuites`, namespaces, direct testcase failure/error children. DOCTYPE/ENTITY declarations rejected. Passed/skipped tests omitted. Metadata counts are not independently verified.
+- Pytest `FAILED/ERROR path.py::test_name - reason`, including parameter IDs with spaces. Present final failure/error counts must match extracted records. Full traceback/collection-error parsing, color, xfail and arbitrary logs are outside scope; prefer JUnit for those.
+- Excerpts capped at 4,000 characters with explicit truncation. Quote options are literal full excerpts when ≤400 characters, source lines/reason suffixes clipped to 400, at most 20 options per test. Choices can be verbose or unrepresentative.
+- JSON-encoded prompt capped at 24,000 characters; 32,768 context, 1,800 output tokens, temperature 0, seed 42, unload after every request. Complex inputs can be rejected; split them. Exact wording/latency is not reproducible across runtime/hardware changes.
+- Optional CommonMark integration test runs with already-installed `markdown-it-py`; otherwise that one check skips. Application and other tests need only the standard library.
 
-## Supported inputs and limits
+## Evidence and drafts
 
-- UTF-8, plain uncolored files, 1–262,144 bytes; no control characters.
-- JUnit `testsuite`/`testsuites`, including namespaces. Extracts direct `failure`/`error` children of testcases; names and testcase ordinals identify evidence. DOCTYPE and ENTITY declarations are rejected. Passed/skipped tests are omitted. Input metadata counts are not independently verified.
-- Pytest plain short-summary `FAILED path.py::test_name - reason` or `ERROR path.py::test_name - reason` lines, including parameter IDs containing spaces. Source line numbers are preserved. If a final count summary exists, its failure/error count must match extracted records. Full traceback parsing, color codes, collection-error blocks without a test node ID, xfail and arbitrary console formats are outside this small version. Prefer JUnit XML for those runs. A passing summary without failure/error counts can yield `no_failures`; it does not certify that tests actually ran.
-- Up to 20 failure records and 4,000 characters per excerpt; longer excerpts are explicitly marked truncated. At most 24,000 characters of JSON-encoded model evidence; split larger files. Up to six findings, each with up to five citations. Long/complex inputs can hit the 1,800-token generation limit and are rejected rather than presented as complete.
-- Temperature 0, seed 42 and 32,768-token model context. Reproducibility of wording or timing across machines/runtime versions is not guaranteed.
-- Prompt isolation and citation validation reduce risk; they do not solve prompt injection or semantic hallucination. The absence of tool execution limits the impact of hostile log text. Inference is advice only.
+[Current quality comparison](docs/quality-comparison.md), [measured runs](evidence/README.md), [demo video](evidence/lazy-ci-triage-demo.mp4), [DEV draft](docs/dev-post-draft.md), [demo script](docs/demo-script.md), [verification ledger](docs/verification.md), [original independent review](docs/independent-review.md).
 
-## Evidence and submission drafts
+The video is an edited walkthrough of actual saved inference, labeled as a replay. Old v0.1 reports/videos are historical and do not describe current behavior. Raw failures and rejected attempts remain available. The current code intentionally rejects the old prose schema rather than translating it into observed facts.
 
-See the [56-second local video walkthrough](evidence/lazy-ci-triage-demo.mp4), [measured runs](evidence/README.md), [independent review](docs/independent-review.md), [verification ledger](docs/verification.md), [design](docs/superpowers/specs/2026-10-23-lazy-ci-triage-design.md), [DEV draft](docs/dev-post-draft.md), [demo script](docs/demo-script.md) and [challenge checklist](docs/challenge-checklist.md). The video is an edited replay of actual saved inference results, clearly labeled, rather than a live terminal recording.
+Nothing is published or submitted. A Library attachment attempt failed before preparation because its helper reported upload capability unavailable; no Library IDs were created, and no alternate upload route was used. Public code/demo links and contest entry remain approval steps for the parent/user. DEV draft disclosure remains `fully_autonomous` unless meaningfully rewritten by a human. Any code changes after October 26, 2026 06:59 UTC must be disclosed here.
 
-The optional CommonMark integration test uses `markdown-it-py` if already installed and otherwise skips that one check; the application and remaining tests use the standard library only. The demonstrated full run included this integration check. No package installation is needed for normal use.
-
-All recorded inputs are synthetic. The project has no published repository, live deployment or submitted contest entry yet. Draft links remain explicit placeholders for human review. Commits use actual local dates, with UTC run timestamps in evidence. Any changes after the October 26, 2026 06:59 UTC deadline must be noted here before an eventual submission is evaluated.
-
-This project was implemented and drafted primarily by an AI agent at the user's request. The DEV draft uses `ai_disclosure_level: fully_autonomous`; reviewing a draft alone does not change that authorship classification.
-
-## License
-
-MIT for this project's code and authored synthetic fixtures. See [LICENSE](LICENSE) and [third-party notes](NOTICE.md). The model is an external dependency with its own license.
+MIT for project code and authored fixtures; see [LICENSE](LICENSE) and [NOTICE](NOTICE.md). The model remains separately licensed.

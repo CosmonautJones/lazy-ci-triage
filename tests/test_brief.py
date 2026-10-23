@@ -72,6 +72,35 @@ class BriefTests(unittest.TestCase):
         record = json.loads(payload["prompt"])["untrusted_evidence"][0]
         self.assertEqual(record["eligible_families"], ["unclassified"])
 
+    def test_model_must_select_a_finite_verbatim_quote_option(self):
+        payload = build_prompt(self.dataset)
+        record = json.loads(payload["prompt"])["untrusted_evidence"][0]
+        self.assertIn("expected 19.99, got 20.0", record["quote_options"])
+        quote = payload["format"]["properties"]["hypotheses"]["items"]["properties"]["quote"]
+        self.assertEqual(quote["enum"], record["quote_options"])
+        item = example()
+        item["hypotheses"][0]["quote"] = "19.99, got 20.0"
+        with self.assertRaisesRegex(BriefError, "option"):
+            validate_brief(item, self.dataset)
+
+    def test_sliced_quote_cannot_invent_a_source_word_boundary(self):
+        dataset = parse_input(b"FAILED a.py::test_docs - NotAKeyError marker; cause unknown", "pytest")
+        item = example()
+        item["hypotheses"][0].update(family="missing_key", quote="KeyError")
+        with self.assertRaises(BriefError):
+            validate_brief(item, dataset)
+
+    def test_mixed_record_schema_cannot_bypass_full_source_eligibility(self):
+        quote = "x" * 391 + " KeyError"
+        dataset = parse_input(("FAILED a.py::test_docs - " + quote + "Tail\n"
+                               "ERROR b.py::test_real - KeyError: 'demo'").encode(), "pytest")
+        item = example()
+        item["hypotheses"][0].update(family="missing_key", quote=quote)
+        item["hypotheses"].append({"test_id": "T002", "log_id": "L002", "family": "missing_key",
+                                   "quote": "KeyError: 'demo'", "uncertainty": "log_only_root_cause_unverified"})
+        with self.assertRaisesRegex(BriefError, "full source"):
+            validate_brief(item, dataset)
+
     def test_rejects_lone_surrogates_and_control_text(self):
         for value in ["Could fail.\ud800", "bad\x1b[31m"]:
             item = example()
@@ -112,7 +141,7 @@ class BriefTests(unittest.TestCase):
     def test_lexical_cue_is_not_a_semantic_truth_guarantee(self):
         dataset = parse_input(b"FAILED a.py::test_docs - text mentions KeyError as an example; actual cause unknown", "pytest")
         item = example()
-        item["hypotheses"][0].update(family="missing_key", quote="KeyError")
+        item["hypotheses"][0].update(family="missing_key", quote="text mentions KeyError as an example; actual cause unknown")
         # A cue can occur in irrelevant or hostile text; acceptance is not entailment.
         brief = validate_brief(item, dataset)
         rendered = render_report(report_for(dataset, brief))

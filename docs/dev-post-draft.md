@@ -1,61 +1,67 @@
 ---
-title: "Lazy CI Triage: let a local model read the red tests first"
+title: "Lazy CI Triage: a real citation can still support a bad explanation"
 published: false
 tags: devchallenge, hf26challenge, python, opensource
 ai_disclosure_level: fully_autonomous
 ---
 
-*Draft for human review. Publication links below must be replaced after separate approval. This article was written primarily by an AI agent at the user's request; it has not been published.*
+*Unpublished draft for human review. Written primarily by an AI agent at the user's request. Replace the public-link placeholders only after separate approval.*
 
-*This is a submission draft for the [Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady](https://dev.to/challenges/hacktoberfest-week3-2026-10-19).*
+*A submission draft for the [Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady](https://dev.to/challenges/hacktoberfest-week3-2026-10-19).*
 
 ## What I Built
 
-A red CI run creates a small chore before the real debugging starts: find the failures, connect each message to a test, and decide what to inspect first.
+A citation can be real and still sit beside a bad explanation. The first local CI brief in this project did exactly that: it linked a real inventory error to a rounding hypothesis. Another run suggested a SQL query where the supplied log established only a `KeyError`.
 
-Lazy CI Triage puts a local model at that starting line. Give it a synthetic or reviewed public JUnit XML file or a plain pytest short summary. It produces a brief with a tentative explanation, a human inspection step, an uncertainty statement and a clickable source excerpt for each failure. Python checks the test IDs, log IDs, exact quotes and failure coverage before showing an accepted result.
+Lazy CI Triage started as a small way to reduce the chore before debugging: read a failure file, identify the tests and collect the lines worth inspecting. Its current version keeps that job small. Python extracts observed metadata and verbatim source excerpts. A local model selects an exact excerpt and a tentative broad failure family for each failed test. The report puts those two sources of information in separate sections.
 
-The scope is deliberately small: one file in, a Markdown report and JSON evidence record out. No agent tools, automatic fixes or model-suggested commands execute. The maintainer can spend less attention assembling the evidence and more attention deciding whether the model's suggestion makes sense. That is the intended Slow and Steady fit; I have not measured human time saved.
+“Observed” means the supplied file contains that text. It does not prove tests ran, a named file exists or the text is truthful. “Model hypothesis” means an unverified category selection. The tool issues no operational recommendations and runs no suggested commands.
+
+That is the Slow and Steady idea: get a bounded evidence index for the task you were going to do anyway. The maintainer still decides what the failure means. No human time savings have been measured.
 
 ## Demo
 
-**[VIDEO OR DEPLOYED DEMO LINK — pending human review and publication approval]**
+**[VIDEO OR DEPLOYED DEMO LINK — pending review and publication approval]**
 
-The local 56-second video is `evidence/lazy-ci-triage-demo.mp4`, an edited walkthrough of saved real inference results, explicitly labeled rather than presented as live capture. The optional live recording script is `docs/demo-script.md`. The repository includes the original synthetic inputs and actual model responses under `evidence/`, so the demo's claims can be inspected without trusting a screenshot.
+The local video, `evidence/lazy-ci-triage-demo.mp4`, is an edited walkthrough of saved actual inference results, explicitly labeled as a replay rather than live terminal capture. Original synthetic inputs, raw responses, rejected attempts and measured timings are included with the code. The current comparison is in `docs/quality-comparison.md`.
 
-On an RTX 3090 with 24 GiB VRAM and an AMD Ryzen 7 5800X, the refined JUnit run took **20.994 seconds wall time**, including local API checks and model loading. Qwen produced three distinct hypotheses, with three accepted citations covering three failures. That is a single synthetic example, not a benchmark or a measured human productivity improvement.
+The model is Qwen2.5-Coder 1.5B Instruct Q4_K_M, served by Ollama 0.18.0 on an RTX 3090 with 24 GiB VRAM and an AMD Ryzen 7 5800X. Every run records the model digest, options, input hash, wall time and token counts. These are tiny synthetic examples, not a latency benchmark or productivity study.
 
 ## Code
 
-**[PUBLIC CODE LINK — pending human review and repository publication approval]**
+**[PUBLIC CODE LINK — pending repository publication approval]**
 
-The project and its isolated Git repository were started on October 23, 2026, inside the Week 3 window. The code and synthetic fixtures use the MIT license. The external model has its own Apache 2.0 license; weights are excluded from Git.
+This standalone project and its Git repository began on October 23, 2026, within the Week 3 window. Project code and authored synthetic fixtures use MIT. The external Qwen model uses Apache 2.0; weights are excluded from Git. The current Python CLI has no third-party runtime dependencies.
 
 ## How I Built It
 
-The AI core is Qwen2.5-Coder 1.5B Instruct, quantized Q4_K_M, running locally through Ollama 0.18.0. The demonstration records the exact model digest, generation options, raw response, token counts and wall latency. Python 3.10's standard library handles everything around inference: parsing, bounded local HTTP requests, validation, CLI arguments and reports.
+The useful change was to ask the model to do less.
 
-The pipeline is small enough to read in one sitting:
+The initial format allowed a hypothesis, an inspection step, uncertainty text and citations. Python verified paired IDs and exact quotes, but that did not stop invented functions or explanations. A prompt asking the model to stay tentative helped some outputs and failed on others. Correct references were never a substitute for checking what the sentences claimed.
 
-1. Parse failed tests into ordered `T001` test and `L001` log records, with a file hash and source location.
-2. Send those records as untrusted JSON data, with a structured output schema and instructions to stay tentative.
-3. Check every returned citation against the supplied record. Reject unknown IDs, wrong pairings, invented quotes, repeated evidence or missing failures.
-4. Escape source/model text in a Markdown report, alongside the exact evidence a human needs to check.
+The revised format has no free-form explanation or recommendation field. The model chooses only:
 
-A useful failure happened in the first actual run. Its quotes and IDs existed, but the model repeated findings and speculated about functions that were never supplied. A rounding hypothesis even carried an unrelated inventory citation. Citation validity did not make the explanation correct.
+- paired test and log IDs;
+- one literal quote from finite options derived from that record;
+- a tentative family: assertion mismatch, missing key, refused connection, or unclassified;
+- a fixed uncertainty marker saying root cause is unverified.
 
-I kept that response, tightened the prompt and added repeated-evidence checks with regression tests. The refined run produced one tentative finding per failure, with a matching source for each. It is still advice. A model can cite a real line and misinterpret it, and this tool cannot prove semantic relevance automatically.
+Python independently validates those choices. It supplies the observed section directly from parsed input. Unknown fields, model-authored observations, invented quotes, duplicate coverage and operational advice are rejected. The report uses fixed tentative descriptions and application-authored review questions, with their origin stated.
 
-The other saved runs make that warning concrete: the pytest brief guessed a SQL query behind a `KeyError`, and the hostile-input brief assumed an HTML file. Those details were not established by the logs. Across the three refined-contract runs, seven out of seven citations and failure records pass structural checks. That measures traceability, not diagnostic accuracy. I would review the wording before acting on any suggestion.
+The family checks are deliberately modest. `KeyError` must appear as a textual cue for a missing-key label, for example. That is lexical eligibility, not semantic entailment. A documentation example can mention `KeyError` while the actual cause remains unknown. A test preserves that counterexample rather than claiming the validator can decide truth.
 
-The tests cover malformed input, XML entities, duplicate test names, hostile instructions inside logs, response failures and citation rejection. Deterministic transport tests use a clearly labeled local test server; the saved inference examples use the actual model. There is an explicit inventory-only mode for when AI is unavailable, and it never masquerades as a successful AI brief.
+Real inference exposed another small-model weakness: even when it selected “unclassified,” it sometimes paraphrased the requested quote. Those attempts were rejected and preserved. The final extractive format offers literal quote choices to constrain that failure channel. It still cannot guarantee that the selected quote is representative or that a selected category is useful.
+
+In the final five-fixture run, all nine source records had valid paired quote selections. An ambiguous status-code message yielded “unclassified.” But a deliberate trap still yielded a misleading missing-key label: its text mentioned `KeyError` only as an example and said the actual cause was unknown. The label passed the lexical checks. It remained an unverified model selection, not an observed fact. That is a useful boundary to show in a demo, rather than hide behind a passing validation count.
+
+The CLI reads one explicitly named synthetic/public file, calls only a numeric loopback endpoint and writes Markdown plus JSON. Hostile source text is escaped, and rejected raw output stays in audit JSON rather than appearing as accepted advice. No agent tools, auto-fixes, runtime installation or model pull happen inside the application.
 
 ## Why Does Open Innovation Matter?
 
-The open-weight model is the part that proposes investigation directions. The surrounding code makes its evidence inspectable and constrains what becomes a report. Once Ollama and the model are installed, this workflow can run without an external inference API, credentials or an internet connection. The demonstrated requests used only loopback; I did not perform a separate network-disconnection experiment.
+The open-weight model makes the selection step a local, inspectable experiment. The prompt, schema and validator can be changed together, and the raw results can be compared. Once the existing runtime and weights are installed, inference needs no provider API key or external inference service. The recorded requests used loopback; a separate network-disconnection experiment was not performed.
 
-That gives the builder a concrete choice: inspect the prompt, change the validator, select another locally installed compatible model, and compare the saved responses. No provider API key or per-request inference bill is needed for this path, though electricity and hardware still cost money. The small model is also imperfect, and keeping its first bad response makes that tradeoff visible.
+This revision reused the same cached weights. The initial build had downloaded about 986 MB after reporting the exact need, size and Apache license first. Hardware and electricity still cost money, so “local” does not mean costless.
 
-The tool currently accepts only synthetic or reviewed public data. Local inference is useful control over where computation runs; it is not a substitute for reviewing the input or securing the machine.
+The tradeoff is visible in the repository: the tighter format prevents newly authored prose from inventing files or telling someone to restart an imagined database. It also gives up nuanced explanations. A rule-based classifier could cover parts of this narrow task; the project tests a real model's excerpt/category selections rather than claiming AI is uniquely necessary.
 
-For this week, laziness means getting an evidence-backed starting point for the task you were going to do anyway. The decision about what to fix stays with the person reading the brief.
+For me, the useful result is a smaller, more honest starting point. The model gets a bounded role. The human gets the source beside it, including the cases where the tool refused a result.

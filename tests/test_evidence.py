@@ -15,6 +15,41 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class EvidenceReplayTests(unittest.TestCase):
+    def test_final_v2_real_runs_keep_observations_and_model_selections_separate(self):
+        cases = [("v2c-junit", "junit.xml", "junit"), ("v2c-pytest", "pytest.log", "pytest"),
+                 ("v2c-injection", "injection.xml", "junit"), ("v2c-ambiguous", "ambiguous.log", "pytest"),
+                 ("v2c-lexical-trap", "lexical-trap.log", "pytest")]
+        count = 0
+        for run, fixture, kind in cases:
+            with self.subTest(run=run):
+                report = json.loads((ROOT / "evidence" / run / "report.json").read_text())
+                dataset = parse_input((ROOT / "fixtures" / fixture).read_bytes(), kind)
+                self.assertEqual(report["observed"], json.loads(json.dumps(asdict(dataset))))
+                self.assertEqual(report["schema_version"], 2)
+                self.assertEqual(report["status"], "ok")
+                self.assertEqual(report["operational_recommendations"]["status"], "refused")
+                selection = json.loads(report["raw_response"])
+                self.assertEqual(validate_brief(selection, dataset), report["model_hypotheses"])
+                count += len(selection["hypotheses"])
+        self.assertEqual(count, 9)
+
+    def test_preserved_v2_model_failures_are_still_refused(self):
+        for run in ["v2-ambiguous", "v2-lexical-trap", "v2b-ambiguous", "v2b-lexical-trap"]:
+            with self.subTest(run=run):
+                report = json.loads((ROOT / "evidence" / run / "report.json").read_text())
+                fixture = "ambiguous.log" if run.endswith("ambiguous") else "lexical-trap.log"
+                dataset = parse_input((ROOT / "fixtures" / fixture).read_bytes(), "pytest")
+                self.assertEqual(report["status"], "invalid_citation")
+                self.assertIsNone(report["model_hypotheses"])
+                with self.assertRaises(BriefError):
+                    validate_brief(json.loads(report["raw_response"]), dataset)
+
+    def test_real_lexical_trap_is_accepted_but_disagrees_with_abstention_rubric(self):
+        report = json.loads((ROOT / "evidence/v2c-lexical-trap/report.json").read_text())
+        self.assertEqual(report["model_hypotheses"]["hypotheses"][0]["family"], "missing_key")
+        self.assertIn("actual cause unknown", report["observed"]["failures"][0]["text"])
+        self.assertIn("not semantic entailment", (ROOT / "evidence/v2c-lexical-trap/report.md").read_text())
+
     def test_historical_real_runs_match_inputs_but_old_prose_schema_is_rejected(self):
         for run, fixture, kind in [("junit-refined", "junit.xml", "junit"),
                                    ("pytest-run", "pytest.log", "pytest"),

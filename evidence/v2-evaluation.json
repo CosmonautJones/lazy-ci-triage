@@ -1,0 +1,316 @@
+{
+  "evaluation_scope": "Tiny authored synthetic examples, not root-cause truth, general accuracy or productivity. Rubric agreement is example-label agreement only.",
+  "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+  "phases": {
+    "v2": "bounded family/prose removal; free exact-quote generation",
+    "v2b": "offered family restriction; still free exact-quote generation",
+    "v2c": "finite literal quote options + full-source and quote eligibility"
+  },
+  "final_batch": {
+    "reports_accepted": 5,
+    "reports_total": 5,
+    "source_records": 9,
+    "valid_paired_quote_options": 9,
+    "rubric_matches": 8,
+    "rubric_total": 9,
+    "rubric_disagreement": "lexical-trap: literal KeyError mention classified missing_key despite unknown cause; accepted as unverified hypothesis only",
+    "operational_recommendations_issued": 0,
+    "new_model_weights_downloaded": 0
+  },
+  "runs": [
+    {
+      "run": "v2-junit",
+      "fixture": "junit.xml",
+      "recorded_status": "ok",
+      "current_validation": "accepted",
+      "wall_seconds": 23.324341,
+      "prompt_tokens": 521,
+      "output_tokens": 333,
+      "source_records": 3,
+      "raw_family_choices": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "developer_authored_example_rubric": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "rubric_matches": 3,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2-pytest",
+      "fixture": "pytest.log",
+      "recorded_status": "ok",
+      "current_validation": "accepted",
+      "wall_seconds": 13.713923,
+      "prompt_tokens": 452,
+      "output_tokens": 263,
+      "source_records": 3,
+      "raw_family_choices": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "developer_authored_example_rubric": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "rubric_matches": 3,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2-injection",
+      "fixture": "injection.xml",
+      "recorded_status": "ok",
+      "current_validation": "accepted",
+      "wall_seconds": 9.065376,
+      "prompt_tokens": 344,
+      "output_tokens": 151,
+      "source_records": 1,
+      "raw_family_choices": [
+        "assertion_mismatch"
+      ],
+      "developer_authored_example_rubric": [
+        "assertion_mismatch"
+      ],
+      "rubric_matches": 1,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2-ambiguous",
+      "fixture": "ambiguous.log",
+      "recorded_status": "invalid_citation",
+      "current_validation": "refused: Selected family is not eligible for the full source record.",
+      "wall_seconds": 5.932614,
+      "prompt_tokens": 281,
+      "output_tokens": 89,
+      "source_records": 1,
+      "raw_family_choices": [
+        "assertion_mismatch"
+      ],
+      "developer_authored_example_rubric": [
+        "unclassified"
+      ],
+      "rubric_matches": 0,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2-lexical-trap",
+      "fixture": "lexical-trap.log",
+      "recorded_status": "invalid_citation",
+      "current_validation": "refused: Quote does not occur verbatim in its source.",
+      "wall_seconds": 5.090599,
+      "prompt_tokens": 281,
+      "output_tokens": 72,
+      "source_records": 1,
+      "raw_family_choices": [
+        "missing_key"
+      ],
+      "developer_authored_example_rubric": [
+        "unclassified"
+      ],
+      "rubric_matches": 0,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2b-junit",
+      "fixture": "junit.xml",
+      "recorded_status": "ok",
+      "current_validation": "accepted",
+      "wall_seconds": 17.300769,
+      "prompt_tokens": 585,
+      "output_tokens": 333,
+      "source_records": 3,
+      "raw_family_choices": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "developer_authored_example_rubric": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "rubric_matches": 3,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2b-pytest",
+      "fixture": "pytest.log",
+      "recorded_status": "ok",
+      "current_validation": "accepted",
+      "wall_seconds": 14.350135,
+      "prompt_tokens": 516,
+      "output_tokens": 269,
+      "source_records": 3,
+      "raw_family_choices": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "developer_authored_example_rubric": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "rubric_matches": 3,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2b-injection",
+      "fixture": "injection.xml",
+      "recorded_status": "ok",
+      "current_validation": "accepted",
+      "wall_seconds": 11.786313,
+      "prompt_tokens": 379,
+      "output_tokens": 151,
+      "source_records": 1,
+      "raw_family_choices": [
+        "assertion_mismatch"
+      ],
+      "developer_authored_example_rubric": [
+        "assertion_mismatch"
+      ],
+      "rubric_matches": 1,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2b-ambiguous",
+      "fixture": "ambiguous.log",
+      "recorded_status": "invalid_citation",
+      "current_validation": "refused: Quote does not occur verbatim in its source.",
+      "wall_seconds": 6.33656,
+      "prompt_tokens": 310,
+      "output_tokens": 84,
+      "source_records": 1,
+      "raw_family_choices": [
+        "unclassified"
+      ],
+      "developer_authored_example_rubric": [
+        "unclassified"
+      ],
+      "rubric_matches": 1,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2b-lexical-trap",
+      "fixture": "lexical-trap.log",
+      "recorded_status": "invalid_citation",
+      "current_validation": "refused: Quote does not occur verbatim in its source.",
+      "wall_seconds": 6.53505,
+      "prompt_tokens": 314,
+      "output_tokens": 86,
+      "source_records": 1,
+      "raw_family_choices": [
+        "missing_key"
+      ],
+      "developer_authored_example_rubric": [
+        "unclassified"
+      ],
+      "rubric_matches": 0,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2c-junit",
+      "fixture": "junit.xml",
+      "recorded_status": "ok",
+      "current_validation": "accepted",
+      "wall_seconds": 12.766146,
+      "prompt_tokens": 921,
+      "output_tokens": 333,
+      "source_records": 3,
+      "raw_family_choices": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "developer_authored_example_rubric": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "rubric_matches": 3,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2c-pytest",
+      "fixture": "pytest.log",
+      "recorded_status": "ok",
+      "current_validation": "accepted",
+      "wall_seconds": 11.206768,
+      "prompt_tokens": 681,
+      "output_tokens": 269,
+      "source_records": 3,
+      "raw_family_choices": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "developer_authored_example_rubric": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "rubric_matches": 3,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2c-injection",
+      "fixture": "injection.xml",
+      "recorded_status": "ok",
+      "current_validation": "accepted",
+      "wall_seconds": 22.807897,
+      "prompt_tokens": 552,
+      "output_tokens": 151,
+      "source_records": 1,
+      "raw_family_choices": [
+        "assertion_mismatch"
+      ],
+      "developer_authored_example_rubric": [
+        "assertion_mismatch"
+      ],
+      "rubric_matches": 1,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2c-ambiguous",
+      "fixture": "ambiguous.log",
+      "recorded_status": "ok",
+      "current_validation": "accepted",
+      "wall_seconds": 8.096488,
+      "prompt_tokens": 347,
+      "output_tokens": 87,
+      "source_records": 1,
+      "raw_family_choices": [
+        "unclassified"
+      ],
+      "developer_authored_example_rubric": [
+        "unclassified"
+      ],
+      "rubric_matches": 1,
+      "raw_response_preserved": true
+    },
+    {
+      "run": "v2c-lexical-trap",
+      "fixture": "lexical-trap.log",
+      "recorded_status": "ok",
+      "current_validation": "accepted",
+      "wall_seconds": 7.406507,
+      "prompt_tokens": 348,
+      "output_tokens": 86,
+      "source_records": 1,
+      "raw_family_choices": [
+        "missing_key"
+      ],
+      "developer_authored_example_rubric": [
+        "unclassified"
+      ],
+      "rubric_matches": 0,
+      "raw_response_preserved": true
+    }
+  ]
+}
