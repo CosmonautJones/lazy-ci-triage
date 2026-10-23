@@ -45,6 +45,16 @@ class BriefTests(unittest.TestCase):
         with self.assertRaisesRegex(BriefError, "coverage"):
             validate_brief(example(), dataset)
 
+    def test_rejects_repeated_evidence_in_duplicate_findings(self):
+        item = example()
+        item["findings"].append(copy.deepcopy(item["findings"][0]))
+        with self.assertRaisesRegex(BriefError, "repeated"):
+            validate_brief(item, self.dataset)
+
+    def test_schema_bounds_findings_by_number_of_failed_tests(self):
+        schema = build_prompt(self.dataset)["format"]
+        self.assertEqual(schema["properties"]["findings"]["maxItems"], 1)
+
     def test_requires_bounded_schema_and_no_extra_prose(self):
         invalid = [None, [], {}, {"findings": []}, {"findings": "text"},
                    {"findings": example()["findings"], "summary": "uncited"}]

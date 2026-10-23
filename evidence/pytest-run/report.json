@@ -1,0 +1,108 @@
+{
+  "app_version": "0.1.0",
+  "created_at_utc": "2026-10-23T11:47:52.054705+00:00",
+  "mode": "model",
+  "status": "ok",
+  "dataset": {
+    "input_sha256": "271606af339bc3ea384eb626cc0115a3e2febac80a76ba5f4d6f1a0b22adf67d",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "tests/test_prices.py::test_total_rounding",
+        "location": "line 8",
+        "text": "FAILED tests/test_prices.py::test_total_rounding - AssertionError: expected 19.99, got 20.0",
+        "truncated": false
+      },
+      {
+        "test_id": "T002",
+        "log_id": "L002",
+        "name": "tests/test_inventory.py::test_missing_product",
+        "location": "line 9",
+        "text": "ERROR tests/test_inventory.py::test_missing_product - KeyError: 'sku-demo-404'",
+        "truncated": false
+      },
+      {
+        "test_id": "T003",
+        "log_id": "L003",
+        "name": "tests/test_api.py::test_health",
+        "location": "line 10",
+        "text": "FAILED tests/test_api.py::test_health - ConnectionRefusedError: [Errno 111] Connection refused on 127.0.0.1:9999",
+        "truncated": false
+      }
+    ]
+  },
+  "brief": {
+    "findings": [
+      {
+        "hypothesis": "Could the rounding issue in `tests/test_prices.py::test_total_rounding` be due to a bug in the `round()` function?",
+        "inspection": "Inspect the implementation of the `round()` function in the `prices.py` file.",
+        "uncertainty": "The exact cause might not be immediately apparent from the error message alone. It could be related to how the rounding is handled or the precision settings.",
+        "citations": [
+          {
+            "test_id": "T001",
+            "log_id": "L001",
+            "quote": "AssertionError: expected 19.99, got 20.0"
+          }
+        ]
+      },
+      {
+        "hypothesis": "Could the missing product issue in `tests/test_inventory.py::test_missing_product` be due to a bug in the database query?",
+        "inspection": "Check the SQL query used in the `missing_product` test.",
+        "uncertainty": "The exact cause might not be immediately apparent from the error message alone. It could be related to how the product is fetched or if there are any issues with the database connection.",
+        "citations": [
+          {
+            "test_id": "T002",
+            "log_id": "L002",
+            "quote": "KeyError: 'sku-demo-404'"
+          }
+        ]
+      },
+      {
+        "hypothesis": "Could the connection refused issue in `tests/test_api.py::test_health` be due to a bug in the API server?",
+        "inspection": "Check the configuration of the API server and ensure it is running correctly.",
+        "uncertainty": "The exact cause might not be immediately apparent from the error message alone. It could be related to how the server is started or if there are any issues with the network connection.",
+        "citations": [
+          {
+            "test_id": "T003",
+            "log_id": "L003",
+            "quote": "ConnectionRefusedError: [Errno 111] Connection refused on 127.0.0.1:9999"
+          }
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "11548902bc5a1ee0ab43c26c5a7358f8189bb22d2cdaf06e1b14ea0fda75f0d9",
+    "created_at": "2026-10-23T11:48:19.1679833Z",
+    "done_reason": "stop",
+    "total_duration": 26684802600,
+    "load_duration": 3802458000,
+    "prompt_eval_count": 491,
+    "prompt_eval_duration": 37711800,
+    "eval_count": 477,
+    "eval_duration": 2824932400,
+    "wall_seconds": 27.117923
+  },
+  "raw_response": "{\n    \"findings\": [\n        {\n            \"hypothesis\": \"Could the rounding issue in `tests/test_prices.py::test_total_rounding` be due to a bug in the `round()` function?\",\n            \"inspection\": \"Inspect the implementation of the `round()` function in the `prices.py` file.\",\n            \"uncertainty\": \"The exact cause might not be immediately apparent from the error message alone. It could be related to how the rounding is handled or the precision settings.\",\n            \"citations\": [\n                {\n                    \"test_id\": \"T001\",\n                    \"log_id\": \"L001\",\n                    \"quote\": \"AssertionError: expected 19.99, got 20.0\"\n                }\n            ]\n        },\n        {\n            \"hypothesis\": \"Could the missing product issue in `tests/test_inventory.py::test_missing_product` be due to a bug in the database query?\",\n            \"inspection\": \"Check the SQL query used in the `missing_product` test.\",\n            \"uncertainty\": \"The exact cause might not be immediately apparent from the error message alone. It could be related to how the product is fetched or if there are any issues with the database connection.\",\n            \"citations\": [\n                {\n                    \"test_id\": \"T002\",\n                    \"log_id\": \"L002\",\n                    \"quote\": \"KeyError: 'sku-demo-404'\"\n                }\n            ]\n        },\n        {\n            \"hypothesis\": \"Could the connection refused issue in `tests/test_api.py::test_health` be due to a bug in the API server?\",\n            \"inspection\": \"Check the configuration of the API server and ensure it is running correctly.\",\n            \"uncertainty\": \"The exact cause might not be immediately apparent from the error message alone. It could be related to how the server is started or if there are any issues with the network connection.\",\n            \"citations\": [\n                {\n                    \"test_id\": \"T003\",\n                    \"log_id\": \"L003\",\n                    \"quote\": \"ConnectionRefusedError: [Errno 111] Connection refused on 127.0.0.1:9999\"\n                }\n            ]\n        }\n    ]\n}"
+}

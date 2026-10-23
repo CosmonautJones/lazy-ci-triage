@@ -79,6 +79,11 @@ class ParsingTests(unittest.TestCase):
             parse_input(b"some random application log", "pytest")
         self.assertEqual(parse_input(b"================ 3 passed in 0.2s ================", "pytest").failures, ())
 
+    def test_summary_without_failure_records_does_not_hide_reported_failures(self):
+        for data in [b"===== 2 failed, 3 passed in 0.2s =====", b"===== 3 passed, 1 error in 0.2s ====="]:
+            with self.subTest(data=data), self.assertRaises(InputError):
+                parse_input(data, "pytest")
+
 
 if __name__ == "__main__":
     unittest.main()

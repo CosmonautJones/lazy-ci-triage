@@ -96,6 +96,9 @@ def _pytest(text: str) -> list[tuple[str, str, str]]:
         match = re.match(r"^(?:FAILED|ERROR)\s+(\S+)(?:\s+-\s+(.*))?\s*$", line)
         if match:
             records.append((match.group(1), f"line {line_number}", line))
-    if not records and not re.search(r"=+\s+\d+ passed(?:[,\s].*)?=+", text):
-        raise InputError("No supported pytest summary found; use plain short-summary output or JUnit XML.")
+    if not records:
+        summaries = [line for line in text.splitlines() if re.match(r"^=+.*=+$", line)]
+        if (not any(re.search(r"\b\d+ passed\b", line) for line in summaries)
+                or any(re.search(r"\b[1-9]\d* (?:failed|errors?)\b", line) for line in summaries)):
+            raise InputError("No supported pytest summary found; use plain short-summary output or JUnit XML.")
     return records
