@@ -1,0 +1,3 @@
+=========================== short test summary info ============================
+FAILED tests/test_worker.py::test_completion - worker returned status 7; no implementation or environment details supplied
+============================== 1 failed in 0.10s ===============================

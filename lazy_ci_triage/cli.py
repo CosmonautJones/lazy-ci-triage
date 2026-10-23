@@ -41,9 +41,13 @@ def main(argv=None):
         message = str(exc) if isinstance(exc, InputError) else "Input file could not be read."
         print("Input rejected: " + message, file=sys.stderr)
         return 2
-    report = {"app_version": __version__, "created_at_utc": datetime.now(timezone.utc).isoformat(),
-              "mode": args.mode, "status": "inventory_only", "dataset": asdict(dataset),
-              "brief": None, "runtime": {}, "raw_response": None}
+    report = {"schema_version": 2, "app_version": __version__,
+              "created_at_utc": datetime.now(timezone.utc).isoformat(),
+              "mode": args.mode, "status": "inventory_only", "observed": asdict(dataset),
+              "model_hypotheses": None,
+              "operational_recommendations": {"status": "refused",
+                  "reason": "No implementation or environment evidence; this tool issues no operational recommendations."},
+              "runtime": {}, "raw_response": None}
     code = 0
     if not dataset.failures:
         report["status"] = "no_failures"

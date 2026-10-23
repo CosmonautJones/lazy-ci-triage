@@ -71,7 +71,7 @@ def generate(dataset, model, endpoint, timeout):
             brief = validate_brief(value, dataset)
         except BriefError as exc:
             raise InferenceError("invalid_citation", str(exc)) from exc
-        return {"brief": brief, "runtime": runtime, "raw_response": raw}
+        return {"model_hypotheses": brief, "runtime": runtime, "raw_response": raw}
     except InferenceError as exc:
         runtime["wall_seconds"] = round(time.perf_counter() - start, 6)
         exc.runtime = runtime

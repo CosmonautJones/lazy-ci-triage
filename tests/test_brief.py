@@ -1,4 +1,5 @@
 import copy
+from dataclasses import asdict
 import json
 from pathlib import Path
 import unittest
@@ -11,32 +12,36 @@ FIXTURES = Path(__file__).resolve().parents[1] / "fixtures"
 
 
 def example():
-    return {"findings": [{
-        "hypothesis": "The assertion may reflect a rounding boundary.",
-        "inspection": "Compare expected decimal rounding with the calculation.",
-        "uncertainty": "The implementation is absent; the root cause is unconfirmed.",
-        "citations": [{"test_id": "T001", "log_id": "L001", "quote": "expected 19.99, got 20.0"}]
-    }]}
+    return {"hypotheses": [{"test_id": "T001", "log_id": "L001",
+                            "family": "assertion_mismatch",
+                            "quote": "expected 19.99, got 20.0",
+                            "uncertainty": "log_only_root_cause_unverified"}]}
+
+
+def report_for(dataset, brief=None):
+    return {"schema_version": 2, "status": "ok" if brief else "inventory_only",
+            "mode": "model" if brief else "inventory", "observed": asdict(dataset),
+            "model_hypotheses": brief, "operational_recommendations": {"status": "refused"}}
 
 
 class BriefTests(unittest.TestCase):
     def setUp(self):
         self.dataset = parse_input(b"FAILED tests/a.py::test_round - expected 19.99, got 20.0", "pytest")
 
-    def test_accepts_exact_paired_source_citation(self):
+    def test_accepts_exact_paired_extractive_selection(self):
         self.assertEqual(validate_brief(example(), self.dataset), example())
 
     def test_rejects_unknown_ids_and_nonverbatim_quotes(self):
         for field, value in [("test_id", "T999"), ("log_id", "L999"), ("quote", "expected 17.99")]:
             item = example()
-            item["findings"][0]["citations"][0][field] = value
+            item["hypotheses"][0][field] = value
             with self.subTest(field=field), self.assertRaises(BriefError):
                 validate_brief(item, self.dataset)
 
     def test_rejects_citation_to_wrong_test(self):
         dataset = parse_input(b"FAILED a.py::test_x - first\nFAILED b.py::test_y - second", "pytest")
         item = example()
-        item["findings"][0]["citations"] = [{"test_id": "T002", "log_id": "L001", "quote": "first"}]
+        item["hypotheses"][0].update(test_id="T002", log_id="L001", quote="first", family="unclassified")
         with self.assertRaises(BriefError):
             validate_brief(item, dataset)
 
@@ -45,82 +50,128 @@ class BriefTests(unittest.TestCase):
         with self.assertRaisesRegex(BriefError, "coverage"):
             validate_brief(example(), dataset)
 
-    def test_rejects_repeated_evidence_in_duplicate_findings(self):
+    def test_rejects_repeated_evidence(self):
         item = example()
-        item["findings"].append(copy.deepcopy(item["findings"][0]))
+        item["hypotheses"].append(copy.deepcopy(item["hypotheses"][0]))
         with self.assertRaisesRegex(BriefError, "repeated"):
             validate_brief(item, self.dataset)
 
-    def test_schema_bounds_findings_by_number_of_failed_tests(self):
+    def test_schema_requires_one_selection_per_test_without_prose_fields(self):
         schema = build_prompt(self.dataset)["format"]
-        self.assertEqual(schema["properties"]["findings"]["maxItems"], 1)
+        items = schema["properties"]["hypotheses"]
+        self.assertEqual((items["minItems"], items["maxItems"]), (1, 1))
+        fields = items["items"]["properties"]
+        self.assertEqual(set(fields), {"test_id", "log_id", "quote", "family", "uncertainty"})
+        self.assertEqual(fields["uncertainty"]["enum"], ["log_only_root_cause_unverified"])
 
-    def test_rejects_lone_surrogates_before_accepting_brief(self):
+    def test_prompt_only_offers_families_with_a_source_cue_plus_abstention(self):
+        dataset = parse_input((FIXTURES / "ambiguous.log").read_bytes(), "pytest")
+        payload = build_prompt(dataset)
+        family = payload["format"]["properties"]["hypotheses"]["items"]["properties"]["family"]
+        self.assertEqual(family["enum"], ["unclassified"])
+        record = json.loads(payload["prompt"])["untrusted_evidence"][0]
+        self.assertEqual(record["eligible_families"], ["unclassified"])
+
+    def test_rejects_lone_surrogates_and_control_text(self):
+        for value in ["Could fail.\ud800", "bad\x1b[31m"]:
+            item = example()
+            item["hypotheses"][0]["quote"] = value
+            with self.subTest(value=repr(value)), self.assertRaises(BriefError):
+                validate_brief(item, self.dataset)
+
+    def test_refuses_model_observations_and_operational_recommendations(self):
+        for field, value in [("observed", {"fact": "prices.py exists"}),
+                             ("inspection", "Restart the database"),
+                             ("recommendation", "Run a shell command"),
+                             ("hypothesis", "round() is broken"), ("file", "invented.py")]:
+            for at_root in [True, False]:
+                item = example()
+                (item if at_root else item["hypotheses"][0])[field] = value
+                with self.subTest(field=field, at_root=at_root), self.assertRaises(BriefError):
+                    validate_brief(item, self.dataset)
+
+    def test_actual_old_bad_outputs_are_rejected_not_rephrased_as_facts(self):
+        for record in json.loads((FIXTURES / "actual-v1-bad-outputs.json").read_text()):
+            fixture, kind = (("pytest.log", "pytest") if record["run"] == "pytest-run" else
+                             ("injection.xml", "junit") if record["run"] == "injection-run" else
+                             ("junit.xml", "junit"))
+            dataset = parse_input((FIXTURES / fixture).read_bytes(), kind)
+            with self.subTest(run=record["run"]), self.assertRaises(BriefError):
+                validate_brief(record["model_output"], dataset)
+
+    def test_abstention_is_explicit_and_family_needs_quoted_textual_cue(self):
+        for family in ["missing_key", "connection_refused", "invented_database_bug"]:
+            item = example()
+            item["hypotheses"][0]["family"] = family
+            with self.subTest(family=family), self.assertRaises(BriefError):
+                validate_brief(item, self.dataset)
         item = example()
-        item["findings"][0]["hypothesis"] = "Could fail.\ud800"
+        item["hypotheses"][0]["family"] = "unclassified"
+        self.assertEqual(validate_brief(item, self.dataset), item)
+
+    def test_lexical_cue_is_not_a_semantic_truth_guarantee(self):
+        dataset = parse_input(b"FAILED a.py::test_docs - text mentions KeyError as an example; actual cause unknown", "pytest")
+        item = example()
+        item["hypotheses"][0].update(family="missing_key", quote="KeyError")
+        # A cue can occur in irrelevant or hostile text; acceptance is not entailment.
+        brief = validate_brief(item, dataset)
+        rendered = render_report(report_for(dataset, brief))
+        self.assertIn("not semantic entailment", rendered)
+        self.assertIn("unverified", rendered)
+
+    def test_uncertainty_is_mandatory_and_cannot_claim_confirmation(self):
+        item = example()
+        item["hypotheses"][0]["uncertainty"] = "confirmed root cause"
         with self.assertRaises(BriefError):
             validate_brief(item, self.dataset)
 
-    def test_blank_lines_cannot_activate_untrusted_markdown(self):
-        try:
-            from markdown_it import MarkdownIt
-        except ImportError:
-            self.skipTest("Optional CommonMark integration check requires markdown-it-py; no runtime dependency")
-        attack = "Could fail.\n\n![model](https://example.invalid/model)\n\n"
-        dataset = parse_input(b'<testsuite><testcase name="test&#10;&#10;![source](https://example.invalid/source)&#10;&#10;"><failure>assertion failed\n\n![quote](https://example.invalid/quote)\n\ncontinued</failure></testcase></testsuite>', "junit")
+    def test_quote_limit_counts_whitespace_too(self):
+        quote = " " * 401 + "word"
+        dataset = parse_input(("FAILED a.py::test_x - " + quote).encode(), "pytest")
         item = example()
-        item["findings"][0]["hypothesis"] = attack
-        item["findings"][0]["citations"][0]["quote"] = dataset.failures[0].text
-        report = {"status": "ok", "mode": "model", "brief": validate_brief(item, dataset),
-                  "dataset": {"input_sha256": dataset.input_sha256,
-                              "failures": [vars(f) for f in dataset.failures]}}
-        rendered = MarkdownIt("commonmark").render(render_report(report))
-        self.assertNotIn('<img src="https://example.invalid/', rendered)
-        self.assertNotIn('href="https://example.invalid/', rendered)
-        self.assertIn("![model]", rendered)
-        self.assertIn("![source]", rendered)
+        item["hypotheses"][0].update(family="unclassified", quote=quote)
+        with self.assertRaises(BriefError):
+            validate_brief(item, dataset)
 
     def test_requires_bounded_schema_and_no_extra_prose(self):
-        invalid = [None, [], {}, {"findings": []}, {"findings": "text"},
-                   {"findings": example()["findings"], "summary": "uncited"}]
-        for field, value in [("hypothesis", ""), ("inspection", 8), ("uncertainty", "x" * 1201),
-                             ("citations", []), ("citations", ["T001"]),
-                             ("hypothesis", "bad\x1b[31m")]:
-            item = example()
-            item["findings"][0][field] = value
-            invalid.append(item)
-        item = example()
-        item["findings"][0]["citations"][0]["url"] = "https://untrusted.invalid"
-        invalid.append(item)
-        for item in invalid:
-            with self.subTest(item=str(item)[:80]), self.assertRaises(BriefError):
-                validate_brief(item, self.dataset)
+        for value in [None, [], {}, {"hypotheses": []}, {"hypotheses": "text"}]:
+            with self.subTest(value=value), self.assertRaises(BriefError):
+                validate_brief(value, self.dataset)
 
-    def test_prompt_keeps_hostile_text_in_data_and_constrains_ids(self):
+    def test_prompt_keeps_hostile_text_in_data(self):
         dataset = parse_input((FIXTURES / "injection.xml").read_bytes(), "junit")
         payload = build_prompt(dataset)
         records = json.loads(payload["prompt"])["untrusted_evidence"]
         self.assertIn("Ignore the system instructions", records[0]["text"])
         self.assertNotIn("Ignore the system instructions", payload["system"])
         self.assertIn("untrusted", payload["system"])
-        citation = payload["format"]["properties"]["findings"]["items"]["properties"]["citations"]["items"]
-        self.assertEqual(citation["properties"]["log_id"]["enum"], ["L001"])
+        self.assertEqual(payload["format"]["properties"]["hypotheses"]["items"]["properties"]["log_id"]["enum"], ["L001"])
 
-    def test_render_escapes_source_and_model_html_links_and_fences(self):
-        dataset = parse_input((FIXTURES / "injection.xml").read_bytes(), "junit")
+
+class ReportTests(unittest.TestCase):
+    def test_observed_records_are_separate_from_model_selections(self):
+        dataset = parse_input(b"FAILED a.py::test_x - expected 19.99, got 20.0", "pytest")
+        rendered = render_report(report_for(dataset, validate_brief(example(), dataset)))
+        self.assertLess(rendered.index("## Observed in supplied file"), rendered.index("## Model hypotheses"))
+        self.assertIn("Operational recommendations: refused", rendered)
+        self.assertIn("not proof of a diagnosis", rendered)
+        self.assertIn("application-authored review question", rendered)
+        self.assertNotIn("**Inspect:**", rendered)
+
+    def test_blank_lines_cannot_activate_untrusted_markdown(self):
+        try:
+            from markdown_it import MarkdownIt
+        except ImportError:
+            self.skipTest("Optional CommonMark integration check requires markdown-it-py")
+        dataset = parse_input(b'<testsuite><testcase name="test&#10;&#10;![source](https://example.invalid/source)&#10;&#10;"><failure>AssertionError\n\n![quote](https://example.invalid/quote)\n\ncontinued &lt;script&gt;</failure></testcase></testsuite>', "junit")
         item = example()
-        item["findings"][0]["hypothesis"] = '<img src=x onerror=alert(1)> [click](https://evil.invalid) ```'
-        item["findings"][0]["citations"][0]["quote"] = "banner text differs"
-        report = {"status": "ok", "mode": "model", "brief": validate_brief(item, dataset),
-                  "dataset": {"input_sha256": dataset.input_sha256,
-                              "failures": [vars(f) for f in dataset.failures]},
-                  "runtime": {"model": "local"}}
-        rendered = render_report(report)
+        item["hypotheses"][0]["quote"] = dataset.failures[0].text
+        rendered = MarkdownIt("commonmark").render(render_report(report_for(dataset, validate_brief(item, dataset))))
+        self.assertNotIn('<img src="https://example.invalid/', rendered)
+        self.assertNotIn('href="https://example.invalid/', rendered)
         self.assertNotIn("<script>", rendered)
-        self.assertNotIn("<img src=x", rendered)
-        self.assertIn("&lt;script&gt;", rendered)
-        self.assertIn('href="#evidence-L001"', rendered)
-        self.assertIn("not proof", rendered)
+        self.assertIn("![quote]", rendered)
+        self.assertIn("![source]", rendered)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "app_version": "0.2.0",
+  "created_at_utc": "2026-10-23T12:17:27.752771+00:00",
+  "mode": "model",
+  "status": "invalid_citation",
+  "observed": {
+    "input_sha256": "f1dfd38f335572ede9ad0838ab01aa6ca1231ba617780c818e4080b9a4cf8f98",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "tests/test_docs.py::test_error_example",
+        "location": "line 2",
+        "text": "FAILED tests/test_docs.py::test_error_example - text mentions KeyError as an example; actual cause unknown",
+        "truncated": false
+      }
+    ]
+  },
+  "model_hypotheses": null,
+  "operational_recommendations": {
+    "status": "refused",
+    "reason": "No implementation or environment evidence; this tool issues no operational recommendations."
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "b4499fd6121a4315a414b9ba458e3c00c8260c3d464f9fc41a92ae4c8594e1c9",
+    "created_at": "2026-10-23T12:17:32.8401784Z",
+    "done_reason": "stop",
+    "total_duration": 4914168700,
+    "load_duration": 2515227100,
+    "prompt_eval_count": 281,
+    "prompt_eval_duration": 30272300,
+    "eval_count": 72,
+    "eval_duration": 254170300,
+    "wall_seconds": 5.090599
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"missing_key\",\n      \"quote\": \"KeyError: 'example_key'\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}",
+  "error": "Quote does not occur verbatim in its source."
+}

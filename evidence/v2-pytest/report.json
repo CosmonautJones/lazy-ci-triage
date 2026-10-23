@@ -1,0 +1,98 @@
+{
+  "schema_version": 2,
+  "app_version": "0.2.0",
+  "created_at_utc": "2026-10-23T12:16:58.015616+00:00",
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "271606af339bc3ea384eb626cc0115a3e2febac80a76ba5f4d6f1a0b22adf67d",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "tests/test_prices.py::test_total_rounding",
+        "location": "line 8",
+        "text": "FAILED tests/test_prices.py::test_total_rounding - AssertionError: expected 19.99, got 20.0",
+        "truncated": false
+      },
+      {
+        "test_id": "T002",
+        "log_id": "L002",
+        "name": "tests/test_inventory.py::test_missing_product",
+        "location": "line 9",
+        "text": "ERROR tests/test_inventory.py::test_missing_product - KeyError: 'sku-demo-404'",
+        "truncated": false
+      },
+      {
+        "test_id": "T003",
+        "log_id": "L003",
+        "name": "tests/test_api.py::test_health",
+        "location": "line 10",
+        "text": "FAILED tests/test_api.py::test_health - ConnectionRefusedError: [Errno 111] Connection refused on 127.0.0.1:9999",
+        "truncated": false
+      }
+    ]
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "assertion_mismatch",
+        "quote": "FAILED tests/test_prices.py::test_total_rounding - AssertionError: expected 19.99, got 20.0",
+        "uncertainty": "log_only_root_cause_unverified"
+      },
+      {
+        "test_id": "T002",
+        "log_id": "L002",
+        "family": "missing_key",
+        "quote": "ERROR tests/test_inventory.py::test_missing_product - KeyError: 'sku-demo-404'",
+        "uncertainty": "log_only_root_cause_unverified"
+      },
+      {
+        "test_id": "T003",
+        "log_id": "L003",
+        "family": "connection_refused",
+        "quote": "FAILED tests/test_api.py::test_health - ConnectionRefusedError: [Errno 111] Connection refused on 127.0.0.1:9999",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused",
+    "reason": "No implementation or environment evidence; this tool issues no operational recommendations."
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "d1cc5f1ee3f5d91c0594bee5be029766ed8e17b1f1fe0370b92959e90d31b958",
+    "created_at": "2026-10-23T12:17:11.7260138Z",
+    "done_reason": "stop",
+    "total_duration": 13505459900,
+    "load_duration": 2519742200,
+    "prompt_eval_count": 452,
+    "prompt_eval_duration": 38337300,
+    "eval_count": 263,
+    "eval_duration": 1351540100,
+    "wall_seconds": 13.713923
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"assertion_mismatch\",\n      \"quote\": \"FAILED tests/test_prices.py::test_total_rounding - AssertionError: expected 19.99, got 20.0\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T002\",\n      \"log_id\": \"L002\",\n      \"family\": \"missing_key\",\n      \"quote\": \"ERROR tests/test_inventory.py::test_missing_product - KeyError: 'sku-demo-404'\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T003\",\n      \"log_id\": \"L003\",\n      \"family\": \"connection_refused\",\n      \"quote\": \"FAILED tests/test_api.py::test_health - ConnectionRefusedError: [Errno 111] Connection refused on 127.0.0.1:9999\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

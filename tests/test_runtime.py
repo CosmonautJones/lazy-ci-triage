@@ -52,7 +52,7 @@ def local_server(scenario="ok"):
                     time.sleep(0.15)
                 brief = example()
                 if scenario == "malformed_unicode":
-                    brief["findings"][0]["hypothesis"] = "Could fail.\ud800"
+                    brief["hypotheses"][0]["quote"] = "Could fail.\ud800"
                 if scenario == "broken_chunk":
                     self.send_response(200)
                     self.send_header("Transfer-Encoding", "chunked")
@@ -61,7 +61,9 @@ def local_server(scenario="ok"):
                     self.close_connection = True
                     return
                 if scenario == "bad_citation":
-                    brief["findings"][0]["citations"][0]["log_id"] = "L999"
+                    brief["hypotheses"][0]["log_id"] = "L999"
+                if scenario == "unsupported_advice":
+                    brief["hypotheses"][0]["inspection"] = "Restart an invented database"
                 value = {"model": "fixture:latest", "done": scenario != "incomplete", "done_reason": "stop",
                          "response": json.dumps(brief), "total_duration": 100000000,
                          "eval_count": 80, "prompt_eval_count": 300, "eval_duration": 50000000}
@@ -98,7 +100,7 @@ class RuntimeTests(unittest.TestCase):
     def test_real_http_transport_returns_validated_brief_and_metrics(self):
         with local_server() as (endpoint, requests):
             result = generate(DATASET, "fixture:latest", endpoint, 2)
-        self.assertEqual(result["brief"], example())
+        self.assertEqual(result["model_hypotheses"], example())
         self.assertEqual(result["runtime"]["model_digest"], "sha256:synthetic-test-digest")
         self.assertEqual(result["runtime"]["eval_count"], 80)
         self.assertGreater(result["runtime"]["wall_seconds"], 0)
@@ -119,7 +121,8 @@ class RuntimeTests(unittest.TestCase):
                  ("timeout", "model_timeout")]
         cases.append(("broken_body", "invalid_response"))
         cases.extend([("malformed_unicode", "invalid_citation"),
-                      ("metadata_unicode", "invalid_response"), ("broken_chunk", "invalid_response")])
+                      ("metadata_unicode", "invalid_response"), ("broken_chunk", "invalid_response"),
+                      ("unsupported_advice", "invalid_citation")])
         for scenario, expected in cases:
             with self.subTest(scenario=scenario), local_server(scenario) as (endpoint, _):
                 with self.assertRaises(InferenceError) as caught:
@@ -153,8 +156,10 @@ class CliTests(unittest.TestCase):
             self.assertEqual(code, 0)
             self.assertEqual(report["mode"], "inventory")
             self.assertEqual(report["status"], "inventory_only")
-            self.assertIsNone(report["brief"])
-            self.assertEqual(len(report["dataset"]["failures"]), 3)
+            self.assertIsNone(report["model_hypotheses"])
+            self.assertEqual(report["schema_version"], 2)
+            self.assertEqual(report["operational_recommendations"]["status"], "refused")
+            self.assertEqual(len(report["observed"]["failures"]), 3)
             self.assertIn("inventory_only", (output / "report.md").read_text(encoding="utf-8"))
 
     def test_model_error_report_preserves_rejected_response(self):
@@ -166,7 +171,7 @@ class CliTests(unittest.TestCase):
             report = json.loads((output / "report.json").read_text())
             self.assertEqual(code, 3)
             self.assertEqual(report["status"], "invalid_citation")
-            self.assertIsNone(report["brief"])
+            self.assertIsNone(report["model_hypotheses"])
             self.assertIn("L999", report["raw_response"])
 
     def test_no_failures_skips_unavailable_model(self):
@@ -178,6 +183,22 @@ class CliTests(unittest.TestCase):
             self.assertEqual(code, 0)
             self.assertEqual(json.loads((output / "report.json").read_text())["status"], "no_failures")
 
+    def test_operational_advice_is_refused_while_source_observations_remain(self):
+        with tempfile.TemporaryDirectory() as temp, local_server("unsupported_advice") as (endpoint, _):
+            source = Path(temp) / "source.log"
+            source.write_text("FAILED a.py::test_round - expected 19.99, got 20.0")
+            output = Path(temp) / "result"
+            code = self.invoke([str(source), "--format", "pytest", "--output", str(output), "--model", "fixture:latest", "--endpoint", endpoint, "--public-data"])
+            report = json.loads((output / "report.json").read_text())
+            self.assertEqual(code, 3)
+            self.assertEqual(report["status"], "invalid_citation")
+            self.assertIsNone(report["model_hypotheses"])
+            self.assertEqual(report["observed"]["failures"][0]["name"], "a.py::test_round")
+            self.assertIn("Restart an invented database", report["raw_response"])
+            markdown = (output / "report.md").read_text(encoding="utf-8")
+            self.assertNotIn("Restart an invented database", markdown)
+            self.assertIn("Operational recommendations: refused", markdown)
+
     def test_invalid_unicode_never_creates_an_ok_report(self):
         with tempfile.TemporaryDirectory() as temp, local_server("malformed_unicode") as (endpoint, _):
             source = Path(temp) / "source.log"
@@ -187,7 +208,7 @@ class CliTests(unittest.TestCase):
             report = json.loads((output / "report.json").read_text())
             self.assertEqual(code, 3)
             self.assertEqual(report["status"], "invalid_citation")
-            self.assertIsNone(report["brief"])
+            self.assertIsNone(report["model_hypotheses"])
             self.assertTrue((output / "report.md").exists())
 
     def test_does_not_overwrite_existing_output_or_read_missing_file(self):
