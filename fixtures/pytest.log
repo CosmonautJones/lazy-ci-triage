@@ -1,0 +1,11 @@
+============================= test session starts ==============================
+platform synthetic -- Python 3.10
+collected 4 items
+tests/test_prices.py .F
+tests/test_inventory.py E
+tests/test_api.py F
+=========================== short test summary info ============================
+FAILED tests/test_prices.py::test_total_rounding - AssertionError: expected 19.99, got 20.0
+ERROR tests/test_inventory.py::test_missing_product - KeyError: 'sku-demo-404'
+FAILED tests/test_api.py::test_health - ConnectionRefusedError: [Errno 111] Connection refused on 127.0.0.1:9999
+==================== 2 failed, 1 passed, 1 error in 0.42s =======================

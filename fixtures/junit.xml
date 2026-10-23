@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="synthetic checkout" tests="4" failures="2" errors="1">
+    <testcase classname="tests.test_cart" name="test_empty_cart"/>
+    <testcase classname="tests.test_prices" name="test_total_rounding">
+      <failure type="AssertionError" message="expected 19.99, got 20.0">assert total == 19.99
+E AssertionError: expected 19.99, got 20.0
+tests/test_prices.py:18</failure>
+    </testcase>
+    <testcase classname="tests.test_inventory" name="test_missing_product">
+      <error type="KeyError" message="sku-demo-404">inventory['sku-demo-404']
+E KeyError: 'sku-demo-404'
+tests/test_inventory.py:27</error>
+    </testcase>
+    <testcase classname="tests.test_api" name="test_health">
+      <failure type="ConnectionError" message="connection refused on 127.0.0.1:9999">ConnectionRefusedError: [Errno 111] Connection refused
+GET http://127.0.0.1:9999/health
+tests/test_api.py:9</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
