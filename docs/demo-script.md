@@ -1,6 +1,6 @@
 # Local demo script (about 90 seconds, plus actual inference wait)
 
-Use only this repository's synthetic fixtures. Record a clean terminal with relative paths; do not capture other windows, accounts, hardware IDs or hostnames. No recording is claimed to exist until one is actually made. The local inference evidence already exists.
+Use only this repository's synthetic fixtures. A 56-second silent edited walkthrough of the saved real results already exists at `evidence/lazy-ci-triage-demo.mp4`, labeled as an edited replay rather than live terminal capture. This script is an optional live-terminal recording plan. Record a clean terminal with relative paths; do not capture other windows, accounts, hardware IDs or hostnames.
 
 Before recording, use the README's isolated Ollama setup and installed model. The demo endpoint is `http://127.0.0.1:11439`. Choose new output directories. Show actual waiting time, or label any cut with the measured wall time from the saved report.
 

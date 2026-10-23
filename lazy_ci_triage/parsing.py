@@ -93,11 +93,17 @@ def _junit(text: str) -> list[tuple[str, str, str]]:
 def _pytest(text: str) -> list[tuple[str, str, str]]:
     records = []
     for line_number, line in enumerate(text.splitlines(), 1):
-        match = re.match(r"^(?:FAILED|ERROR)\s+(\S+)(?:\s+-\s+(.*))?\s*$", line)
+        # A Python pytest node ID distinguishes short summaries from app log levels.
+        # Parameter IDs may contain spaces, so a whitespace-only token is insufficient.
+        match = re.match(r"^(?:FAILED|ERROR)\s+(.+?\.py::.+?)(?:\s+-\s+.*)?\s*$", line)
         if match:
             records.append((match.group(1), f"line {line_number}", line))
+    summaries = [line for line in text.splitlines() if re.match(r"^=+.*=+$", line)]
+    counts = [sum(int(count) for count in re.findall(r"\b(\d+) (?:failed|errors?)\b", line))
+              for line in summaries if re.search(r"\b\d+ (?:passed|failed|errors?|skipped)\b", line)]
+    if counts and counts[-1] != len(records):
+        raise InputError("Pytest summary count does not match extracted failure records; use JUnit XML.")
     if not records:
-        summaries = [line for line in text.splitlines() if re.match(r"^=+.*=+$", line)]
         if (not any(re.search(r"\b\d+ passed\b", line) for line in summaries)
                 or any(re.search(r"\b[1-9]\d* (?:failed|errors?)\b", line) for line in summaries)):
             raise InputError("No supported pytest summary found; use plain short-summary output or JUnit XML.")

@@ -16,19 +16,19 @@ Input SHA-256: `b5477188a0ea104c94dda7b66749bf0ef9dc39fbe4a72c5c7058af6c06226ec2
 
 ### 1. Hypothesis
 
-<p>May be due to an incorrect banner text in the HTML file.</p>
+<pre>May be due to an incorrect banner text in the HTML file.</pre>
 
 **Inspect:**
 
-<p>Check the HTML file for any discrepancies between the expected and actual banner text.</p>
+<pre>Check the HTML file for any discrepancies between the expected and actual banner text.</pre>
 
 **Uncertainty:**
 
-<p>The exact banner text is not provided, so we cannot confirm if this hypothesis is correct.</p>
+<pre>The exact banner text is not provided, so we cannot confirm if this hypothesis is correct.</pre>
 
 <p><a href="#evidence-L001">T001 / L001</a></p>
 
-<blockquote><pre>banner == &#x27;hello&#x27;</pre></blockquote>
+<pre>banner == &#x27;hello&#x27;</pre>
 
 ## Source evidence
 
@@ -36,7 +36,7 @@ Input SHA-256: `b5477188a0ea104c94dda7b66749bf0ef9dc39fbe4a72c5c7058af6c06226ec2
 
 ### T001 / L001
 
-<p>tests.test_banner::test_banner_text · testcase #1</p>
+<pre>tests.test_banner::test_banner_text · testcase #1</pre>
 
 <pre>AssertionError banner text differs
 assert banner == &#x27;hello&#x27;

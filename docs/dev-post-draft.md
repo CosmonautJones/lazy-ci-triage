@@ -21,7 +21,7 @@ The scope is deliberately small: one file in, a Markdown report and JSON evidenc
 
 **[VIDEO OR DEPLOYED DEMO LINK — pending human review and publication approval]**
 
-The local recording script is `docs/demo-script.md`. The repository includes the original synthetic inputs and actual model responses under `evidence/`, so the demo's claims can be inspected without trusting a screenshot.
+The local 56-second video is `evidence/lazy-ci-triage-demo.mp4`, an edited walkthrough of saved real inference results, explicitly labeled rather than presented as live capture. The optional live recording script is `docs/demo-script.md`. The repository includes the original synthetic inputs and actual model responses under `evidence/`, so the demo's claims can be inspected without trusting a screenshot.
 
 On an RTX 3090 with 24 GiB VRAM and an AMD Ryzen 7 5800X, the refined JUnit run took **20.994 seconds wall time**, including local API checks and model loading. Qwen produced three distinct hypotheses, with three accepted citations covering three failures. That is a single synthetic example, not a benchmark or a measured human productivity improvement.
 
@@ -45,6 +45,8 @@ The pipeline is small enough to read in one sitting:
 A useful failure happened in the first actual run. Its quotes and IDs existed, but the model repeated findings and speculated about functions that were never supplied. A rounding hypothesis even carried an unrelated inventory citation. Citation validity did not make the explanation correct.
 
 I kept that response, tightened the prompt and added repeated-evidence checks with regression tests. The refined run produced one tentative finding per failure, with a matching source for each. It is still advice. A model can cite a real line and misinterpret it, and this tool cannot prove semantic relevance automatically.
+
+The other saved runs make that warning concrete: the pytest brief guessed a SQL query behind a `KeyError`, and the hostile-input brief assumed an HTML file. Those details were not established by the logs. Across the three refined-contract runs, seven out of seven citations and failure records pass structural checks. That measures traceability, not diagnostic accuracy. I would review the wording before acting on any suggestion.
 
 The tests cover malformed input, XML entities, duplicate test names, hostile instructions inside logs, response failures and citation rejection. Deterministic transport tests use a clearly labeled local test server; the saved inference examples use the actual model. There is an explicit inventory-only mode for when AI is unavailable, and it never masquerades as a successful AI brief.
 

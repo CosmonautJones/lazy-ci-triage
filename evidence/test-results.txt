@@ -1,0 +1,43 @@
+test_accepts_exact_paired_source_citation (test_brief.BriefTests) ... ok
+test_blank_lines_cannot_activate_untrusted_markdown (test_brief.BriefTests) ... ok
+test_prompt_keeps_hostile_text_in_data_and_constrains_ids (test_brief.BriefTests) ... ok
+test_rejects_citation_to_wrong_test (test_brief.BriefTests) ... ok
+test_rejects_lone_surrogates_before_accepting_brief (test_brief.BriefTests) ... ok
+test_rejects_repeated_evidence_in_duplicate_findings (test_brief.BriefTests) ... ok
+test_rejects_unknown_ids_and_nonverbatim_quotes (test_brief.BriefTests) ... ok
+test_render_escapes_source_and_model_html_links_and_fences (test_brief.BriefTests) ... ok
+test_requires_bounded_schema_and_no_extra_prose (test_brief.BriefTests) ... ok
+test_requires_complete_failure_coverage (test_brief.BriefTests) ... ok
+test_schema_bounds_findings_by_number_of_failed_tests (test_brief.BriefTests) ... ok
+test_historical_first_attempt_is_rejected_by_current_contract (test_evidence.EvidenceReplayTests) ... ok
+test_saved_real_runs_match_inputs_and_current_citation_contract (test_evidence.EvidenceReplayTests) ... ok
+test_duplicates_get_distinct_ids (test_parsing.ParsingTests) ... ok
+test_injection_remains_literal_source_data (test_parsing.ParsingTests) ... ok
+test_junit_retains_failures_and_errors_with_traceable_ids (test_parsing.ParsingTests) ... ok
+test_marks_bounded_excerpts (test_parsing.ParsingTests) ... ok
+test_namespaced_junit (test_parsing.ParsingTests) ... ok
+test_parameterized_nodeids_with_spaces_are_preserved (test_parsing.ParsingTests) ... ok
+test_partial_pytest_summary_cannot_claim_full_coverage (test_parsing.ParsingTests) ... ok
+test_pass_and_skipped_are_not_failures (test_parsing.ParsingTests) ... ok
+test_pytest_summary_links_to_original_line (test_parsing.ParsingTests) ... ok
+test_rejects_malformed_and_unsupported_input (test_parsing.ParsingTests) ... ok
+test_rejects_oversized_input_and_excess_failures (test_parsing.ParsingTests) ... ok
+test_rejects_xml_entities_and_utf16 (test_parsing.ParsingTests) ... ok
+test_summary_without_failure_records_does_not_hide_reported_failures (test_parsing.ParsingTests) ... ok
+test_unrecognized_pytest_log_is_not_a_passing_run (test_parsing.ParsingTests) ... ok
+test_unrelated_application_errors_are_not_pytest_tests (test_parsing.ParsingTests) ... ok
+test_does_not_overwrite_existing_output_or_read_missing_file (test_runtime.CliTests) ... ok
+test_invalid_unicode_never_creates_an_ok_report (test_runtime.CliTests) ... ok
+test_inventory_is_explicitly_labeled_and_writes_traceable_evidence (test_runtime.CliTests) ... ok
+test_model_error_report_preserves_rejected_response (test_runtime.CliTests) ... ok
+test_no_failures_skips_unavailable_model (test_runtime.CliTests) ... ok
+test_requires_public_data_acknowledgement (test_runtime.CliTests) ... ok
+test_missing_model_never_calls_generate (test_runtime.RuntimeTests) ... ok
+test_real_http_transport_returns_validated_brief_and_metrics (test_runtime.RuntimeTests) ... ok
+test_rejects_remote_credentials_paths_and_non_http_endpoints (test_runtime.RuntimeTests) ... ok
+test_reports_model_failure_states_without_fallback (test_runtime.RuntimeTests) ... ok
+
+----------------------------------------------------------------------
+Ran 38 tests in 8.023s
+
+OK

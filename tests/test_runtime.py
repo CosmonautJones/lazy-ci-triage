@@ -45,10 +45,21 @@ def local_server(scenario="ok"):
                 value = {"models": [{"name": "fixture:latest", "digest": "sha256:synthetic-test-digest"}]}
             elif self.path == "/api/show":
                 value = {"license": "Apache License, Version 2.0", "details": {"parameter_size": "1.5B", "quantization_level": "Q4_K_M"}}
+                if scenario == "metadata_unicode":
+                    value["details"]["parameter_size"] = "\ud800"
             elif self.path == "/api/generate":
                 if scenario == "timeout":
                     time.sleep(0.15)
                 brief = example()
+                if scenario == "malformed_unicode":
+                    brief["findings"][0]["hypothesis"] = "Could fail.\ud800"
+                if scenario == "broken_chunk":
+                    self.send_response(200)
+                    self.send_header("Transfer-Encoding", "chunked")
+                    self.end_headers()
+                    self.wfile.write(b"10\r\npartial\r\n")
+                    self.close_connection = True
+                    return
                 if scenario == "bad_citation":
                     brief["findings"][0]["citations"][0]["log_id"] = "L999"
                 value = {"model": "fixture:latest", "done": scenario != "incomplete", "done_reason": "stop",
@@ -107,6 +118,8 @@ class RuntimeTests(unittest.TestCase):
                  ("oversized", "invalid_response"), ("redirect", "model_unavailable"),
                  ("timeout", "model_timeout")]
         cases.append(("broken_body", "invalid_response"))
+        cases.extend([("malformed_unicode", "invalid_citation"),
+                      ("metadata_unicode", "invalid_response"), ("broken_chunk", "invalid_response")])
         for scenario, expected in cases:
             with self.subTest(scenario=scenario), local_server(scenario) as (endpoint, _):
                 with self.assertRaises(InferenceError) as caught:
@@ -164,6 +177,18 @@ class CliTests(unittest.TestCase):
             code = self.invoke([str(source), "--format", "junit", "--output", str(output), "--public-data"])
             self.assertEqual(code, 0)
             self.assertEqual(json.loads((output / "report.json").read_text())["status"], "no_failures")
+
+    def test_invalid_unicode_never_creates_an_ok_report(self):
+        with tempfile.TemporaryDirectory() as temp, local_server("malformed_unicode") as (endpoint, _):
+            source = Path(temp) / "source.log"
+            source.write_text("FAILED a.py::test_round - expected 19.99, got 20.0")
+            output = Path(temp) / "result"
+            code = self.invoke([str(source), "--format", "pytest", "--output", str(output), "--model", "fixture:latest", "--endpoint", endpoint, "--public-data"])
+            report = json.loads((output / "report.json").read_text())
+            self.assertEqual(code, 3)
+            self.assertEqual(report["status"], "invalid_citation")
+            self.assertIsNone(report["brief"])
+            self.assertTrue((output / "report.md").exists())
 
     def test_does_not_overwrite_existing_output_or_read_missing_file(self):
         with tempfile.TemporaryDirectory() as temp:

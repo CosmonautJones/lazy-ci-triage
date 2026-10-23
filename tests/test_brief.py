@@ -34,14 +34,14 @@ class BriefTests(unittest.TestCase):
                 validate_brief(item, self.dataset)
 
     def test_rejects_citation_to_wrong_test(self):
-        dataset = parse_input(b"FAILED a - first\nFAILED b - second", "pytest")
+        dataset = parse_input(b"FAILED a.py::test_x - first\nFAILED b.py::test_y - second", "pytest")
         item = example()
         item["findings"][0]["citations"] = [{"test_id": "T002", "log_id": "L001", "quote": "first"}]
         with self.assertRaises(BriefError):
             validate_brief(item, dataset)
 
     def test_requires_complete_failure_coverage(self):
-        dataset = parse_input(b"FAILED a - expected 19.99, got 20.0\nFAILED b - other", "pytest")
+        dataset = parse_input(b"FAILED a.py::test_x - expected 19.99, got 20.0\nFAILED b.py::test_y - other", "pytest")
         with self.assertRaisesRegex(BriefError, "coverage"):
             validate_brief(example(), dataset)
 
@@ -54,6 +54,31 @@ class BriefTests(unittest.TestCase):
     def test_schema_bounds_findings_by_number_of_failed_tests(self):
         schema = build_prompt(self.dataset)["format"]
         self.assertEqual(schema["properties"]["findings"]["maxItems"], 1)
+
+    def test_rejects_lone_surrogates_before_accepting_brief(self):
+        item = example()
+        item["findings"][0]["hypothesis"] = "Could fail.\ud800"
+        with self.assertRaises(BriefError):
+            validate_brief(item, self.dataset)
+
+    def test_blank_lines_cannot_activate_untrusted_markdown(self):
+        try:
+            from markdown_it import MarkdownIt
+        except ImportError:
+            self.skipTest("Optional CommonMark integration check requires markdown-it-py; no runtime dependency")
+        attack = "Could fail.\n\n![model](https://example.invalid/model)\n\n"
+        dataset = parse_input(b'<testsuite><testcase name="test&#10;&#10;![source](https://example.invalid/source)&#10;&#10;"><failure>assertion failed\n\n![quote](https://example.invalid/quote)\n\ncontinued</failure></testcase></testsuite>', "junit")
+        item = example()
+        item["findings"][0]["hypothesis"] = attack
+        item["findings"][0]["citations"][0]["quote"] = dataset.failures[0].text
+        report = {"status": "ok", "mode": "model", "brief": validate_brief(item, dataset),
+                  "dataset": {"input_sha256": dataset.input_sha256,
+                              "failures": [vars(f) for f in dataset.failures]}}
+        rendered = MarkdownIt("commonmark").render(render_report(report))
+        self.assertNotIn('<img src="https://example.invalid/', rendered)
+        self.assertNotIn('href="https://example.invalid/', rendered)
+        self.assertIn("![model]", rendered)
+        self.assertIn("![source]", rendered)
 
     def test_requires_bounded_schema_and_no_extra_prose(self):
         invalid = [None, [], {}, {"findings": []}, {"findings": "text"},

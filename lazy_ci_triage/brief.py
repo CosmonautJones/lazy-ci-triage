@@ -95,3 +95,7 @@ def _text(value, field, minimum, maximum):
     if (not isinstance(value, str) or not minimum <= len(value.strip()) <= maximum
             or re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]", value)):
         raise BriefError(f"Invalid {field} text or length.")
+    try:
+        value.encode("utf-8")
+    except UnicodeEncodeError as exc:
+        raise BriefError(f"Invalid Unicode in {field}.") from exc

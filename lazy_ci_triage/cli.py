@@ -55,10 +55,13 @@ def main(argv=None):
             report.update(status=exc.status, error=str(exc), runtime=exc.runtime, raw_response=exc.raw_response)
             code = 3
     try:
+        json_text = json.dumps(report, indent=2, ensure_ascii=True) + "\n"
+        markdown_text = render_report(report)
+        markdown_text.encode("utf-8")
         args.output.mkdir(parents=True, exist_ok=False)
-        (args.output / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
-        (args.output / "report.md").write_text(render_report(report), encoding="utf-8")
-    except OSError:
+        (args.output / "report.json").write_text(json_text, encoding="utf-8")
+        (args.output / "report.md").write_text(markdown_text, encoding="utf-8")
+    except (OSError, UnicodeError):
         print("Output failed: reports could not be written completely. Inspect the selected directory.", file=sys.stderr)
         return 2
     print(f"status={report['status']} mode={args.mode} failures={len(dataset.failures)}")

@@ -16,51 +16,51 @@ Input SHA-256: `271606af339bc3ea384eb626cc0115a3e2febac80a76ba5f4d6f1a0b22adf67d
 
 ### 1. Hypothesis
 
-<p>Could the rounding issue in `tests/test_prices.py::test_total_rounding` be due to a bug in the `round()` function?</p>
+<pre>Could the rounding issue in `tests/test_prices.py::test_total_rounding` be due to a bug in the `round()` function?</pre>
 
 **Inspect:**
 
-<p>Inspect the implementation of the `round()` function in the `prices.py` file.</p>
+<pre>Inspect the implementation of the `round()` function in the `prices.py` file.</pre>
 
 **Uncertainty:**
 
-<p>The exact cause might not be immediately apparent from the error message alone. It could be related to how the rounding is handled or the precision settings.</p>
+<pre>The exact cause might not be immediately apparent from the error message alone. It could be related to how the rounding is handled or the precision settings.</pre>
 
 <p><a href="#evidence-L001">T001 / L001</a></p>
 
-<blockquote><pre>AssertionError: expected 19.99, got 20.0</pre></blockquote>
+<pre>AssertionError: expected 19.99, got 20.0</pre>
 
 ### 2. Hypothesis
 
-<p>Could the missing product issue in `tests/test_inventory.py::test_missing_product` be due to a bug in the database query?</p>
+<pre>Could the missing product issue in `tests/test_inventory.py::test_missing_product` be due to a bug in the database query?</pre>
 
 **Inspect:**
 
-<p>Check the SQL query used in the `missing_product` test.</p>
+<pre>Check the SQL query used in the `missing_product` test.</pre>
 
 **Uncertainty:**
 
-<p>The exact cause might not be immediately apparent from the error message alone. It could be related to how the product is fetched or if there are any issues with the database connection.</p>
+<pre>The exact cause might not be immediately apparent from the error message alone. It could be related to how the product is fetched or if there are any issues with the database connection.</pre>
 
 <p><a href="#evidence-L002">T002 / L002</a></p>
 
-<blockquote><pre>KeyError: &#x27;sku-demo-404&#x27;</pre></blockquote>
+<pre>KeyError: &#x27;sku-demo-404&#x27;</pre>
 
 ### 3. Hypothesis
 
-<p>Could the connection refused issue in `tests/test_api.py::test_health` be due to a bug in the API server?</p>
+<pre>Could the connection refused issue in `tests/test_api.py::test_health` be due to a bug in the API server?</pre>
 
 **Inspect:**
 
-<p>Check the configuration of the API server and ensure it is running correctly.</p>
+<pre>Check the configuration of the API server and ensure it is running correctly.</pre>
 
 **Uncertainty:**
 
-<p>The exact cause might not be immediately apparent from the error message alone. It could be related to how the server is started or if there are any issues with the network connection.</p>
+<pre>The exact cause might not be immediately apparent from the error message alone. It could be related to how the server is started or if there are any issues with the network connection.</pre>
 
 <p><a href="#evidence-L003">T003 / L003</a></p>
 
-<blockquote><pre>ConnectionRefusedError: [Errno 111] Connection refused on 127.0.0.1:9999</pre></blockquote>
+<pre>ConnectionRefusedError: [Errno 111] Connection refused on 127.0.0.1:9999</pre>
 
 ## Source evidence
 
@@ -68,7 +68,7 @@ Input SHA-256: `271606af339bc3ea384eb626cc0115a3e2febac80a76ba5f4d6f1a0b22adf67d
 
 ### T001 / L001
 
-<p>tests/test_prices.py::test_total_rounding · line 8</p>
+<pre>tests/test_prices.py::test_total_rounding · line 8</pre>
 
 <pre>FAILED tests/test_prices.py::test_total_rounding - AssertionError: expected 19.99, got 20.0</pre>
 
@@ -76,7 +76,7 @@ Input SHA-256: `271606af339bc3ea384eb626cc0115a3e2febac80a76ba5f4d6f1a0b22adf67d
 
 ### T002 / L002
 
-<p>tests/test_inventory.py::test_missing_product · line 9</p>
+<pre>tests/test_inventory.py::test_missing_product · line 9</pre>
 
 <pre>ERROR tests/test_inventory.py::test_missing_product - KeyError: &#x27;sku-demo-404&#x27;</pre>
 
@@ -84,6 +84,6 @@ Input SHA-256: `271606af339bc3ea384eb626cc0115a3e2febac80a76ba5f4d6f1a0b22adf67d
 
 ### T003 / L003
 
-<p>tests/test_api.py::test_health · line 10</p>
+<pre>tests/test_api.py::test_health · line 10</pre>
 
 <pre>FAILED tests/test_api.py::test_health - ConnectionRefusedError: [Errno 111] Connection refused on 127.0.0.1:9999</pre>

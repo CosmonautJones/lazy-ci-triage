@@ -67,20 +67,22 @@ The product never starts Ollama, pulls models, invokes tools, runs model suggest
 | `input_budget_exceeded` | 3 | Split evidence before inference |
 | Input/argument/output error | 2 | Read terminal error; output may be incomplete on write failure |
 
-Model errors create an error report rather than silently switching to deterministic output. Rejected raw responses are preserved when available. Source and model text are escaped inside HTML blocks in the Markdown; arbitrary Markdown links and HTML from logs remain inert. Raw JSON remains untrusted text: never paste it into a shell or execute suggested commands.
+Model errors create an error report rather than silently switching to deterministic output. Rejected raw responses are preserved when available. Source and model text are escaped inside blank-line-safe `pre` blocks in the Markdown; arbitrary Markdown links and HTML from logs remain inert. Raw JSON remains untrusted text: never paste it into a shell or execute suggested commands.
 
 ## Supported inputs and limits
 
 - UTF-8, plain uncolored files, 1–262,144 bytes; no control characters.
 - JUnit `testsuite`/`testsuites`, including namespaces. Extracts direct `failure`/`error` children of testcases; names and testcase ordinals identify evidence. DOCTYPE and ENTITY declarations are rejected. Passed/skipped tests are omitted. Input metadata counts are not independently verified.
-- Pytest plain short-summary `FAILED nodeid - reason` or `ERROR nodeid - reason` lines. Source line numbers are preserved. Full traceback parsing, color codes, collection-error blocks, xfail and arbitrary console formats are outside this small version. Prefer JUnit XML for those runs. A passing summary without failure/error counts can yield `no_failures`; it does not certify that tests actually ran.
+- Pytest plain short-summary `FAILED path.py::test_name - reason` or `ERROR path.py::test_name - reason` lines, including parameter IDs containing spaces. Source line numbers are preserved. If a final count summary exists, its failure/error count must match extracted records. Full traceback parsing, color codes, collection-error blocks without a test node ID, xfail and arbitrary console formats are outside this small version. Prefer JUnit XML for those runs. A passing summary without failure/error counts can yield `no_failures`; it does not certify that tests actually ran.
 - Up to 20 failure records and 4,000 characters per excerpt; longer excerpts are explicitly marked truncated. At most 24,000 characters of JSON-encoded model evidence; split larger files. Up to six findings, each with up to five citations. Long/complex inputs can hit the 1,800-token generation limit and are rejected rather than presented as complete.
 - Temperature 0, seed 42 and 32,768-token model context. Reproducibility of wording or timing across machines/runtime versions is not guaranteed.
 - Prompt isolation and citation validation reduce risk; they do not solve prompt injection or semantic hallucination. The absence of tool execution limits the impact of hostile log text. Inference is advice only.
 
 ## Evidence and submission drafts
 
-See [measured runs](evidence/README.md), [verification ledger](docs/verification.md), [design](docs/superpowers/specs/2026-10-23-lazy-ci-triage-design.md), [DEV draft](docs/dev-post-draft.md), [demo script](docs/demo-script.md) and [challenge checklist](docs/challenge-checklist.md).
+See the [56-second local video walkthrough](evidence/lazy-ci-triage-demo.mp4), [measured runs](evidence/README.md), [independent review](docs/independent-review.md), [verification ledger](docs/verification.md), [design](docs/superpowers/specs/2026-10-23-lazy-ci-triage-design.md), [DEV draft](docs/dev-post-draft.md), [demo script](docs/demo-script.md) and [challenge checklist](docs/challenge-checklist.md). The video is an edited replay of actual saved inference results, clearly labeled, rather than a live terminal recording.
+
+The optional CommonMark integration test uses `markdown-it-py` if already installed and otherwise skips that one check; the application and remaining tests use the standard library only. The demonstrated full run included this integration check. No package installation is needed for normal use.
 
 All recorded inputs are synthetic. The project has no published repository, live deployment or submitted contest entry yet. Draft links remain explicit placeholders for human review. Commits use actual local dates, with UTC run timestamps in evidence. Any changes after the October 26, 2026 06:59 UTC deadline must be noted here before an eventual submission is evaluated.
 

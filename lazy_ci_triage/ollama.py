@@ -1,6 +1,7 @@
 """Loopback-only Ollama transport; never starts servers or downloads weights."""
 
 import hashlib
+from http.client import HTTPException
 import json
 import math
 import socket
@@ -105,6 +106,8 @@ def _request(endpoint, path, body, timeout):
             raw = response.read(MAX_RESPONSE_BYTES + 1)
     except (TimeoutError, socket.timeout) as exc:
         raise InferenceError("model_timeout", "Local model request timed out; no fallback generated.") from exc
+    except HTTPException as exc:
+        raise InferenceError("invalid_response", "Local model HTTP response was incomplete or malformed.") from exc
     except (HTTPError, URLError, OSError) as exc:
         status = "model_timeout" if isinstance(getattr(exc, "reason", None), (TimeoutError, socket.timeout)) else "model_unavailable"
         raise InferenceError(status, "Cannot use the local Ollama endpoint; check the server and installed model.") from exc
@@ -116,6 +119,10 @@ def _request(endpoint, path, body, timeout):
         raise InferenceError("invalid_response", "Local endpoint returned malformed JSON.") from exc
     if not isinstance(value, dict):
         raise InferenceError("invalid_response", "Local endpoint returned an unexpected JSON type.")
+    try:
+        json.dumps(value, ensure_ascii=False).encode("utf-8")
+    except (UnicodeError, RecursionError) as exc:
+        raise InferenceError("invalid_response", "Local endpoint returned invalid Unicode or nesting.") from exc
     if "error" in value:
         raise InferenceError("model_unavailable", "Local model server returned an error.")
     return value

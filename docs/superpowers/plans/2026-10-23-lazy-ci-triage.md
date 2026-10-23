@@ -27,24 +27,24 @@
 ### Task 1: Input normalization
 Files: `fixtures/*`, `tests/test_parsing.py`, `lazy_ci_triage/parsing.py`.
 Interface: `parse_input(data: bytes, kind: str) -> Dataset`; immutable Failure records with test_id/log_id/name/location/text and Dataset with input_sha256/failures.
-- [ ] Write parser behavior tests, run RED, implement minimal parsers, run full suite GREEN.
-- [ ] Commit parser and tests.
+- [x] Write parser behavior tests, run RED, implement minimal parsers, run full suite GREEN.
+- [x] Commit parser and tests.
 
 ### Task 2: Brief contract and rendering
 Files: `tests/test_brief.py`, `lazy_ci_triage/brief.py`, `lazy_ci_triage/report.py`.
 Interfaces: `build_prompt(dataset) -> dict`, `validate_brief(value, dataset) -> dict`, `render_report(report) -> str`.
-- [ ] Write schema/citation/coverage/injection tests, run RED, implement and run GREEN.
-- [ ] Commit validated report path.
+- [x] Write schema/citation/coverage/injection tests, run RED, implement and run GREEN.
+- [x] Commit validated report path.
 
 ### Task 3: Local inference and CLI
 Files: `tests/test_runtime.py`, `lazy_ci_triage/ollama.py`, `lazy_ci_triage/cli.py`, `lazy_ci_triage/__main__.py`, `pyproject.toml`.
 Interfaces: `generate(dataset, model, endpoint, timeout) -> dict`; `main(argv=None) -> int`. CLI writes report.json and report.md to a new directory; statuses/exits documented.
-- [ ] Write real loopback HTTP test-server and CLI tests for normal/failure states, run RED, implement and run GREEN.
-- [ ] Run actual model on synthetic fixtures, preserve evidence, commit.
+- [x] Write real loopback HTTP test-server and CLI tests for normal/failure states, run RED, implement and run GREEN.
+- [x] Run actual model on synthetic fixtures, preserve evidence, commit.
 
 ### Task 4: Delivery and review
 Files: `README.md`, `LICENSE`, `docs/dev-post-draft.md`, `docs/demo-script.md`, `docs/challenge-checklist.md`, `docs/verification.md`.
-- [ ] Record model license/digest, hardware/runtime/latency/quality measurements and limitations.
-- [ ] Draft official-template post with `fully_autonomous` disclosure and explicit publication placeholders.
-- [ ] Independent review, address important findings with RED/GREEN regression tests.
-- [ ] Fresh full suite, CLI smoke, commit and return paths/hash/blockers.
+- [x] Record model license/digest, hardware/runtime/latency/quality measurements and limitations.
+- [x] Draft official-template post with `fully_autonomous` disclosure and explicit publication placeholders.
+- [x] Independent review, address important findings with RED/GREEN regression tests.
+- [x] Fresh full suite, CLI smoke, commit and return paths/hash/blockers.

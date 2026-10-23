@@ -84,6 +84,23 @@ class ParsingTests(unittest.TestCase):
             with self.subTest(data=data), self.assertRaises(InputError):
                 parse_input(data, "pytest")
 
+    def test_parameterized_nodeids_with_spaces_are_preserved(self):
+        data = (b"FAILED tests/test_a.py::test_x[param with space] - AssertionError\n"
+                b"FAILED tests/test_b.py::test_y - AssertionError\n===== 2 failed in 0.1s =====")
+        parsed = parse_input(data, "pytest")
+        self.assertEqual(len(parsed.failures), 2)
+        self.assertEqual(parsed.failures[0].name, "tests/test_a.py::test_x[param with space]")
+
+    def test_unrelated_application_errors_are_not_pytest_tests(self):
+        for data in [b"ERROR database - connection lost", b"FAILED deploy - rollout failed"]:
+            with self.subTest(data=data), self.assertRaises(InputError):
+                parse_input(data, "pytest")
+
+    def test_partial_pytest_summary_cannot_claim_full_coverage(self):
+        data = b"FAILED tests/test_b.py::test_y - AssertionError\n===== 2 failed in 0.1s ====="
+        with self.assertRaisesRegex(InputError, "count"):
+            parse_input(data, "pytest")
+
 
 if __name__ == "__main__":
     unittest.main()

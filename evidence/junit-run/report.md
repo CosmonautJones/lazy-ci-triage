@@ -16,103 +16,103 @@ Input SHA-256: `c8cfed2f0dd2b84cc9bded4480beed4a36a6132ae09a4f486f01e3e20cae6683
 
 ### 1. Hypothesis
 
-<p>The total rounding issue is due to a precision error in the calculation of the total price.</p>
+<pre>The total rounding issue is due to a precision error in the calculation of the total price.</pre>
 
 **Inspect:**
 
-<p>Inspect the code that calculates the total price and ensure it uses appropriate floating-point arithmetic operations.</p>
+<pre>Inspect the code that calculates the total price and ensure it uses appropriate floating-point arithmetic operations.</pre>
 
 **Uncertainty:**
 
-<p>There might be a bug in the implementation of the `round` function or the way prices are being added together.</p>
+<pre>There might be a bug in the implementation of the `round` function or the way prices are being added together.</pre>
 
 <p><a href="#evidence-L001">T001 / L001</a></p>
 
-<blockquote><pre>assert total == 19.99</pre></blockquote>
+<pre>assert total == 19.99</pre>
 
 <p><a href="#evidence-L002">T002 / L002</a></p>
 
-<blockquote><pre>KeyError sku-demo-404</pre></blockquote>
+<pre>KeyError sku-demo-404</pre>
 
 ### 2. Hypothesis
 
-<p>The missing product issue is caused by a failure to retrieve the product from the inventory.</p>
+<pre>The missing product issue is caused by a failure to retrieve the product from the inventory.</pre>
 
 **Inspect:**
 
-<p>Check the code that retrieves the product and ensure it handles all possible errors gracefully.</p>
+<pre>Check the code that retrieves the product and ensure it handles all possible errors gracefully.</pre>
 
 **Uncertainty:**
 
-<p>There might be a bug in the implementation of the `get_product` function or the way products are being fetched from the database.</p>
+<pre>There might be a bug in the implementation of the `get_product` function or the way products are being fetched from the database.</pre>
 
 <p><a href="#evidence-L002">T002 / L002</a></p>
 
-<blockquote><pre>KeyError sku-demo-404</pre></blockquote>
+<pre>KeyError sku-demo-404</pre>
 
 ### 3. Hypothesis
 
-<p>The health check issue is due to a network connectivity problem.</p>
+<pre>The health check issue is due to a network connectivity problem.</pre>
 
 **Inspect:**
 
-<p>Check the code that makes the HTTP request and ensure it handles all possible errors gracefully.</p>
+<pre>Check the code that makes the HTTP request and ensure it handles all possible errors gracefully.</pre>
 
 **Uncertainty:**
 
-<p>There might be a bug in the implementation of the `make_request` function or the way requests are being sent over the network.</p>
+<pre>There might be a bug in the implementation of the `make_request` function or the way requests are being sent over the network.</pre>
 
 <p><a href="#evidence-L003">T003 / L003</a></p>
 
-<blockquote><pre>ConnectionError connection refused on 127.0.0.1:9999</pre></blockquote>
+<pre>ConnectionError connection refused on 127.0.0.1:9999</pre>
 
 ### 4. Hypothesis
 
-<p>The total rounding issue is due to a precision error in the calculation of the total price.</p>
+<pre>The total rounding issue is due to a precision error in the calculation of the total price.</pre>
 
 **Inspect:**
 
-<p>Inspect the code that calculates the total price and ensure it uses appropriate floating-point arithmetic operations.</p>
+<pre>Inspect the code that calculates the total price and ensure it uses appropriate floating-point arithmetic operations.</pre>
 
 **Uncertainty:**
 
-<p>There might be a bug in the implementation of the `round` function or the way prices are being added together.</p>
+<pre>There might be a bug in the implementation of the `round` function or the way prices are being added together.</pre>
 
 <p><a href="#evidence-L001">T001 / L001</a></p>
 
-<blockquote><pre>assert total == 19.99</pre></blockquote>
+<pre>assert total == 19.99</pre>
 
 ### 5. Hypothesis
 
-<p>The missing product issue is caused by a failure to retrieve the product from the inventory.</p>
+<pre>The missing product issue is caused by a failure to retrieve the product from the inventory.</pre>
 
 **Inspect:**
 
-<p>Check the code that retrieves the product and ensure it handles all possible errors gracefully.</p>
+<pre>Check the code that retrieves the product and ensure it handles all possible errors gracefully.</pre>
 
 **Uncertainty:**
 
-<p>There might be a bug in the implementation of the `get_product` function or the way products are being fetched from the database.</p>
+<pre>There might be a bug in the implementation of the `get_product` function or the way products are being fetched from the database.</pre>
 
 <p><a href="#evidence-L002">T002 / L002</a></p>
 
-<blockquote><pre>KeyError sku-demo-404</pre></blockquote>
+<pre>KeyError sku-demo-404</pre>
 
 ### 6. Hypothesis
 
-<p>The health check issue is due to a network connectivity problem.</p>
+<pre>The health check issue is due to a network connectivity problem.</pre>
 
 **Inspect:**
 
-<p>Check the code that makes the HTTP request and ensure it handles all possible errors gracefully.</p>
+<pre>Check the code that makes the HTTP request and ensure it handles all possible errors gracefully.</pre>
 
 **Uncertainty:**
 
-<p>There might be a bug in the implementation of the `make_request` function or the way requests are being sent over the network.</p>
+<pre>There might be a bug in the implementation of the `make_request` function or the way requests are being sent over the network.</pre>
 
 <p><a href="#evidence-L003">T003 / L003</a></p>
 
-<blockquote><pre>ConnectionError connection refused on 127.0.0.1:9999</pre></blockquote>
+<pre>ConnectionError connection refused on 127.0.0.1:9999</pre>
 
 ## Source evidence
 
@@ -120,7 +120,7 @@ Input SHA-256: `c8cfed2f0dd2b84cc9bded4480beed4a36a6132ae09a4f486f01e3e20cae6683
 
 ### T001 / L001
 
-<p>tests.test_prices::test_total_rounding · testcase #2</p>
+<pre>tests.test_prices::test_total_rounding · testcase #2</pre>
 
 <pre>AssertionError expected 19.99, got 20.0
 assert total == 19.99
@@ -131,7 +131,7 @@ tests/test_prices.py:18</pre>
 
 ### T002 / L002
 
-<p>tests.test_inventory::test_missing_product · testcase #3</p>
+<pre>tests.test_inventory::test_missing_product · testcase #3</pre>
 
 <pre>KeyError sku-demo-404
 inventory[&#x27;sku-demo-404&#x27;]
@@ -142,7 +142,7 @@ tests/test_inventory.py:27</pre>
 
 ### T003 / L003
 
-<p>tests.test_api::test_health · testcase #4</p>
+<pre>tests.test_api::test_health · testcase #4</pre>
 
 <pre>ConnectionError connection refused on 127.0.0.1:9999
 ConnectionRefusedError: [Errno 111] Connection refused

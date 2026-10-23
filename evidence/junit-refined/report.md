@@ -16,51 +16,51 @@ Input SHA-256: `c8cfed2f0dd2b84cc9bded4480beed4a36a6132ae09a4f486f01e3e20cae6683
 
 ### 1. Hypothesis
 
-<p>May be due to incorrect rounding logic in the total calculation.</p>
+<pre>May be due to incorrect rounding logic in the total calculation.</pre>
 
 **Inspect:**
 
-<p>Review the code responsible for calculating the total price and ensure it rounds correctly.</p>
+<pre>Review the code responsible for calculating the total price and ensure it rounds correctly.</pre>
 
 **Uncertainty:**
 
-<p>The exact implementation of rounding may not be clear from the provided text, so this hypothesis is tentative.</p>
+<pre>The exact implementation of rounding may not be clear from the provided text, so this hypothesis is tentative.</pre>
 
 <p><a href="#evidence-L001">T001 / L001</a></p>
 
-<blockquote><pre>assert total == 19.99</pre></blockquote>
+<pre>assert total == 19.99</pre>
 
 ### 2. Hypothesis
 
-<p>May be due to a bug in the product inventory lookup.</p>
+<pre>May be due to a bug in the product inventory lookup.</pre>
 
 **Inspect:**
 
-<p>Check the code responsible for retrieving products by SKU and ensure it handles missing keys gracefully.</p>
+<pre>Check the code responsible for retrieving products by SKU and ensure it handles missing keys gracefully.</pre>
 
 **Uncertainty:**
 
-<p>The exact implementation of key retrieval may not be clear from the provided text, so this hypothesis is tentative.</p>
+<pre>The exact implementation of key retrieval may not be clear from the provided text, so this hypothesis is tentative.</pre>
 
 <p><a href="#evidence-L002">T002 / L002</a></p>
 
-<blockquote><pre>KeyError sku-demo-404</pre></blockquote>
+<pre>KeyError sku-demo-404</pre>
 
 ### 3. Hypothesis
 
-<p>May be due to a network issue with the API.</p>
+<pre>May be due to a network issue with the API.</pre>
 
 **Inspect:**
 
-<p>Verify that the API server is running and accessible on the specified URL.</p>
+<pre>Verify that the API server is running and accessible on the specified URL.</pre>
 
 **Uncertainty:**
 
-<p>The exact implementation of the API connection may not be clear from the provided text, so this hypothesis is tentative.</p>
+<pre>The exact implementation of the API connection may not be clear from the provided text, so this hypothesis is tentative.</pre>
 
 <p><a href="#evidence-L003">T003 / L003</a></p>
 
-<blockquote><pre>ConnectionError connection refused on 127.0.0.1:9999</pre></blockquote>
+<pre>ConnectionError connection refused on 127.0.0.1:9999</pre>
 
 ## Source evidence
 
@@ -68,7 +68,7 @@ Input SHA-256: `c8cfed2f0dd2b84cc9bded4480beed4a36a6132ae09a4f486f01e3e20cae6683
 
 ### T001 / L001
 
-<p>tests.test_prices::test_total_rounding · testcase #2</p>
+<pre>tests.test_prices::test_total_rounding · testcase #2</pre>
 
 <pre>AssertionError expected 19.99, got 20.0
 assert total == 19.99
@@ -79,7 +79,7 @@ tests/test_prices.py:18</pre>
 
 ### T002 / L002
 
-<p>tests.test_inventory::test_missing_product · testcase #3</p>
+<pre>tests.test_inventory::test_missing_product · testcase #3</pre>
 
 <pre>KeyError sku-demo-404
 inventory[&#x27;sku-demo-404&#x27;]
@@ -90,7 +90,7 @@ tests/test_inventory.py:27</pre>
 
 ### T003 / L003
 
-<p>tests.test_api::test_health · testcase #4</p>
+<pre>tests.test_api::test_health · testcase #4</pre>
 
 <pre>ConnectionError connection refused on 127.0.0.1:9999
 ConnectionRefusedError: [Errno 111] Connection refused
