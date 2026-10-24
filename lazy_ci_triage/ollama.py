@@ -30,7 +30,10 @@ def generate(dataset, model, endpoint, timeout):
         raise InferenceError("invalid_response", "Choose a valid installed local model name.")
     if not isinstance(timeout, (int, float)) or not math.isfinite(timeout) or not 0 < timeout <= 600:
         raise InferenceError("invalid_response", "Timeout must be finite, greater than 0 and at most 600 seconds.")
-    prompt = build_prompt(dataset)
+    try:
+        prompt = build_prompt(dataset)
+    except BriefError as exc:
+        raise InferenceError("insufficient_evidence", str(exc)) from exc
     if len(prompt["prompt"]) > 24000:
         raise InferenceError("input_budget_exceeded", "Evidence exceeds the 24000-character model budget; split the input.")
     runtime = {"model": model, "options": OPTIONS.copy()}

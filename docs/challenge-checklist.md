@@ -1,6 +1,6 @@
 # Challenge review checklist
 
-Reviewed 2026-10-23. This records build requirements, not an eligibility determination or a submitted entry.
+Rechecked against current official sources 2026-10-24. This records build requirements, not an eligibility determination or a submitted entry. The precise remaining decisions are in [submission-review.md](submission-review.md).
 
 Sources: [launch article](https://dev.to/devteam/join-the-hacktoberfest-open-source-ai-challenge-slow-and-steady-2850-in-prizes-across-21-3iee), [Week 3 rules](https://dev.to/page/hacktoberfest-week3-2026-10-19-contest-rules), [challenge and FAQ](https://dev.to/challenges/hacktoberfest-week3-2026-10-19), [general rules](https://dev.to/page/official-hackathon-rules), [DEV AI disclosure](https://dev.to/llms.txt).
 

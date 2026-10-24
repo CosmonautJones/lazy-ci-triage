@@ -1,6 +1,8 @@
 # Lazy CI Triage
 
-An extractive local AI brief for synthetic or reviewed public CI failures. Python shows what the supplied file contains. A local model selects a literal source excerpt and a tentative failure-family label for each failed test. **It does not diagnose root causes or issue operational recommendations.**
+An extractive local AI brief for synthetic or reviewed public CI failures. Python shows parsed metadata and decoded/normalized test detail. A local model selects a literal option from that detail and a tentative failure-family label for each failed test. **It does not diagnose root causes or issue operational recommendations.**
+
+Current version: **0.2.1**, reviewed and prepared locally on October 24, 2026. Publication and contest acceptance remain separate human decisions.
 
 New standalone project started October 23, 2026 for Hacktoberfest Week 3, **Slow and Steady**. The intended benefit is a small evidence index to start reviewing failures. No human time savings or diagnostic accuracy have been measured.
 
@@ -49,12 +51,12 @@ Schema version 2 separates these fields:
 
 | Field | Origin | Meaning |
 | --- | --- | --- |
-| `observed` | Python parser only | Input hash, extracted test names/locations, verbatim bounded source excerpts |
+| `observed` | Python parser only | Input hash, parsed test names/locations, bounded decoded/normalized detail |
 | `model_hypotheses` | Validated model selections | Paired test/log IDs, one finite literal quote option, tentative family enum, fixed uncertainty marker |
 | `operational_recommendations` | Application policy | Always `refused`; no operational advice is issued |
 | `runtime`, `raw_response` | Inference audit | Model/version/digest, measured timings/tokens, untrusted raw output, including rejected responses |
 
-“Observed” means **present in the supplied text**, not independently verified test execution, file existence, source authenticity or root cause. Source text can itself be false, hostile or contain commands. It remains a labeled, escaped quote.
+“Observed” means **parsed from the supplied file**, not independently verified test execution, file existence, source authenticity or root cause. JUnit XML entities/attributes are decoded, and failure type/message values and element text are joined into a normalized record; a selected quote matches that record and may not occur byte-for-byte in raw XML. Pytest detail preserves its summary line. Generated “no detail” and truncation notes remain outside quotable detail. Supplied text can itself be false, hostile or contain commands; it remains labeled and escaped.
 
 The model can select `assertion_mismatch`, `missing_key`, `connection_refused` or `unclassified` (abstention). Names are tentative categories, not diagnoses. Every selection must reference an existing paired T/L ID, use one offered literal quote from that record, cover each extracted failure exactly once and carry `log_only_root_cause_unverified`. Non-abstention families require narrow textual cues in both full record and quote. The schema only offers families with cues somewhere in the input; paired-record checks run independently afterward.
 
@@ -75,12 +77,13 @@ Markdown shows observations first and unverified selections separately. Blank-li
 | `invalid_response` | 3 | Malformed, incomplete, oversized or invalid-Unicode response |
 | `invalid_citation` | 3 | Schema/quote/pairing/coverage/family/uncertainty contract refused |
 | `input_budget_exceeded` | 3 | Split input before inference |
+| `insufficient_evidence` | 3 | At least one failure has no nonempty detail; no model endpoint is contacted |
 | Input/argument/output error | 2 | Read terminal error; a write failure can leave an incomplete output directory |
 
 - UTF-8 plain uncolored input: 1–262,144 bytes, at most 20 failures; control characters rejected.
 - JUnit `testsuite`/`testsuites`, namespaces, direct testcase failure/error children. DOCTYPE/ENTITY declarations rejected. Passed/skipped tests omitted. Metadata counts are not independently verified.
-- Pytest `FAILED/ERROR path.py::test_name - reason`, including parameter IDs with spaces. Present final failure/error counts must match extracted records. Full traceback/collection-error parsing, color, xfail and arbitrary logs are outside scope; prefer JUnit for those.
-- Excerpts capped at 4,000 characters with explicit truncation. Quote options are literal full excerpts when ≤400 characters, source lines/reason suffixes clipped to 400, at most 20 options per test. Choices can be verbose or unrepresentative.
+- Pytest `FAILED/ERROR path.py::test_name - reason`, including balanced parameter brackets containing spaces or ` - `. Ambiguous/unbalanced brackets are rejected with guidance to use JUnit. Present final failure/error counts must match extracted records. Full traceback/collection-error parsing, color, xfail and arbitrary logs are outside scope; prefer JUnit for those.
+- Detail is capped at 4,000 characters with truncation flagged separately. Quote options are literal full normalized records when ≤400 characters, detail lines/reason suffixes clipped to 400, at most 20 options per test. Genuine short detail (1–3 characters) is supported; a failure with no detail is still available in inventory mode but cannot produce a model brief. Choices can be verbose or unrepresentative.
 - JSON-encoded prompt capped at 24,000 characters; 32,768 context, 1,800 output tokens, temperature 0, seed 42, unload after every request. Complex inputs can be rejected; split them. Exact wording/latency is not reproducible across runtime/hardware changes.
 - Optional CommonMark integration test runs with already-installed `markdown-it-py`; otherwise that one check skips. Application and other tests need only the standard library.
 
@@ -88,8 +91,8 @@ Markdown shows observations first and unverified selections separately. Blank-li
 
 [Current quality comparison](docs/quality-comparison.md), [measured runs](evidence/README.md), [demo video](evidence/lazy-ci-triage-demo.mp4), [DEV draft](docs/dev-post-draft.md), [demo script](docs/demo-script.md), [verification ledger](docs/verification.md), [original independent review](docs/independent-review.md).
 
-The video is an edited walkthrough of actual saved inference, labeled as a replay. Old v0.1 reports/videos are historical and do not describe current behavior. Raw failures and rejected attempts remain available. The current code intentionally rejects the old prose schema rather than translating it into observed facts.
+The video is an edited walkthrough of actual saved inference, labeled as a replay. Older v0.1/v0.2 reports/videos are historical; the `oct24-*` records show the current version. Raw failures and rejected attempts remain available. The current code intentionally rejects the old prose schema rather than translating it into observed facts. The earlier classification counterexample remains a limit, not a promised diagnosis.
 
-Nothing is published or submitted. A Library attachment attempt failed before preparation because its helper reported upload capability unavailable; no Library IDs were created, and no alternate upload route was used. Public code/demo links and contest entry remain approval steps for the parent/user. DEV draft disclosure remains `fully_autonomous` unless meaningfully rewritten by a human. Any code changes after October 26, 2026 06:59 UTC must be disclosed here.
+Nothing is published or submitted. Public code/demo links and contest entry remain human approval steps. DEV draft disclosure remains `fully_autonomous` unless meaningfully rewritten by a human. Any code changes after October 26, 2026 06:59 UTC must be disclosed here. See the [precise remaining submission checklist and attachment status](docs/submission-review.md).
 
 MIT for project code and authored fixtures; see [LICENSE](LICENSE) and [NOTICE](NOTICE.md). The model remains separately licensed.

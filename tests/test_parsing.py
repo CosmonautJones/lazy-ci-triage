@@ -91,6 +91,27 @@ class ParsingTests(unittest.TestCase):
         self.assertEqual(len(parsed.failures), 2)
         self.assertEqual(parsed.failures[0].name, "tests/test_a.py::test_x[param with space]")
 
+    def test_parameterized_nodeids_keep_reason_like_delimiters(self):
+        data = (b"FAILED a.py::test_x[a - b] - AssertionError\n"
+                b"ERROR b.py::TestThing::test_y[[nested] - value] - KeyError\n"
+                b"===== 1 failed, 1 error in 0.1s =====")
+        parsed = parse_input(data, "pytest")
+        self.assertEqual([f.name for f in parsed.failures],
+                         ["a.py::test_x[a - b]", "b.py::TestThing::test_y[[nested] - value]"])
+
+    def test_ambiguous_unbalanced_nodeids_are_refused(self):
+        for line in [b"FAILED a.py::test_x[a - b - AssertionError", b"FAILED a.py::test_x[a]] - AssertionError"]:
+            with self.subTest(line=line), self.assertRaises(InputError):
+                parse_input(line, "pytest")
+
+    def test_generated_annotations_are_not_source_text(self):
+        empty = parse_input(b'<testsuite><testcase name="x"><failure/></testcase></testsuite>', "junit")
+        self.assertEqual(empty.failures[0].text, "")
+        long_source = ('<testsuite><testcase name="x"><failure>' + 'x' * 5000 + '</failure></testcase></testsuite>').encode()
+        source = parse_input(long_source, "junit").failures[0]
+        self.assertTrue(source.truncated)
+        self.assertEqual(source.text, 'x' * 4000)
+
     def test_unrelated_application_errors_are_not_pytest_tests(self):
         for data in [b"ERROR database - connection lost", b"FAILED deploy - rollout failed"]:
             with self.subTest(data=data), self.assertRaises(InputError):

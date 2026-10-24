@@ -135,6 +135,13 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(caught.exception.status, "model_unavailable")
         self.assertNotIn("/api/generate", [path for path, _ in requests])
 
+    def test_missing_detail_refuses_before_any_model_request(self):
+        dataset = parse_input(b'<testsuite><testcase name="x"><failure/></testcase></testsuite>', "junit")
+        with local_server() as (endpoint, requests), self.assertRaises(InferenceError) as caught:
+            generate(dataset, "fixture:latest", endpoint, 2)
+        self.assertEqual(caught.exception.status, "insufficient_evidence")
+        self.assertEqual(requests, [])
+
 
 class CliTests(unittest.TestCase):
     def invoke(self, args):
@@ -182,6 +189,22 @@ class CliTests(unittest.TestCase):
             code = self.invoke([str(source), "--format", "junit", "--output", str(output), "--public-data"])
             self.assertEqual(code, 0)
             self.assertEqual(json.loads((output / "report.json").read_text())["status"], "no_failures")
+
+    def test_no_detail_report_keeps_only_actual_empty_observation(self):
+        for mode, expected_status, expected_code in [("inventory", "inventory_only", 0),
+                                                      ("model", "insufficient_evidence", 3)]:
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as temp:
+                source = Path(temp) / "empty.xml"
+                source.write_text('<testsuite><testcase name="x"><failure/></testcase></testsuite>')
+                output = Path(temp) / "result"
+                code = self.invoke([str(source), "--format", "junit", "--output", str(output), "--mode", mode, "--public-data"])
+                report = json.loads((output / "report.json").read_text())
+                self.assertEqual(code, expected_code)
+                self.assertEqual(report["status"], expected_status)
+                self.assertEqual(report["observed"]["failures"][0]["text"], "")
+                self.assertIsNone(report["model_hypotheses"])
+                self.assertIsNone(report["raw_response"])
+                self.assertEqual(report["runtime"], {})
 
     def test_operational_advice_is_refused_while_source_observations_remain(self):
         with tempfile.TemporaryDirectory() as temp, local_server("unsupported_advice") as (endpoint, _):

@@ -50,7 +50,7 @@ def parse_input(data: bytes, kind: str) -> Dataset:
             raise InputError("Test name exceeds 500 characters.")
         truncated = len(excerpt) > MAX_EXCERPT
         if truncated:
-            excerpt = excerpt[:MAX_EXCERPT - 16] + "\n[truncated]"
+            excerpt = excerpt[:MAX_EXCERPT]
         failures.append(Failure(f"T{index:03}", f"L{index:03}", name,
                                 location, excerpt, truncated))
     return Dataset(hashlib.sha256(data).hexdigest(), tuple(failures))
@@ -85,7 +85,7 @@ def _junit(text: str) -> list[tuple[str, str, str]]:
         for child in bad:
             parts.append(" ".join(filter(None, [child.get("type"), child.get("message")]))
                          + "\n" + "".join(child.itertext()))
-        excerpt = "\n".join(parts).strip() or "Failure recorded without details."
+        excerpt = "\n".join(parts).strip()
         records.append((name, f"testcase #{ordinal}", excerpt))
     return records
 
@@ -93,11 +93,9 @@ def _junit(text: str) -> list[tuple[str, str, str]]:
 def _pytest(text: str) -> list[tuple[str, str, str]]:
     records = []
     for line_number, line in enumerate(text.splitlines(), 1):
-        # A Python pytest node ID distinguishes short summaries from app log levels.
-        # Parameter IDs may contain spaces, so a whitespace-only token is insufficient.
-        match = re.match(r"^(?:FAILED|ERROR)\s+(.+?\.py::.+?)(?:\s+-\s+.*)?\s*$", line)
-        if match:
-            records.append((match.group(1), f"line {line_number}", line))
+        parts = pytest_summary_parts(line)
+        if parts:
+            records.append((parts[0], f"line {line_number}", line))
     summaries = [line for line in text.splitlines() if re.match(r"^=+.*=+$", line)]
     counts = [sum(int(count) for count in re.findall(r"\b(\d+) (?:failed|errors?)\b", line))
               for line in summaries if re.search(r"\b\d+ (?:passed|failed|errors?|skipped)\b", line)]
@@ -108,3 +106,31 @@ def _pytest(text: str) -> list[tuple[str, str, str]]:
                 or any(re.search(r"\b[1-9]\d* (?:failed|errors?)\b", line) for line in summaries)):
             raise InputError("No supported pytest summary found; use plain short-summary output or JUnit XML.")
     return records
+
+
+def pytest_summary_parts(line: str) -> tuple[str, str] | None:
+    """Split a supported summary outside parameter brackets, or reject ambiguity."""
+    match = re.match(r"^(?:FAILED|ERROR)\s+(.+)$", line)
+    if not match or not re.search(r"\.py::", match.group(1)):
+        return None
+    body = match.group(1)
+    depth = 0
+    node, reason = body.rstrip(), ""
+    for index, char in enumerate(body):
+        if char == "[":
+            depth += 1
+        elif char == "]":
+            if depth == 0:
+                raise InputError("Ambiguous pytest parameter brackets; use JUnit XML.")
+            depth -= 1
+        elif char.isspace() and depth == 0:
+            separator = re.match(r"\s+-\s+", body[index:])
+            if separator:
+                node = body[:index].rstrip()
+                reason = body[index + separator.end():]
+                break
+    if depth:
+        raise InputError("Ambiguous pytest parameter brackets; use JUnit XML.")
+    if not re.fullmatch(r".+\.py::.+", node):
+        return None
+    return node, reason

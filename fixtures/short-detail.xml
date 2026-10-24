@@ -1,0 +1,3 @@
+<testsuite name="synthetic short detail">
+  <testcase name="short"><failure>x</failure></testcase>
+</testsuite>

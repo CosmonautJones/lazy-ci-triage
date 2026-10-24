@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "app_version": "0.2.1",
+  "created_at_utc": "2026-10-24T05:14:06.929428+00:00",
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "95cd03dcdd461a2771170e61d80f5a987b77fdf1e1e9870aaf7edebd54aec7c2",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "tests/test_parameters.py::test_label[a - b]",
+        "location": "line 2",
+        "text": "FAILED tests/test_parameters.py::test_label[a - b] - AssertionError: labels differ",
+        "truncated": false
+      }
+    ]
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "assertion_mismatch",
+        "quote": "FAILED tests/test_parameters.py::test_label[a - b] - AssertionError: labels differ",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused",
+    "reason": "No implementation or environment evidence; this tool issues no operational recommendations."
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "72505c56c795133d24970fe51769acbc1950b861938a0a8825fe712f8ff18120",
+    "created_at": "2026-10-24T05:14:12.2609378Z",
+    "done_reason": "stop",
+    "total_duration": 5154878500,
+    "load_duration": 2499840300,
+    "prompt_eval_count": 341,
+    "prompt_eval_duration": 32038700,
+    "eval_count": 85,
+    "eval_duration": 305411700,
+    "wall_seconds": 5.33408
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"assertion_mismatch\",\n      \"quote\": \"FAILED tests/test_parameters.py::test_label[a - b] - AssertionError: labels differ\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

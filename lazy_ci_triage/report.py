@@ -18,14 +18,17 @@ def render_report(report):
              "Model selections can be wrong or irrelevant. Human review is required.", "",
              "Operational recommendations: refused. No model-suggested commands are executed.", "",
              "## Observed in supplied file", "",
-             "Python-extracted metadata and verbatim source text only. Test execution, source authenticity and root cause are not verified.", "",
+             "Python-extracted metadata and decoded/normalized test detail only. Test execution, source authenticity and root cause are not verified.", "",
+             "For JUnit, decoded failure type/message values and element text are joined. Quotes match that normalized record, not raw XML bytes.", "",
              f"Input SHA-256: `{observed['input_sha256']}`", ""]
     if not observed["failures"]:
         lines.extend(["No failures extracted from the supported input. This does not verify test success.", ""])
     for source in observed["failures"]:
         lines.extend([f'<a id="evidence-{source["log_id"]}"></a>', "", f'### {source["test_id"]} / {source["log_id"]}', "",
                       "<pre>" + _plain(source["name"]) + " | " + _plain(source["location"]) + "</pre>", "",
-                      "Untrusted source excerpt:", "", "<pre>" + _plain(source["text"]) + "</pre>", ""])
+                      "Untrusted normalized detail:", "", "<pre>" + _plain(source["text"]) + "</pre>", ""])
+        if not source["text"]:
+            lines.extend(["Application note: no failure detail text was supplied. This note is not quotable evidence.", ""])
         if source["truncated"]:
             lines.extend(["Excerpt truncated; consult the original input.", ""])
     lines.extend(["## Model hypotheses - unverified selections", ""])
@@ -33,7 +36,7 @@ def render_report(report):
         for selection in report["model_hypotheses"]["hypotheses"]:
             label, question = FAMILY_COPY[selection["family"]]
             lines.extend([f'### {selection["test_id"]}: {label}', "",
-                          "Model-selected quote (verbatim occurrence checked; support for the label is not proven):", "",
+                          "Model-selected normalized detail quote (literal occurrence checked; support for the label is not proven):", "",
                           f'<p><a href="#evidence-{selection["log_id"]}">{selection["test_id"]} / {selection["log_id"]}</a></p>', "",
                           "<pre>" + _plain(selection["quote"]) + "</pre>", "",
                           "Fixed uncertainty: log-only evidence; implementation, environment and root cause remain unverified.", "",

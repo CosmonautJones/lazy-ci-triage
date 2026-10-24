@@ -1,0 +1,28 @@
+{
+  "schema_version": 2,
+  "app_version": "0.2.1",
+  "created_at_utc": "2026-10-24T05:14:17.224774+00:00",
+  "mode": "model",
+  "status": "insufficient_evidence",
+  "observed": {
+    "input_sha256": "febedc4c6af26ddc4cd9f50c9c80cc5d4915e3dcecc265f88d08f3e5a4265e06",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "missing",
+        "location": "testcase #1",
+        "text": "",
+        "truncated": false
+      }
+    ]
+  },
+  "model_hypotheses": null,
+  "operational_recommendations": {
+    "status": "refused",
+    "reason": "No implementation or environment evidence; this tool issues no operational recommendations."
+  },
+  "runtime": {},
+  "raw_response": null,
+  "error": "One or more failures have no nonempty detail text; provide fuller input or use inventory mode."
+}

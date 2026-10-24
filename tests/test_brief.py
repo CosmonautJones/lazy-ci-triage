@@ -154,6 +154,29 @@ class BriefTests(unittest.TestCase):
         with self.assertRaises(BriefError):
             validate_brief(item, self.dataset)
 
+    def test_short_genuine_junit_detail_can_be_selected(self):
+        dataset = parse_input(b'<testsuite><testcase name="x"><failure>x</failure></testcase></testsuite>', "junit")
+        item = example()
+        item["hypotheses"][0].update(family="unclassified", quote="x")
+        prompt = build_prompt(dataset)
+        self.assertEqual(prompt["format"]["properties"]["hypotheses"]["items"]["properties"]["quote"]["enum"], ["x"])
+        self.assertEqual(validate_brief(item, dataset), item)
+
+    def test_empty_detail_has_explicit_insufficient_evidence_contract(self):
+        dataset = parse_input(b'<testsuite><testcase name="x"><failure/></testcase></testsuite>', "junit")
+        with self.assertRaisesRegex(BriefError, "detail"):
+            build_prompt(dataset)
+
+    def test_generated_placeholder_and_truncation_markers_cannot_be_quotes(self):
+        cases = [(b'<testsuite><testcase name="x"><failure/></testcase></testsuite>', 'Failure recorded without details.'),
+                 (('<testsuite><testcase name="x"><failure>' + 'x' * 5000 + '</failure></testcase></testsuite>').encode(), '[truncated]')]
+        for data, quote in cases:
+            dataset = parse_input(data, "junit")
+            item = example()
+            item["hypotheses"][0].update(family="unclassified", quote=quote)
+            with self.subTest(quote=quote), self.assertRaises(BriefError):
+                validate_brief(item, dataset)
+
     def test_quote_limit_counts_whitespace_too(self):
         quote = " " * 401 + "word"
         dataset = parse_input(("FAILED a.py::test_x - " + quote).encode(), "pytest")

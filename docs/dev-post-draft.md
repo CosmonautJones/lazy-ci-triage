@@ -15,7 +15,7 @@ A citation can be real and still sit beside a bad explanation. The first local C
 
 Lazy CI Triage started as a small way to reduce the chore before debugging: read a failure file, identify the tests and collect the lines worth inspecting. Its current version keeps that job small. Python extracts observed metadata and verbatim source excerpts. A local model selects an exact excerpt and a tentative broad failure family for each failed test. The report puts those two sources of information in separate sections.
 
-“Observed” means the supplied file contains that text. It does not prove tests ran, a named file exists or the text is truthful. “Model hypothesis” means an unverified category selection. The tool issues no operational recommendations and runs no suggested commands.
+"Observed" means the file was parsed into metadata and normalized detail. For JUnit, XML values are decoded and failure type/message/text are joined; a quote matches that normalized record, not necessarily raw XML bytes. It does not prove tests ran, a named file exists or the text is truthful. "Model hypothesis" means an unverified category selection. The tool issues no operational recommendations and runs no suggested commands.
 
 That is the Slow and Steady idea: get a bounded evidence index for the task you were going to do anyway. The maintainer still decides what the failure means. No human time savings have been measured.
 
@@ -26,6 +26,8 @@ That is the Slow and Steady idea: get a bounded evidence index for the task you 
 The local video, `evidence/lazy-ci-triage-demo.mp4`, is an edited walkthrough of saved actual inference results, explicitly labeled as a replay rather than live terminal capture. Original synthetic inputs, raw responses, rejected attempts and measured timings are included with the code. The current comparison is in `docs/quality-comparison.md`.
 
 The model is Qwen2.5-Coder 1.5B Instruct Q4_K_M, served by Ollama 0.18.0 on an RTX 3090 with 24 GiB VRAM and an AMD Ryzen 7 5800X. Every run records the model digest, options, input hash, wall time and token counts. These are tiny synthetic examples, not a latency benchmark or productivity study.
+
+The useful screen to pause on is the boundary between the two report sections. A missing-key example contains the parsed test name and error detail first; the model's “possible missing-key failure” label comes afterward, with uncertainty and a link back to the quoted detail. Neither the label nor the generic review question becomes an observed fact.
 
 ## Code
 
@@ -47,6 +49,8 @@ The revised format has no free-form explanation or recommendation field. The mod
 - a fixed uncertainty marker saying root cause is unverified.
 
 Python independently validates those choices. It supplies the observed section directly from parsed input. Unknown fields, model-authored observations, invented quotes, duplicate coverage and operational advice are rejected. The report uses fixed tentative descriptions and application-authored review questions, with their origin stated.
+
+A fresh review found a more mundane provenance bug: the parser had inserted “no details” and truncation markers into quotable text. Those generated notes now stay outside evidence. Real one-character detail is supported; a failure with no detail produces an explicit `insufficient_evidence` report before any model request. Pytest parameter IDs containing ` - ` are preserved, while ambiguous bracket syntax is refused with guidance to use JUnit. The saved observations need the same scrutiny as the AI output.
 
 The family checks are deliberately modest. `KeyError` must appear as a textual cue for a missing-key label, for example. That is lexical eligibility, not semantic entailment. A documentation example can mention `KeyError` while the actual cause remains unknown. A test preserves that counterexample rather than claiming the validator can decide truth.
 

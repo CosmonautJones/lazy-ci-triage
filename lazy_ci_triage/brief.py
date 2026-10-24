@@ -4,6 +4,8 @@ from dataclasses import asdict
 import json
 import re
 
+from .parsing import InputError, pytest_summary_parts
+
 UNCERTAINTY = "log_only_root_cause_unverified"
 FIELDS = {"test_id", "log_id", "family", "quote", "uncertainty"}
 # These cues permit a tentative label; they cannot establish what caused a failure.
@@ -32,6 +34,8 @@ class BriefError(ValueError):
 def build_prompt(dataset):
     records = [{**asdict(f), "eligible_families": _eligible(f.text),
                 "quote_options": _quote_options(f.text)} for f in dataset.failures]
+    if not records or any(not record["quote_options"] for record in records):
+        raise BriefError("One or more failures have no nonempty detail text; provide fuller input or use inventory mode.")
     offered = [family for family in CUES if any(family in r["eligible_families"] for r in records)]
     quotes = list(dict.fromkeys(quote for r in records for quote in r["quote_options"]))
     item = {
@@ -78,7 +82,7 @@ def validate_brief(value, dataset):
             raise BriefError("Unknown or missing selection fields; prose and operational recommendations are refused.")
         for field in ["test_id", "log_id"]:
             _text(selection[field], field, 4, 4)
-        _text(selection["quote"], "quote", 4, 400)
+        _text(selection["quote"], "quote", 1, 400)
         _text(selection["family"], "family", 1, 40)
         if selection["family"] not in CUES or selection["uncertainty"] != UNCERTAINTY:
             raise BriefError("Unknown failure family or missing fixed uncertainty marker.")
@@ -111,9 +115,14 @@ def _quote_options(text):
     candidates = [text] if len(text) <= 400 else []
     for line in text.splitlines():
         candidates.append(line.strip()[:400])
-        if re.match(r"^(?:FAILED|ERROR)\s", line) and " - " in line:
-            candidates.append(line.split(" - ", 1)[1].strip()[:400])
-    return list(dict.fromkeys(candidate for candidate in candidates if 4 <= len(candidate) <= 400))[:20]
+        try:
+            parts = pytest_summary_parts(line)
+        except InputError:
+            # A JUnit detail may itself contain arbitrary malformed pytest-like data.
+            parts = None
+        if parts and parts[1]:
+            candidates.append(parts[1].strip()[:400])
+    return list(dict.fromkeys(candidate for candidate in candidates if 1 <= len(candidate) <= 400))[:20]
 
 
 def _text(value, field, minimum, maximum):

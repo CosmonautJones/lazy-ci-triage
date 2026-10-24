@@ -1,0 +1,116 @@
+{
+  "app_version": "0.2.1",
+  "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+  "scope": "Synthetic cases only. Literal matching refers to decoded/normalized detail, not raw XML bytes. Family labels are unverified; rubric agreement is not diagnostic accuracy.",
+  "summary": {
+    "input_reports": 6,
+    "accepted_model_reports": 5,
+    "pre_inference_refusals": 1,
+    "accepted_model_selections": 9,
+    "paired_literal_normalized_quote_options": 9,
+    "new_model_downloads": 0,
+    "remaining_counterexample": "Lexical-trap still receives missing_key despite actual cause unknown."
+  },
+  "runs": [
+    {
+      "run": "oct24-junit",
+      "fixture": "junit.xml",
+      "status": "ok",
+      "source_records": 3,
+      "model_invoked": true,
+      "wall_seconds": 15.628156,
+      "output_tokens": 333,
+      "model_families": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "example_rubric": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "rubric_agreement": 3
+    },
+    {
+      "run": "oct24-pytest",
+      "fixture": "pytest.log",
+      "status": "ok",
+      "source_records": 3,
+      "model_invoked": true,
+      "wall_seconds": 12.061146,
+      "output_tokens": 269,
+      "model_families": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "example_rubric": [
+        "assertion_mismatch",
+        "missing_key",
+        "connection_refused"
+      ],
+      "rubric_agreement": 3
+    },
+    {
+      "run": "oct24-lexical-trap",
+      "fixture": "lexical-trap.log",
+      "status": "ok",
+      "source_records": 1,
+      "model_invoked": true,
+      "wall_seconds": 5.605698,
+      "output_tokens": 86,
+      "model_families": [
+        "missing_key"
+      ],
+      "example_rubric": [
+        "unclassified"
+      ],
+      "rubric_agreement": 0
+    },
+    {
+      "run": "oct24-parameter-delimiter",
+      "fixture": "parameter-delimiter.log",
+      "status": "ok",
+      "source_records": 1,
+      "model_invoked": true,
+      "wall_seconds": 5.33408,
+      "output_tokens": 85,
+      "model_families": [
+        "assertion_mismatch"
+      ],
+      "example_rubric": [
+        "assertion_mismatch"
+      ],
+      "rubric_agreement": 1
+    },
+    {
+      "run": "oct24-short-detail",
+      "fixture": "short-detail.xml",
+      "status": "ok",
+      "source_records": 1,
+      "model_invoked": true,
+      "wall_seconds": 4.307976,
+      "output_tokens": 53,
+      "model_families": [
+        "unclassified"
+      ],
+      "example_rubric": [
+        "unclassified"
+      ],
+      "rubric_agreement": 1
+    },
+    {
+      "run": "oct24-no-detail",
+      "fixture": "no-detail.xml",
+      "status": "insufficient_evidence",
+      "source_records": 1,
+      "model_invoked": false,
+      "wall_seconds": null,
+      "output_tokens": null,
+      "model_families": [],
+      "example_rubric": [],
+      "rubric_agreement": 0
+    }
+  ]
+}

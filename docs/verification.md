@@ -63,3 +63,21 @@ The Library attachment failure remains documented: helper reported prepare_uploa
 Current README, DEV draft and 56-second edited replay video describe v0.2. Original v0.1 raw records and video remain historical. Public code/demo URLs remain placeholders and `fully_autonomous` remains accurate disclosure. The current safe archive excludes ignored model weights, runtime logs, temporary helper files and caches.
 
 Final v0.2 verification: `python -m unittest discover -s tests -v` ran **52 tests in 10.709s, OK**, with no skips in the build environment. Full safe output is `evidence/test-results.txt`; historical v0.1 log retained separately. Compileall, whitespace check and final inventory CLI smoke passed. Current edited replay: H.264 1280x720, 56.000s, 331678 bytes, ffprobe verified and representative card visually inspected. No further model runs are needed for this deliverable.
+
+## October 24 reviewable-entry pass
+
+Initial clean HEAD verified as 278e67cc1d9926b57ef774f5024298ad40952890. Existing model blob verified present at 986048576 bytes; only that cache was used. Official challenge, Week 3 rules, current template, general rules and DEV disclosure were re-read. Deadline remains October 26 06:59 UTC. No terms accepted, eligibility claim, grant, spending, public action, new install or model download.
+
+Fresh independent review of the exact starting HEAD ran 52 tests in 9.323s and verified prior records/prompt hashes/rendered output/video. Verdict BLOCK on three P2 defects: parameter delimiter corruption, unsupported short-detail contract, and generated annotations offered as source quotes; one P3 historical-table wording defect. See `docs/oct24-review-fixes.md` for reproductions and dispositions.
+
+New tests observed RED (59 tests, nine failures). Fixed with shared bracket-aware summary splitting, real 1-character quote support, explicit pre-inference `insufficient_evidence` for no detail, and removal of generated notes/markers from quotable text. All 60 tests then passed, including CLI zero-detail state and zero endpoint requests. Added current-real-record replay checks afterward.
+
+Ruling: clearly call JUnit quotes decoded/normalized test detail, not raw XML byte excerpts. This accurately describes entity/attribute decoding and joined type/message/body values without broadening the parser. Cost if ignored: users could infer a stronger byte-level provenance guarantee than the code provides.
+
+Fresh actual inference: JUnit 15.628156s/333 output tokens, pytest 12.061146s/269, lexical trap 5.605698s/86, parameter delimiter 5.334080s/85, short detail 4.307976s/53. Five model reports accepted, nine paired normalized-detail options; a sixth no-detail report was refused before inference. Isolated server logged five generation requests. Raw records, input hashes, metrics, refusals and current Markdown are preserved. Lexical-trap label remains wrong against the example abstention rubric and explicitly unverified; no semantic-truth claim.
+
+Attachment recheck: read-only exact-title Library search returned no matching results/IDs, without proving global absence. Current library_upload.py and both companions are byte-identical to those used in the failed attempt. No materially new evidence of prepared-upload availability, so no retry or bypass. The known pre-preparation failure remains unresolved; delivery is not claimed.
+
+Current README, draft, demo script, review-fix note and precise submission checklist reflect v0.2.1. Original videos and raw records remain historical. Final exact-commit independent recheck follows the frozen candidate and will be recorded externally so the reviewed checkout remains unchanged.
+
+Candidate verification: full suite **62 tests in 9.702s, OK, no skips**; saved `evidence/test-results.txt`. Compileall and whitespace checks passed. Inventory CLI smoke preserved the parameter ID and returned one extracted failure. Current edited replay verified H.264 1280x720, 56.000 seconds, 329148 bytes; representative edge-case card visually inspected. Server PID 8364, started only for this pass, was stopped after `/api/ps` confirmed zero loaded models. Cached weights remain ignored for reuse. No tracked source/evidence changes will occur during the final exact-commit review.

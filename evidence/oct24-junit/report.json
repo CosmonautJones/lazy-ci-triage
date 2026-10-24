@@ -1,0 +1,98 @@
+{
+  "schema_version": 2,
+  "app_version": "0.2.1",
+  "created_at_utc": "2026-10-24T05:13:32.596417+00:00",
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "c8cfed2f0dd2b84cc9bded4480beed4a36a6132ae09a4f486f01e3e20cae6683",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "tests.test_prices::test_total_rounding",
+        "location": "testcase #2",
+        "text": "AssertionError expected 19.99, got 20.0\nassert total == 19.99\nE AssertionError: expected 19.99, got 20.0\ntests/test_prices.py:18",
+        "truncated": false
+      },
+      {
+        "test_id": "T002",
+        "log_id": "L002",
+        "name": "tests.test_inventory::test_missing_product",
+        "location": "testcase #3",
+        "text": "KeyError sku-demo-404\ninventory['sku-demo-404']\nE KeyError: 'sku-demo-404'\ntests/test_inventory.py:27",
+        "truncated": false
+      },
+      {
+        "test_id": "T003",
+        "log_id": "L003",
+        "name": "tests.test_api::test_health",
+        "location": "testcase #4",
+        "text": "ConnectionError connection refused on 127.0.0.1:9999\nConnectionRefusedError: [Errno 111] Connection refused\nGET http://127.0.0.1:9999/health\ntests/test_api.py:9",
+        "truncated": false
+      }
+    ]
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "assertion_mismatch",
+        "quote": "AssertionError expected 19.99, got 20.0\nassert total == 19.99\nE AssertionError: expected 19.99, got 20.0\ntests/test_prices.py:18",
+        "uncertainty": "log_only_root_cause_unverified"
+      },
+      {
+        "test_id": "T002",
+        "log_id": "L002",
+        "family": "missing_key",
+        "quote": "KeyError sku-demo-404\ninventory['sku-demo-404']\nE KeyError: 'sku-demo-404'\ntests/test_inventory.py:27",
+        "uncertainty": "log_only_root_cause_unverified"
+      },
+      {
+        "test_id": "T003",
+        "log_id": "L003",
+        "family": "connection_refused",
+        "quote": "ConnectionError connection refused on 127.0.0.1:9999\nConnectionRefusedError: [Errno 111] Connection refused\nGET http://127.0.0.1:9999/health\ntests/test_api.py:9",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused",
+    "reason": "No implementation or environment evidence; this tool issues no operational recommendations."
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "0f499370e040017724a1a1096043e271ad7b20c7e2c310cb2ad3db37811e379c",
+    "created_at": "2026-10-24T05:13:48.2195042Z",
+    "done_reason": "stop",
+    "total_duration": 15413501800,
+    "load_duration": 3488860300,
+    "prompt_eval_count": 921,
+    "prompt_eval_duration": 78460100,
+    "eval_count": 333,
+    "eval_duration": 1806325900,
+    "wall_seconds": 15.628156
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"assertion_mismatch\",\n      \"quote\": \"AssertionError expected 19.99, got 20.0\\nassert total == 19.99\\nE AssertionError: expected 19.99, got 20.0\\ntests/test_prices.py:18\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T002\",\n      \"log_id\": \"L002\",\n      \"family\": \"missing_key\",\n      \"quote\": \"KeyError sku-demo-404\\ninventory['sku-demo-404']\\nE KeyError: 'sku-demo-404'\\ntests/test_inventory.py:27\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T003\",\n      \"log_id\": \"L003\",\n      \"family\": \"connection_refused\",\n      \"quote\": \"ConnectionError connection refused on 127.0.0.1:9999\\nConnectionRefusedError: [Errno 111] Connection refused\\nGET http://127.0.0.1:9999/health\\ntests/test_api.py:9\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

@@ -1,0 +1,3 @@
+=========================== short test summary info ============================
+FAILED tests/test_parameters.py::test_label[a - b] - AssertionError: labels differ
+============================== 1 failed in 0.10s ===============================

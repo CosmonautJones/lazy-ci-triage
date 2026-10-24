@@ -1,8 +1,8 @@
 # Actual local inference evidence
 
-**Current behavior is v0.2.** Start with [quality comparison](../docs/quality-comparison.md), [current JUnit report](v2c-junit/report.md), [current lexical counterexample](v2c-lexical-trap/report.md), and [all v2-stage measurements](v2-evaluation.json). Final batch: 5 reports accepted, 9 paired literal quote options covering all 9 supplied failures, no operational recommendations. One accepted family label is misleading (documentation-only `KeyError` mention). This is traceability, not semantic entailment or diagnostic accuracy.
+**Current behavior is v0.2.1 (October 24).** Start with [quality comparison](../docs/quality-comparison.md), [current JUnit report](oct24-junit/report.md), [current lexical counterexample](oct24-lexical-trap/report.md), [explicit no-detail refusal](oct24-no-detail/report.md), and [current measurements](oct24-evaluation.json). Five model reports contain nine paired literal options; one additional input is refused before inference. One accepted family label is still misleading (documentation-only `KeyError` mention). This is traceability in decoded/normalized detail, not raw XML byte matching, semantic entailment or diagnostic accuracy.
 
-`v2-*` and `v2b-*` retain earlier constrained-format attempts, including four model rejections. `v2c-*` uses the final finite-quote format. The four older folders without a v2 prefix are **historical v0.1 prose output**, and their old statuses are not claims of current acceptance. The current validator refuses that old prose schema. The historical measurements and initial limitations below are preserved for comparison.
+`v2-*`, `v2b-*` and `v2c-*` retain historical v0.2 attempts, including four model rejections. The four older folders without a v2 prefix are **historical v0.1 prose output**, and their old statuses/wording are not claims of current behavior. The current validator refuses that old prose schema. The historical measurements and initial limitations below are preserved for comparison.
 
 All records here came from real local model inference on authored synthetic inputs on 2026-10-23. They are not canned responses or test-server output. Files named `report.json` preserve raw response, accepted selection or rejection, input records/hash, model digest, request hash, options and measurements; `report.md` is the renderer's output. No private logs or personal paths are included.
 
@@ -20,7 +20,7 @@ All records here came from real local model inference on authored synthetic inpu
 
 ## Recorded results
 
-| Run | Input / failures | Wall seconds | Prompt / output tokens | Current citation contract |
+| Run | Input / failures | Wall seconds | Prompt / output tokens | Historical v0.1 citation contract |
 | --- | --- | ---: | ---: | --- |
 | [Initial JUnit](junit-run/report.md) | JUnit / 3 | 43.502795 | 473 / 843 | Rejected now: repeated citations; initial version recorded `ok` |
 | [Refined JUnit](junit-refined/report.md) | JUnit / 3 | 20.993951 | 560 / 378 | Accepted: 3 paired exact quotes, 3/3 failures covered once |

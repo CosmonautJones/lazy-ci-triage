@@ -1,5 +1,26 @@
 # Model quality comparison: v0.1 prose to v0.2 constrained selections
 
+**October 24 current release is v0.2.1.** The earlier v0.2 measurements below remain historical. Current reviewed-edge-case artifacts are `evidence/oct24-*` and `evidence/oct24-evaluation.json`. The current report explicitly calls JUnit detail decoded/normalized; its joined XML type/message/body representation is not raw-byte XML quotation.
+
+## October 24 review and inference follow-up
+
+A fresh exact-commit review of `278e67c` reproduced three P2 defects: a ` - ` delimiter inside a pytest parameter ID was mistaken for the reason boundary; a genuine one-character JUnit detail had no valid quote choice; and generated missing-detail/truncation annotations were offered as source text. These are provenance/parser defects, not the deliberately acknowledged semantic-label limitation. They now have RED/GREEN regressions. Generated annotations stay outside quotable detail, short genuine options are supported, and no-detail cases are refused before model requests while inventory remains useful. Ambiguous parameter brackets are rejected in favor of JUnit. The historical-table heading was also corrected to identify its v0.1 contract.
+
+Current actual inference uses the same cached weights/digest and hardware, with no downloads:
+
+| Current fixture | Status | Wall seconds | Output tokens | Result |
+| --- | --- | ---: | ---: | --- |
+| `oct24-junit` | `ok` | 15.628156 | 333 | Three tentative families with paired normalized-detail quotes |
+| `oct24-pytest` | `ok` | 12.061146 | 269 | Three tentative families with paired summary-line quotes |
+| `oct24-lexical-trap` | `ok` | 5.605698 | 86 | Still misleading: `missing_key` for an example-only mention |
+| `oct24-parameter-delimiter` | `ok` | 5.334080 | 85 | `test_label[a - b]` retained intact |
+| `oct24-short-detail` | `ok` | 4.307976 | 53 | Literal `x`, `unclassified` |
+| `oct24-no-detail` | `insufficient_evidence` | — | — | No model request; empty observed detail retained |
+
+That is five accepted model reports with nine valid paired options and one pre-inference refusal, not six successful AI runs. All attempts are preserved. New replay tests verify input/observation equality, request hashes, raw/accepted selections and current rendered Markdown. The lexical trap remains the honest semantic counterexample: lexical checks cannot determine whether a category explains a failure. Source quotes may themselves contain false or hostile statements; none becomes an operational recommendation.
+
+A final read-only exact-commit recheck is required after these fixes; its reviewed hash/verdict is supplied in the external handoff/review bundle so the checkout can remain unchanged after review.
+
 All examples are authored synthetic inputs. Same Qwen2.5-Coder 1.5B Instruct Q4_K_M model, manifest digest `d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668`, Ollama 0.18.0, RTX 3090 24 GiB, Ryzen 7 5800X, Python 3.10.6. This revision reused the already-downloaded project-local weights; **zero new model downloads**. No additional human authorization is inferred from automatic tool approval.
 
 ## What changed
