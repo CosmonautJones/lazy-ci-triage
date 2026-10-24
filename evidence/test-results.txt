@@ -2,8 +2,8 @@ test_abstention_is_explicit_and_family_needs_quoted_textual_cue (test_brief.Brie
 test_accepts_exact_paired_extractive_selection (test_brief.BriefTests) ... ok
 test_actual_old_bad_outputs_are_rejected_not_rephrased_as_facts (test_brief.BriefTests) ... ok
 test_empty_detail_has_explicit_insufficient_evidence_contract (test_brief.BriefTests) ... ok
+test_exception_shaped_copy_is_not_a_semantic_truth_guarantee (test_brief.BriefTests) ... ok
 test_generated_placeholder_and_truncation_markers_cannot_be_quotes (test_brief.BriefTests) ... ok
-test_lexical_cue_is_not_a_semantic_truth_guarantee (test_brief.BriefTests) ... ok
 test_mixed_record_schema_cannot_bypass_full_source_eligibility (test_brief.BriefTests) ... ok
 test_model_must_select_a_finite_verbatim_quote_option (test_brief.BriefTests) ... ok
 test_prompt_keeps_hostile_text_in_data (test_brief.BriefTests) ... ok
@@ -23,12 +23,12 @@ test_uncertainty_is_mandatory_and_cannot_claim_confirmation (test_brief.BriefTes
 test_blank_lines_cannot_activate_untrusted_markdown (test_brief.ReportTests) ... ok
 test_observed_records_are_separate_from_model_selections (test_brief.ReportTests) ... ok
 test_final_v2_real_runs_keep_observations_and_model_selections_separate (test_evidence.EvidenceReplayTests) ... ok
+test_historical_false_lexical_trap_is_rejected_by_current_policy (test_evidence.EvidenceReplayTests) ... ok
 test_historical_first_attempt_is_rejected_by_current_contract (test_evidence.EvidenceReplayTests) ... ok
 test_historical_real_runs_match_inputs_but_old_prose_schema_is_rejected (test_evidence.EvidenceReplayTests) ... ok
-test_oct24_current_model_records_match_input_prompt_and_renderer (test_evidence.EvidenceReplayTests) ... ok
+test_oct24_historical_records_match_input_and_frozen_baseline_prompt (test_evidence.EvidenceReplayTests) ... ok
 test_oct24_no_detail_record_is_an_explicit_pre_inference_refusal (test_evidence.EvidenceReplayTests) ... ok
 test_preserved_v2_model_failures_are_still_refused (test_evidence.EvidenceReplayTests) ... ok
-test_real_lexical_trap_is_accepted_but_disagrees_with_abstention_rubric (test_evidence.EvidenceReplayTests) ... ok
 test_ambiguous_unbalanced_nodeids_are_refused (test_parsing.ParsingTests) ... ok
 test_duplicates_get_distinct_ids (test_parsing.ParsingTests) ... ok
 test_generated_annotations_are_not_source_text (test_parsing.ParsingTests) ... ok
@@ -60,8 +60,20 @@ test_missing_model_never_calls_generate (test_runtime.RuntimeTests) ... ok
 test_real_http_transport_returns_validated_brief_and_metrics (test_runtime.RuntimeTests) ... ok
 test_rejects_remote_credentials_paths_and_non_http_endpoints (test_runtime.RuntimeTests) ... ok
 test_reports_model_failure_states_without_fallback (test_runtime.RuntimeTests) ... ok
+test_conflicting_failure_signatures_abstain (test_structural_support.StructuralSupportTests) ... ok
+test_copied_exception_shaped_example_remains_an_explicit_limit (test_structural_support.StructuralSupportTests) ... ok
+test_message_contents_do_not_override_exception_family (test_structural_support.StructuralSupportTests) ... ok
+test_old_false_label_is_rejected_but_literal_abstention_is_valid (test_structural_support.StructuralSupportTests) ... ok
+test_prose_mentions_identifiers_and_quoted_docs_only_offer_abstention (test_structural_support.StructuralSupportTests) ... ok
+test_quote_with_only_incidental_keyword_is_not_label_support (test_structural_support.StructuralSupportTests) ... ok
+test_supported_failure_shapes_retain_their_family (test_structural_support.StructuralSupportTests) ... ok
+test_all_individual_inputs_are_exact_and_current_responses_replay (test_support_evidence.SupportEvidenceTests) ... ok
+test_comparison_counts_include_refusals_and_coverage_loss (test_support_evidence.SupportEvidenceTests) ... ok
+test_current_cli_demo_preserves_junit_and_abstains_on_original_trap (test_support_evidence.SupportEvidenceTests) ... ok
+test_failed_batch_stress_reports_are_retained_and_still_refused (test_support_evidence.SupportEvidenceTests) ... ok
+test_frozen_cases_keep_their_hash_and_indistinguishable_pairs (test_support_evidence.SupportEvidenceTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 62 tests in 9.702s
+Ran 74 tests in 10.111s
 
 OK

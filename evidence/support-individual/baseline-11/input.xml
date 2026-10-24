@@ -1,0 +1,1 @@
+<testsuite tests="1" errors="1"><testcase classname="synthetic.transport" name="test_open"><error type="builtins.ConnectionRefusedError" message="[Errno 111] Connection refused" /></testcase></testsuite>

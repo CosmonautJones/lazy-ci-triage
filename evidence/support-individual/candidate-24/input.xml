@@ -1,0 +1,1 @@
+<testsuite tests="1" failures="1"><testcase classname="synthetic.worker" name="test_complete"><failure type="" message="">Worker stopped before output was written.</failure></testcase></testsuite>

@@ -1,0 +1,15 @@
+<testsuite>
+<testcase name="H01"><failure>builtins.AssertionError expected total 9, observed 12</failure></testcase>
+<testcase name="H02"><failure>Traceback (most recent call last):
+  File "tests/test_limits.py", line 18, in test_remaining
+    assert remaining == 0
+AssertionError: assert 2 == 0</failure></testcase>
+<testcase name="H03"><failure>AssertionError assert 'KeyError' == 'ready'
+def test_label():
+    label = "KeyError"
+&gt;   assert label == "ready"
+E   AssertionError: assert 'KeyError' == 'ready'</failure></testcase>
+<testcase name="H04"><failure>FAILED tests/test_records.py::test_sorted - assert ['pear', 'apple'] == ['apple', 'pear']</failure></testcase>
+<testcase name="H05"><failure>FAILED tests/test_flags.py::test_explicit - builtins.AssertionError: enabled flag was false</failure></testcase>
+<testcase name="H06"><failure>builtins.KeyError 'region'</failure></testcase>
+</testsuite>

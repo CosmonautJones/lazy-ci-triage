@@ -1,0 +1,57 @@
+{
+  "app_version": "0.2.2",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "invalid_citation",
+  "observed": {
+    "input_sha256": "153e1c1c225d96889cd2b44851e1c20941907ad1da1a0bd6457cae1774e4cd95",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "synthetic.client::test_request",
+        "location": "testcase #1",
+        "text": "requests.exceptions.ConnectionError HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded\nTraceback (most recent call last):\n  File \"tests/test_client.py\", line 42, in test_request\n    client.get(\"http://service.invalid:8123/ping\")\nConnectionRefusedError: [Errno 111] Connection refused\n\nThe above exception was the direct cause of the following exception:\n\nrequests.exceptions.ConnectionError: HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded with url: /ping (Caused by NewConnectionError('Failed to establish a new connection: [Errno 111] Connection refused'))",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "error": "Selected quote lacks unambiguous structural support; abstain instead.",
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "6d5b6b778d4b8a1eaa76cc3f929ad07d620632dcef599afd633bdf179e6cc597",
+    "created_at": "2026-10-24T10:10:36.1376217Z",
+    "done_reason": "stop",
+    "total_duration": 5814442300,
+    "load_duration": 2762191500,
+    "prompt_eval_count": 602,
+    "prompt_eval_duration": 58730200,
+    "eval_count": 89,
+    "eval_duration": 349102400,
+    "wall_seconds": 5.942786
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"connection_refused\",\n      \"quote\": \"requests.exceptions.ConnectionError HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}",
+  "model_hypotheses": null
+}

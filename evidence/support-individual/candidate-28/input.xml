@@ -1,0 +1,5 @@
+<testsuite tests="1" failures="1"><testcase classname="synthetic.limits" name="test_remaining"><failure type="" message=""><![CDATA[Traceback (most recent call last):
+  File "tests/test_limits.py", line 18, in test_remaining
+    assert remaining == 0
+AssertionError: assert 2 == 0
+]]></failure></testcase></testsuite>

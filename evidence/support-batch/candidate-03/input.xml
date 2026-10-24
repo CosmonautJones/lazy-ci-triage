@@ -1,0 +1,19 @@
+<testsuite>
+<testcase name="H13"><failure>requests.exceptions.ConnectionError HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded
+Traceback (most recent call last):
+  File "tests/test_client.py", line 42, in test_request
+    client.get("http://service.invalid:8123/ping")
+ConnectionRefusedError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded with url: /ping (Caused by NewConnectionError('Failed to establish a new connection: [Errno 111] Connection refused'))</failure></testcase>
+<testcase name="H14"><failure>ERROR tests/test_probe.py::test_service - ConnectionRefusedError: [Errno 111] Connection refused</failure></testcase>
+<testcase name="H15"><failure>FAILED tests/test_endpoint.py::test_ready - builtins.ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it</failure></testcase>
+<testcase name="H16"><failure>Review the glossary entry for AssertionError
+The guide discusses AssertionError as a vocabulary term.
+The page heading is outdated and needs editorial review.</failure></testcase>
+<testcase name="H17"><failure>FAILED docs/test_glossary.py::test_key_entry - documentation note: "KeyError: 'region'" is an example string; the page title is stale</failure></testcase>
+<testcase name="H18"><failure>ValueError Invalid example text: "ConnectionRefusedError: [Errno 111] Connection refused"
+ValueError: the quoted sample must be escaped before rendering.</failure></testcase>
+</testsuite>

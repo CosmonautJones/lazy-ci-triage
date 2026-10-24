@@ -1,0 +1,66 @@
+{
+  "app_version": "0.2.1",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "97dacc7e2df9d56c418bb4aab4b2155cc6f28f3c21b9a69c144cdeb1f2d6c222",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "synthetic.worker::test_complete",
+        "location": "testcase #1",
+        "text": "Worker stopped before output was written.",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "unclassified",
+        "quote": "Worker stopped before output was written.",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "ef0ad8f87a84c27307f9fa5bd0c36eed658df8adf078be8e24f4e983698ded3c",
+    "created_at": "2026-10-24T10:12:45.2063995Z",
+    "done_reason": "stop",
+    "total_duration": 5306341000,
+    "load_duration": 2880831900,
+    "prompt_eval_count": 304,
+    "prompt_eval_duration": 34338600,
+    "eval_count": 72,
+    "eval_duration": 250638300,
+    "wall_seconds": 5.474789
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"unclassified\",\n      \"quote\": \"Worker stopped before output was written.\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

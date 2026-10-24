@@ -13,6 +13,7 @@ This is a preparation checklist, not an entry, eligibility determination or acce
 
 - New isolated repository began October 23, with truthful Git dates; no older project patch.
 - README, synthetic fixtures, repeatable tests, saved real inference, rejected attempts and explicit classification limitation.
+- v0.2.2 bounded support pass: 30 independently frozen cases, 60 individual comparison calls, 10 retained multi-record stress calls and two current CLI demos. Wrong specific selections fell 7 to 2 while correct specific coverage fell 12/15 to 9/15. Unmarked copied examples and poor batch reliability remain visible. See `structural-support-evaluation.md`; no general accuracy claim.
 - Unpublished DEV draft: `docs/dev-post-draft.md`.
 - Local edited demo: `evidence/lazy-ci-triage-demo.mp4`, clearly labeled as recorded-result replay.
 - A fresh exact-commit independent review is the final code gate for this October 24 pass. Its final verdict and reviewed hash will be supplied in the external handoff/review bundle, keeping the reviewed checkout unchanged.

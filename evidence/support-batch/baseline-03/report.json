@@ -1,0 +1,97 @@
+{
+  "app_version": "0.2.1",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "invalid_citation",
+  "observed": {
+    "input_sha256": "7750afb0891849b13573d84ae443ee746996cab6aa7e80dbf7d61b8a69f2607c",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "H13",
+        "location": "testcase #1",
+        "text": "requests.exceptions.ConnectionError HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded\nTraceback (most recent call last):\n  File \"tests/test_client.py\", line 42, in test_request\n    client.get(\"http://service.invalid:8123/ping\")\nConnectionRefusedError: [Errno 111] Connection refused\n\nThe above exception was the direct cause of the following exception:\n\nrequests.exceptions.ConnectionError: HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded with url: /ping (Caused by NewConnectionError('Failed to establish a new connection: [Errno 111] Connection refused'))",
+        "truncated": false
+      },
+      {
+        "test_id": "T002",
+        "log_id": "L002",
+        "name": "H14",
+        "location": "testcase #2",
+        "text": "ERROR tests/test_probe.py::test_service - ConnectionRefusedError: [Errno 111] Connection refused",
+        "truncated": false
+      },
+      {
+        "test_id": "T003",
+        "log_id": "L003",
+        "name": "H15",
+        "location": "testcase #3",
+        "text": "FAILED tests/test_endpoint.py::test_ready - builtins.ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it",
+        "truncated": false
+      },
+      {
+        "test_id": "T004",
+        "log_id": "L004",
+        "name": "H16",
+        "location": "testcase #4",
+        "text": "Review the glossary entry for AssertionError\nThe guide discusses AssertionError as a vocabulary term.\nThe page heading is outdated and needs editorial review.",
+        "truncated": false
+      },
+      {
+        "test_id": "T005",
+        "log_id": "L005",
+        "name": "H17",
+        "location": "testcase #5",
+        "text": "FAILED docs/test_glossary.py::test_key_entry - documentation note: \"KeyError: 'region'\" is an example string; the page title is stale",
+        "truncated": false
+      },
+      {
+        "test_id": "T006",
+        "log_id": "L006",
+        "name": "H18",
+        "location": "testcase #6",
+        "text": "ValueError Invalid example text: \"ConnectionRefusedError: [Errno 111] Connection refused\"\nValueError: the quoted sample must be escaped before rendering.",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "error": "Selected family lacks its required textual cue in the quote; abstain instead.",
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "f59783c61f128f63865a135f4f13e0f94a2b8190edf1f7ee2b59e01b2d1a1889",
+    "created_at": "2026-10-24T10:05:17.6799026Z",
+    "done_reason": "stop",
+    "total_duration": 21195004700,
+    "load_duration": 2869200000,
+    "prompt_eval_count": 1393,
+    "prompt_eval_duration": 104023600,
+    "eval_count": 502,
+    "eval_duration": 3121048600,
+    "wall_seconds": 21.348316
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"connection_refused\"\n    ,\n      \"quote\": \"requests.exceptions.ConnectionError HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T002\",\n      \"log_id\": \"L002\",\n      \"family\": \"connection_refused\"\n    ,\n      \"quote\": \"ConnectionRefusedError: [Errno 111] Connection refused\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T003\",\n      \"log_id\": \"L003\",\n      \"family\": \"connection_refused\"\n    ,\n      \"quote\": \"builtins.ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T004\",\n      \"log_id\": \"L004\",\n      \"family\": \"assertion_mismatch\"\n    ,\n      \"quote\": \"Review the glossary entry for AssertionError\\nThe guide discusses AssertionError as a vocabulary term.\\nThe page heading is outdated and needs editorial review.\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T005\",\n      \"log_id\": \"L005\",\n      \"family\": \"missing_key\"\n    ,\n      \"quote\": \"documentation note: \\\"KeyError: 'region'\\\" is an example string; the page title is stale\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T006\",\n      \"log_id\": \"L006\",\n      \"family\": \"connection_refused\"\n    ,\n      \"quote\": \"ValueError Invalid example text: \\\"ConnectionRefusedError: [Errno 111] Connection refused\\\"\\nValueError: the quoted sample must be escaped before rendering.\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}",
+  "model_hypotheses": null
+}

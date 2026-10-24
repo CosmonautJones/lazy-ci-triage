@@ -1,0 +1,141 @@
+{
+  "app_version": "0.2.2",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "c5b974ef89bbb3ddc2062e88fdffc5cca75b5ec2578f3aa7ed6d9455cad2bfaf",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "H25",
+        "location": "testcase #1",
+        "text": "ERROR tests/test_workspace.py::test_cleanup - fixture teardown failed",
+        "truncated": false
+      },
+      {
+        "test_id": "T002",
+        "log_id": "L002",
+        "name": "H26",
+        "location": "testcase #2",
+        "text": "LookupError 'region'\nLookupError: 'region'",
+        "truncated": false
+      },
+      {
+        "test_id": "T003",
+        "log_id": "L003",
+        "name": "H27",
+        "location": "testcase #3",
+        "text": "ERROR tests/test_latency.py::test_deadline - TimeoutError: [Errno 110] Connection timed out",
+        "truncated": false
+      },
+      {
+        "test_id": "T004",
+        "log_id": "L004",
+        "name": "H28",
+        "location": "testcase #4",
+        "text": "Traceback (most recent call last):\n  File \"tests/test_limits.py\", line 18, in test_remaining\n    assert remaining == 0\nAssertionError: assert 2 == 0",
+        "truncated": false
+      },
+      {
+        "test_id": "T005",
+        "log_id": "L005",
+        "name": "H29",
+        "location": "testcase #5",
+        "text": "Traceback (most recent call last):\n  File \"tests/test_payload.py\", line 24, in test_lookup\n    return payload[\"AssertionError\"]\nbuiltins.KeyError: 'AssertionError'",
+        "truncated": false
+      },
+      {
+        "test_id": "T006",
+        "log_id": "L006",
+        "name": "H30",
+        "location": "testcase #6",
+        "text": "Traceback (most recent call last):\n  File \"tests/test_socket.py\", line 31, in test_connect\n    sock.connect(address)\nConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "unclassified",
+        "quote": "ERROR tests/test_workspace.py::test_cleanup - fixture teardown failed",
+        "uncertainty": "log_only_root_cause_unverified"
+      },
+      {
+        "test_id": "T002",
+        "log_id": "L002",
+        "family": "unclassified",
+        "quote": "LookupError 'region'\nLookupError: 'region'",
+        "uncertainty": "log_only_root_cause_unverified"
+      },
+      {
+        "test_id": "T003",
+        "log_id": "L003",
+        "family": "unclassified",
+        "quote": "ERROR tests/test_latency.py::test_deadline - TimeoutError: [Errno 110] Connection timed out",
+        "uncertainty": "log_only_root_cause_unverified"
+      },
+      {
+        "test_id": "T004",
+        "log_id": "L004",
+        "family": "assertion_mismatch",
+        "quote": "Traceback (most recent call last):\n  File \"tests/test_limits.py\", line 18, in test_remaining\n    assert remaining == 0\nAssertionError: assert 2 == 0",
+        "uncertainty": "log_only_root_cause_unverified"
+      },
+      {
+        "test_id": "T005",
+        "log_id": "L005",
+        "family": "missing_key",
+        "quote": "Traceback (most recent call last):\n  File \"tests/test_payload.py\", line 24, in test_lookup\n    return payload[\"AssertionError\"]\nbuiltins.KeyError: 'AssertionError'",
+        "uncertainty": "log_only_root_cause_unverified"
+      },
+      {
+        "test_id": "T006",
+        "log_id": "L006",
+        "family": "connection_refused",
+        "quote": "Traceback (most recent call last):\n  File \"tests/test_socket.py\", line 31, in test_connect\n    sock.connect(address)\nConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "dbce74be138be536513c1fbaca3eacbfc2ff0b365d3d2893e416d65baf2bc459",
+    "created_at": "2026-10-24T10:07:04.3406337Z",
+    "done_reason": "stop",
+    "total_duration": 22092700300,
+    "load_duration": 2840339600,
+    "prompt_eval_count": 1197,
+    "prompt_eval_duration": 94321600,
+    "eval_count": 543,
+    "eval_duration": 3302955200,
+    "wall_seconds": 22.27011
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"unclassified\",\n      \"quote\": \"ERROR tests/test_workspace.py::test_cleanup - fixture teardown failed\"\n    ,\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T002\",\n      \"log_id\": \"L002\",\n      \"family\": \"unclassified\",\n      \"quote\": \"LookupError 'region'\\nLookupError: 'region'\"\n    ,\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T003\",\n      \"log_id\": \"L003\",\n      \"family\": \"unclassified\",\n      \"quote\": \"ERROR tests/test_latency.py::test_deadline - TimeoutError: [Errno 110] Connection timed out\"\n    ,\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T004\",\n      \"log_id\": \"L004\",\n      \"family\": \"assertion_mismatch\",\n      \"quote\": \"Traceback (most recent call last):\\n  File \\\"tests/test_limits.py\\\", line 18, in test_remaining\\n    assert remaining == 0\\nAssertionError: assert 2 == 0\"\n    ,\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T005\",\n      \"log_id\": \"L005\",\n      \"family\": \"missing_key\",\n      \"quote\": \"Traceback (most recent call last):\\n  File \\\"tests/test_payload.py\\\", line 24, in test_lookup\\n    return payload[\\\"AssertionError\\\"]\\nbuiltins.KeyError: 'AssertionError'\"\n    ,\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    },\n    {\n      \"test_id\": \"T006\",\n      \"log_id\": \"L006\",\n      \"family\": \"connection_refused\",\n      \"quote\": \"Traceback (most recent call last):\\n  File \\\"tests/test_socket.py\\\", line 31, in test_connect\\n    sock.connect(address)\\nConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it\"\n    ,\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

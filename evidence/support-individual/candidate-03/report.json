@@ -1,0 +1,66 @@
+{
+  "app_version": "0.2.2",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "cf59f57edbdec2aa12f5464ef02878d796311bdce6cfe78f3857f8fb5ed9b3e4",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "synthetic.labels::test_label",
+        "location": "testcase #1",
+        "text": "AssertionError assert 'KeyError' == 'ready'\ndef test_label():\n    label = \"KeyError\"\n>   assert label == \"ready\"\nE   AssertionError: assert 'KeyError' == 'ready'",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "assertion_mismatch",
+        "quote": "AssertionError assert 'KeyError' == 'ready'\ndef test_label():\n    label = \"KeyError\"\n>   assert label == \"ready\"\nE   AssertionError: assert 'KeyError' == 'ready'",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "1fa4b1e5d3d09283e052596ac613d22616837a9ce7fdf2121334da4605c57d0e",
+    "created_at": "2026-10-24T10:08:40.6724017Z",
+    "done_reason": "stop",
+    "total_duration": 10604314000,
+    "load_duration": 4934462700,
+    "prompt_eval_count": 439,
+    "prompt_eval_duration": 39441700,
+    "eval_count": 114,
+    "eval_duration": 512892700,
+    "wall_seconds": 10.814217
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"assertion_mismatch\",\n      \"quote\": \"AssertionError assert 'KeyError' == 'ready'\\ndef test_label():\\n    label = \\\"KeyError\\\"\\n>   assert label == \\\"ready\\\"\\nE   AssertionError: assert 'KeyError' == 'ready'\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

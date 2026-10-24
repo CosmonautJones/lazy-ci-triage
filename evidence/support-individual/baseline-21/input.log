@@ -1,0 +1,1 @@
+ERROR tests/test_connection_refused_icon.py::test_accessible_label - ValueError: missing aria label

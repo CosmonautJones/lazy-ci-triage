@@ -1,0 +1,15 @@
+<testsuite>
+<testcase name="H07"><failure>Traceback (most recent call last):
+  File "tests/test_payload.py", line 24, in test_lookup
+    return payload["AssertionError"]
+builtins.KeyError: 'AssertionError'</failure></testcase>
+<testcase name="H08"><failure>KeyError: 17
+Mapping lookup failed.</failure></testcase>
+<testcase name="H09"><failure>FAILED tests/test_routes.py::test_zone - KeyError: 'routing.zone'</failure></testcase>
+<testcase name="H10"><failure>ERROR tests/test_cache.py::test_partition - builtins.KeyError: ('west', 3)</failure></testcase>
+<testcase name="H11"><failure>builtins.ConnectionRefusedError [Errno 111] Connection refused</failure></testcase>
+<testcase name="H12"><failure>Traceback (most recent call last):
+  File "tests/test_socket.py", line 31, in test_connect
+    sock.connect(address)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it</failure></testcase>
+</testsuite>

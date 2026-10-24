@@ -1,0 +1,3 @@
+<testsuite tests="1" failures="1"><testcase classname="synthetic.docs" name="test_glossary"><failure type="" message="Review the glossary entry for AssertionError"><![CDATA[The guide discusses AssertionError as a vocabulary term.
+The page heading is outdated and needs editorial review.
+]]></failure></testcase></testsuite>

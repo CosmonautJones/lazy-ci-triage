@@ -1,0 +1,66 @@
+{
+  "app_version": "0.2.1",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "b475f5998b454562b03304c3a50d7442f7378b8c0e442869f889f0a7008ce9d3",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "docs/test_glossary.py::test_key_entry",
+        "location": "line 1",
+        "text": "FAILED docs/test_glossary.py::test_key_entry - documentation note: \"KeyError: 'region'\" is an example string; the page title is stale",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "missing_key",
+        "quote": "FAILED docs/test_glossary.py::test_key_entry - documentation note: \"KeyError: 'region'\" is an example string; the page title is stale",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "619f497f4cbbd09c9bc1d58e2b5a2c4c58455ed8bc2284fdc261bcf5dea2c27d",
+    "created_at": "2026-10-24T10:11:16.6022587Z",
+    "done_reason": "stop",
+    "total_duration": 5782266900,
+    "load_duration": 2831991200,
+    "prompt_eval_count": 387,
+    "prompt_eval_duration": 35028300,
+    "eval_count": 99,
+    "eval_duration": 353872900,
+    "wall_seconds": 5.934261
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"missing_key\",\n      \"quote\": \"FAILED docs/test_glossary.py::test_key_entry - documentation note: \\\"KeyError: 'region'\\\" is an example string; the page title is stale\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

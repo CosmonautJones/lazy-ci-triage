@@ -1,0 +1,5 @@
+<testsuite tests="1" errors="1"><testcase classname="synthetic.payload" name="test_lookup"><error type="" message=""><![CDATA[Traceback (most recent call last):
+  File "tests/test_payload.py", line 24, in test_lookup
+    return payload["AssertionError"]
+builtins.KeyError: 'AssertionError'
+]]></error></testcase></testsuite>

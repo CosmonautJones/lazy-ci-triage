@@ -31,9 +31,9 @@
 
 **Interfaces:** `_eligible(text)` feeds prompt and validator; public schema stays unchanged.
 
-- [ ] Add literal positive/negative synthetic tests, including the actual lexical-trap response; run and save RED failures against baseline.
-- [ ] Implement anchored signatures, remove pytest identifiers from classification, abstain on conflicts, require quote support.
-- [ ] Run full unittest discovery; preserve historical provenance checks under their original policy.
+- [x] Add literal positive/negative synthetic tests, including the actual lexical-trap response; run and save RED failures against baseline.
+- [x] Implement anchored signatures, remove pytest identifiers from classification, abstain on conflicts, require quote support.
+- [x] Run full unittest discovery; preserve historical provenance checks under their original policy.
 
 ### Task 2: Frozen comparison and actual inference
 
@@ -41,16 +41,18 @@
 
 **Interfaces:** case IDs/formats/input/expected/category/rationale -> per-case deterministic and real-inference comparison JSON. Baseline loaded from exact Git archive in ignored scratch.
 
-- [ ] Record frozen held-out SHA before reading; do not tune on held-out results.
-- [ ] Measure label eligibility, false specific choices, useful coverage and abstentions; preserve failed attempts.
-- [ ] Run baseline and candidate real inference with identical cached model/options on paired batches; unload/stop task-owned server.
-- [ ] Decide retain/reject based on measured evidence; run regressions/full suite.
+- [x] Record frozen held-out SHA before reading; do not tune on held-out results.
+- [x] Measure label eligibility, false specific choices, useful coverage and abstentions; preserve failed attempts.
+- [x] Run baseline and candidate real inference with identical cached model/options on paired batches; unload/stop task-owned server.
+- [x] Decide retain/reject based on measured evidence; run regressions/full suite.
 
 ### Task 3: Reviewable release
 
 **Files:** update README, quality comparison, verification, demo script, DEV draft and current edited replay; preserve prior versions.
 
-- [ ] Document exact scope, metrics, lost coverage and counterexamples; update demo/draft to current results.
-- [ ] Run full tests, artifact integrity checks, compile/whitespace and commit candidate.
+- [x] Document exact scope, metrics, lost coverage and counterexamples; update demo/draft to current results.
+- [x] Run full tests, artifact integrity checks, compile/whitespace and commit candidate.
 - [ ] Fresh independent exact-commit review, fix reproducible material defects with RED/GREEN tests, verify final clean checkout.
 - [ ] Produce local safe bundle and precise final handoff; no unsupported delivery claim.
+
+The two final gates are recorded externally in the handoff/review bundle after freezing this source, keeping the exact reviewed checkout unchanged.

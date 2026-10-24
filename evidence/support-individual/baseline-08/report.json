@@ -1,0 +1,66 @@
+{
+  "app_version": "0.2.1",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "3e650214be10da384e6aa25f2a920e99523c95be99397455170382207f9a0be4",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "synthetic.index::test_numeric_key",
+        "location": "testcase #1",
+        "text": "KeyError: 17\nMapping lookup failed.",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "missing_key",
+        "quote": "KeyError: 17\nMapping lookup failed.",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "db773f226e28c25003fc9378e6d0984692dc1d8cbadf00ccebbabf0e10c5031c",
+    "created_at": "2026-10-24T10:09:31.9474361Z",
+    "done_reason": "stop",
+    "total_duration": 4989246300,
+    "load_duration": 2724172200,
+    "prompt_eval_count": 330,
+    "prompt_eval_duration": 31950300,
+    "eval_count": 76,
+    "eval_duration": 233920500,
+    "wall_seconds": 5.119662
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"missing_key\",\n      \"quote\": \"KeyError: 17\\nMapping lookup failed.\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

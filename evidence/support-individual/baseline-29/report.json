@@ -1,0 +1,66 @@
+{
+  "app_version": "0.2.1",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "17b07d162e982602157264c37693de1d348313089691201a032f82289970751d",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "synthetic.payload::test_lookup",
+        "location": "testcase #1",
+        "text": "Traceback (most recent call last):\n  File \"tests/test_payload.py\", line 24, in test_lookup\n    return payload[\"AssertionError\"]\nbuiltins.KeyError: 'AssertionError'",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "missing_key",
+        "quote": "Traceback (most recent call last):\n  File \"tests/test_payload.py\", line 24, in test_lookup\n    return payload[\"AssertionError\"]\nbuiltins.KeyError: 'AssertionError'",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "fd33aed6afc9c68f207a140c82b7d7a862992ff9ffcb70894fbf9bd65252671f",
+    "created_at": "2026-10-24T10:13:56.6317045Z",
+    "done_reason": "stop",
+    "total_duration": 9144925400,
+    "load_duration": 4527933000,
+    "prompt_eval_count": 436,
+    "prompt_eval_duration": 42782900,
+    "eval_count": 110,
+    "eval_duration": 421767300,
+    "wall_seconds": 9.431809
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"missing_key\",\n      \"quote\": \"Traceback (most recent call last):\\n  File \\\"tests/test_payload.py\\\", line 24, in test_lookup\\n    return payload[\\\"AssertionError\\\"]\\nbuiltins.KeyError: 'AssertionError'\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

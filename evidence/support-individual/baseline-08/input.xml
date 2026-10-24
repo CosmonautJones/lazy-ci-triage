@@ -1,0 +1,1 @@
+<testsuite tests="1" errors="1"><testcase classname="synthetic.index" name="test_numeric_key"><error type="" message="KeyError: 17">Mapping lookup failed.</error></testcase></testsuite>

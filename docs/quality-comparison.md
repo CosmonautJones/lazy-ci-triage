@@ -1,6 +1,8 @@
-# Model quality comparison: v0.1 prose to v0.2 constrained selections
+# Model quality comparisons and preserved failures
 
-**October 24 current release is v0.2.1.** The earlier v0.2 measurements below remain historical. Current reviewed-edge-case artifacts are `evidence/oct24-*` and `evidence/oct24-evaluation.json`. The current report explicitly calls JUnit detail decoded/normalized; its joined XML type/message/body representation is not raw-byte XML quotation.
+**Current release is v0.2.2.** Start with the [bounded structural-support comparison](structural-support-evaluation.md): frozen independently authored cases, baseline/candidate results, coverage loss, refused batches and unknowable copied examples. Earlier comparisons below are historical and remain intact. Source observations, hypotheses and operational-refusal policy are unchanged.
+
+**Earlier October 24 release was v0.2.1.** Its reviewed-edge-case artifacts are `evidence/oct24-*` and `evidence/oct24-evaluation.json`. The report explicitly calls JUnit detail decoded/normalized; its joined XML type/message/body representation is not raw-byte XML quotation.
 
 ## October 24 review and inference follow-up
 

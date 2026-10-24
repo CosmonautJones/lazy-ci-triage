@@ -1,0 +1,66 @@
+{
+  "app_version": "0.2.1",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "6b7a114d7dcf9f6ea93440d5f15aeeaf087aa80112f1e8f950be3dd28efd41c3",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "synthetic.audit::test_inventory",
+        "location": "testcase #1",
+        "text": "RuntimeError No AssertionError or KeyError was raised.\nValidation stopped for an unrelated reason.\nThe inventory snapshot could not be loaded.",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "unclassified",
+        "quote": "RuntimeError No AssertionError or KeyError was raised.\nValidation stopped for an unrelated reason.\nThe inventory snapshot could not be loaded.",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "69ab5d4bfe8737577cf40c69dba9f8a6c8f263c3b87d618dee58d71f788d38e3",
+    "created_at": "2026-10-24T10:12:21.0040366Z",
+    "done_reason": "stop",
+    "total_duration": 6713703300,
+    "load_duration": 3191526900,
+    "prompt_eval_count": 378,
+    "prompt_eval_duration": 34948600,
+    "eval_count": 90,
+    "eval_duration": 328456200,
+    "wall_seconds": 6.868104
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"unclassified\",\n      \"quote\": \"RuntimeError No AssertionError or KeyError was raised.\\nValidation stopped for an unrelated reason.\\nThe inventory snapshot could not be loaded.\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

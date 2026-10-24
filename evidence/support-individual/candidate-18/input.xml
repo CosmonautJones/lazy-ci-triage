@@ -1,0 +1,2 @@
+<testsuite tests="1" errors="1"><testcase classname="synthetic.examples" name="test_example_text"><error type="ValueError" message="Invalid example text: &quot;ConnectionRefusedError: [Errno 111] Connection refused&quot;"><![CDATA[ValueError: the quoted sample must be escaped before rendering.
+]]></error></testcase></testsuite>

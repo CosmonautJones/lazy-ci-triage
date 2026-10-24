@@ -1,0 +1,1611 @@
+{
+  "scope": "Authored synthetic rubric, not diagnostic accuracy; includes identical inputs with unknowable differing provenance labels.",
+  "baseline_commit": "f28d2e6ad7777d782c75dbf47013de0336eb2ee0",
+  "candidate_version": "0.2.2",
+  "batch_size": 1,
+  "cases_sha256": "ea89c56033b22d24d4a490a1b042ca7af702e80e2b873003c680874f92238f87",
+  "candidate_brief_sha256": "c088efeed405e44dca61733f7a08bb1e802aa86806c801ff735a4bfb3f839677",
+  "baseline_brief_sha256": "8620ebfb3d8bb160832f918fa99f3ca21591a1a92be245954f6d09b6feb22d3b",
+  "gate": {
+    "baseline": {
+      "metrics": {
+        "cases": 30,
+        "specific_rubric_cases": 15,
+        "abstention_rubric_cases": 15,
+        "specific_rubric_family_available": 15,
+        "abstention_cases_allowing_specific": 8,
+        "cases_allowing_wrong_specific": 10,
+        "only_abstention_available": 7
+      },
+      "rows": [
+        {
+          "id": "H01",
+          "expected": "assertion_mismatch",
+          "offered": [
+            "assertion_mismatch",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "builtins.AssertionError expected total 9, observed 12"
+        },
+        {
+          "id": "H02",
+          "expected": "assertion_mismatch",
+          "offered": [
+            "assertion_mismatch",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_limits.py\", line 18, in test_remaining\n    assert remaining == 0\nAssertionError: assert 2 == 0"
+        },
+        {
+          "id": "H03",
+          "expected": "assertion_mismatch",
+          "offered": [
+            "assertion_mismatch",
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "AssertionError assert 'KeyError' == 'ready'\ndef test_label():\n    label = \"KeyError\"\n>   assert label == \"ready\"\nE   AssertionError: assert 'KeyError' == 'ready'"
+        },
+        {
+          "id": "H04",
+          "expected": "assertion_mismatch",
+          "offered": [
+            "assertion_mismatch",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_records.py::test_sorted - assert ['pear', 'apple'] == ['apple', 'pear']"
+        },
+        {
+          "id": "H05",
+          "expected": "assertion_mismatch",
+          "offered": [
+            "assertion_mismatch",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_flags.py::test_explicit - builtins.AssertionError: enabled flag was false"
+        },
+        {
+          "id": "H06",
+          "expected": "missing_key",
+          "offered": [
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "builtins.KeyError 'region'"
+        },
+        {
+          "id": "H07",
+          "expected": "missing_key",
+          "offered": [
+            "assertion_mismatch",
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_payload.py\", line 24, in test_lookup\n    return payload[\"AssertionError\"]\nbuiltins.KeyError: 'AssertionError'"
+        },
+        {
+          "id": "H08",
+          "expected": "missing_key",
+          "offered": [
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "KeyError: 17\nMapping lookup failed."
+        },
+        {
+          "id": "H09",
+          "expected": "missing_key",
+          "offered": [
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_routes.py::test_zone - KeyError: 'routing.zone'"
+        },
+        {
+          "id": "H10",
+          "expected": "missing_key",
+          "offered": [
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ERROR tests/test_cache.py::test_partition - builtins.KeyError: ('west', 3)"
+        },
+        {
+          "id": "H11",
+          "expected": "connection_refused",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "builtins.ConnectionRefusedError [Errno 111] Connection refused"
+        },
+        {
+          "id": "H12",
+          "expected": "connection_refused",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_socket.py\", line 31, in test_connect\n    sock.connect(address)\nConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it"
+        },
+        {
+          "id": "H13",
+          "expected": "connection_refused",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "requests.exceptions.ConnectionError HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded\nTraceback (most recent call last):\n  File \"tests/test_client.py\", line 42, in test_request\n    client.get(\"http://service.invalid:8123/ping\")\nConnectionRefusedError: [Errno 111] Connection refused\n\nThe above exception was the direct cause of the following exception:\n\nrequests.exceptions.ConnectionError: HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded with url: /ping (Caused by NewConnectionError('Failed to establish a new connection: [Errno 111] Connection refused'))"
+        },
+        {
+          "id": "H14",
+          "expected": "connection_refused",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ERROR tests/test_probe.py::test_service - ConnectionRefusedError: [Errno 111] Connection refused"
+        },
+        {
+          "id": "H15",
+          "expected": "connection_refused",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_endpoint.py::test_ready - builtins.ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it"
+        },
+        {
+          "id": "H16",
+          "expected": "unclassified",
+          "offered": [
+            "assertion_mismatch",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "Review the glossary entry for AssertionError\nThe guide discusses AssertionError as a vocabulary term.\nThe page heading is outdated and needs editorial review."
+        },
+        {
+          "id": "H17",
+          "expected": "unclassified",
+          "offered": [
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED docs/test_glossary.py::test_key_entry - documentation note: \"KeyError: 'region'\" is an example string; the page title is stale"
+        },
+        {
+          "id": "H18",
+          "expected": "unclassified",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ValueError Invalid example text: \"ConnectionRefusedError: [Errno 111] Connection refused\"\nValueError: the quoted sample must be escaped before rendering."
+        },
+        {
+          "id": "H19",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_AssertionError_badge.py::test_status - RuntimeError: rendering failed"
+        },
+        {
+          "id": "H20",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "RuntimeError KeyErrorHandler failed to initialize\nRuntimeError: KeyErrorHandler is disabled by configuration"
+        },
+        {
+          "id": "H21",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ERROR tests/test_connection_refused_icon.py::test_accessible_label - ValueError: missing aria label"
+        },
+        {
+          "id": "H22",
+          "expected": "unclassified",
+          "offered": [
+            "assertion_mismatch",
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "RuntimeError No AssertionError or KeyError was raised.\nValidation stopped for an unrelated reason.\nThe inventory snapshot could not be loaded."
+        },
+        {
+          "id": "H23",
+          "expected": "unclassified",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_auth_probe.py::test_access - RuntimeError: No ConnectionRefusedError occurred; HTTP response status was 401"
+        },
+        {
+          "id": "H24",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "Worker stopped before output was written."
+        },
+        {
+          "id": "H25",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ERROR tests/test_workspace.py::test_cleanup - fixture teardown failed"
+        },
+        {
+          "id": "H26",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "LookupError 'region'\nLookupError: 'region'"
+        },
+        {
+          "id": "H27",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ERROR tests/test_latency.py::test_deadline - TimeoutError: [Errno 110] Connection timed out"
+        },
+        {
+          "id": "H28",
+          "expected": "unclassified",
+          "offered": [
+            "assertion_mismatch",
+            "unclassified"
+          ],
+          "hard_limit": true,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_limits.py\", line 18, in test_remaining\n    assert remaining == 0\nAssertionError: assert 2 == 0"
+        },
+        {
+          "id": "H29",
+          "expected": "unclassified",
+          "offered": [
+            "assertion_mismatch",
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": true,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_payload.py\", line 24, in test_lookup\n    return payload[\"AssertionError\"]\nbuiltins.KeyError: 'AssertionError'"
+        },
+        {
+          "id": "H30",
+          "expected": "unclassified",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": true,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_socket.py\", line 31, in test_connect\n    sock.connect(address)\nConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it"
+        }
+      ]
+    },
+    "candidate": {
+      "metrics": {
+        "cases": 30,
+        "specific_rubric_cases": 15,
+        "abstention_rubric_cases": 15,
+        "specific_rubric_family_available": 12,
+        "abstention_cases_allowing_specific": 3,
+        "cases_allowing_wrong_specific": 3,
+        "only_abstention_available": 15
+      },
+      "rows": [
+        {
+          "id": "H01",
+          "expected": "assertion_mismatch",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "builtins.AssertionError expected total 9, observed 12"
+        },
+        {
+          "id": "H02",
+          "expected": "assertion_mismatch",
+          "offered": [
+            "assertion_mismatch",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_limits.py\", line 18, in test_remaining\n    assert remaining == 0\nAssertionError: assert 2 == 0"
+        },
+        {
+          "id": "H03",
+          "expected": "assertion_mismatch",
+          "offered": [
+            "assertion_mismatch",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "AssertionError assert 'KeyError' == 'ready'\ndef test_label():\n    label = \"KeyError\"\n>   assert label == \"ready\"\nE   AssertionError: assert 'KeyError' == 'ready'"
+        },
+        {
+          "id": "H04",
+          "expected": "assertion_mismatch",
+          "offered": [
+            "assertion_mismatch",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_records.py::test_sorted - assert ['pear', 'apple'] == ['apple', 'pear']"
+        },
+        {
+          "id": "H05",
+          "expected": "assertion_mismatch",
+          "offered": [
+            "assertion_mismatch",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_flags.py::test_explicit - builtins.AssertionError: enabled flag was false"
+        },
+        {
+          "id": "H06",
+          "expected": "missing_key",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "builtins.KeyError 'region'"
+        },
+        {
+          "id": "H07",
+          "expected": "missing_key",
+          "offered": [
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_payload.py\", line 24, in test_lookup\n    return payload[\"AssertionError\"]\nbuiltins.KeyError: 'AssertionError'"
+        },
+        {
+          "id": "H08",
+          "expected": "missing_key",
+          "offered": [
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "KeyError: 17\nMapping lookup failed."
+        },
+        {
+          "id": "H09",
+          "expected": "missing_key",
+          "offered": [
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_routes.py::test_zone - KeyError: 'routing.zone'"
+        },
+        {
+          "id": "H10",
+          "expected": "missing_key",
+          "offered": [
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ERROR tests/test_cache.py::test_partition - builtins.KeyError: ('west', 3)"
+        },
+        {
+          "id": "H11",
+          "expected": "connection_refused",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "builtins.ConnectionRefusedError [Errno 111] Connection refused"
+        },
+        {
+          "id": "H12",
+          "expected": "connection_refused",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_socket.py\", line 31, in test_connect\n    sock.connect(address)\nConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it"
+        },
+        {
+          "id": "H13",
+          "expected": "connection_refused",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "requests.exceptions.ConnectionError HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded\nTraceback (most recent call last):\n  File \"tests/test_client.py\", line 42, in test_request\n    client.get(\"http://service.invalid:8123/ping\")\nConnectionRefusedError: [Errno 111] Connection refused\n\nThe above exception was the direct cause of the following exception:\n\nrequests.exceptions.ConnectionError: HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded with url: /ping (Caused by NewConnectionError('Failed to establish a new connection: [Errno 111] Connection refused'))"
+        },
+        {
+          "id": "H14",
+          "expected": "connection_refused",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ERROR tests/test_probe.py::test_service - ConnectionRefusedError: [Errno 111] Connection refused"
+        },
+        {
+          "id": "H15",
+          "expected": "connection_refused",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_endpoint.py::test_ready - builtins.ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it"
+        },
+        {
+          "id": "H16",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "Review the glossary entry for AssertionError\nThe guide discusses AssertionError as a vocabulary term.\nThe page heading is outdated and needs editorial review."
+        },
+        {
+          "id": "H17",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED docs/test_glossary.py::test_key_entry - documentation note: \"KeyError: 'region'\" is an example string; the page title is stale"
+        },
+        {
+          "id": "H18",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ValueError Invalid example text: \"ConnectionRefusedError: [Errno 111] Connection refused\"\nValueError: the quoted sample must be escaped before rendering."
+        },
+        {
+          "id": "H19",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_AssertionError_badge.py::test_status - RuntimeError: rendering failed"
+        },
+        {
+          "id": "H20",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "RuntimeError KeyErrorHandler failed to initialize\nRuntimeError: KeyErrorHandler is disabled by configuration"
+        },
+        {
+          "id": "H21",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ERROR tests/test_connection_refused_icon.py::test_accessible_label - ValueError: missing aria label"
+        },
+        {
+          "id": "H22",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "RuntimeError No AssertionError or KeyError was raised.\nValidation stopped for an unrelated reason.\nThe inventory snapshot could not be loaded."
+        },
+        {
+          "id": "H23",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "FAILED tests/test_auth_probe.py::test_access - RuntimeError: No ConnectionRefusedError occurred; HTTP response status was 401"
+        },
+        {
+          "id": "H24",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "Worker stopped before output was written."
+        },
+        {
+          "id": "H25",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ERROR tests/test_workspace.py::test_cleanup - fixture teardown failed"
+        },
+        {
+          "id": "H26",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "LookupError 'region'\nLookupError: 'region'"
+        },
+        {
+          "id": "H27",
+          "expected": "unclassified",
+          "offered": [
+            "unclassified"
+          ],
+          "hard_limit": false,
+          "normalized_text": "ERROR tests/test_latency.py::test_deadline - TimeoutError: [Errno 110] Connection timed out"
+        },
+        {
+          "id": "H28",
+          "expected": "unclassified",
+          "offered": [
+            "assertion_mismatch",
+            "unclassified"
+          ],
+          "hard_limit": true,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_limits.py\", line 18, in test_remaining\n    assert remaining == 0\nAssertionError: assert 2 == 0"
+        },
+        {
+          "id": "H29",
+          "expected": "unclassified",
+          "offered": [
+            "missing_key",
+            "unclassified"
+          ],
+          "hard_limit": true,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_payload.py\", line 24, in test_lookup\n    return payload[\"AssertionError\"]\nbuiltins.KeyError: 'AssertionError'"
+        },
+        {
+          "id": "H30",
+          "expected": "unclassified",
+          "offered": [
+            "connection_refused",
+            "unclassified"
+          ],
+          "hard_limit": true,
+          "normalized_text": "Traceback (most recent call last):\n  File \"tests/test_socket.py\", line 31, in test_connect\n    sock.connect(address)\nConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it"
+        }
+      ]
+    }
+  },
+  "model": {
+    "baseline": {
+      "metrics": {
+        "cases": 30,
+        "accepted_selections": 29,
+        "false_specific": 7,
+        "correct_specific": 12,
+        "correct_abstention": 9,
+        "all_abstentions": 10,
+        "missing_due_to_refused_report": 1,
+        "hard_limit_false_specific": 2
+      },
+      "rows": [
+        {
+          "id": "H01",
+          "expected": "assertion_mismatch",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "assertion_mismatch"
+        },
+        {
+          "id": "H02",
+          "expected": "assertion_mismatch",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H03",
+          "expected": "assertion_mismatch",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H04",
+          "expected": "assertion_mismatch",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "assertion_mismatch"
+        },
+        {
+          "id": "H05",
+          "expected": "assertion_mismatch",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "assertion_mismatch"
+        },
+        {
+          "id": "H06",
+          "expected": "missing_key",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H07",
+          "expected": "missing_key",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H08",
+          "expected": "missing_key",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H09",
+          "expected": "missing_key",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H10",
+          "expected": "missing_key",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H11",
+          "expected": "connection_refused",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "connection_refused"
+        },
+        {
+          "id": "H12",
+          "expected": "connection_refused",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "connection_refused"
+        },
+        {
+          "id": "H13",
+          "expected": "connection_refused",
+          "hard_limit": false,
+          "status": "invalid_citation",
+          "selected": null
+        },
+        {
+          "id": "H14",
+          "expected": "connection_refused",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "connection_refused"
+        },
+        {
+          "id": "H15",
+          "expected": "connection_refused",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "connection_refused"
+        },
+        {
+          "id": "H16",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "assertion_mismatch"
+        },
+        {
+          "id": "H17",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H18",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "connection_refused"
+        },
+        {
+          "id": "H19",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H20",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H21",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H22",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H23",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "connection_refused"
+        },
+        {
+          "id": "H24",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H25",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H26",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H27",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H28",
+          "expected": "unclassified",
+          "hard_limit": true,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H29",
+          "expected": "unclassified",
+          "hard_limit": true,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H30",
+          "expected": "unclassified",
+          "hard_limit": true,
+          "status": "ok",
+          "selected": "connection_refused"
+        }
+      ]
+    },
+    "candidate": {
+      "metrics": {
+        "cases": 30,
+        "accepted_selections": 29,
+        "false_specific": 2,
+        "correct_specific": 9,
+        "correct_abstention": 13,
+        "all_abstentions": 18,
+        "missing_due_to_refused_report": 1,
+        "hard_limit_false_specific": 2
+      },
+      "rows": [
+        {
+          "id": "H01",
+          "expected": "assertion_mismatch",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H02",
+          "expected": "assertion_mismatch",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H03",
+          "expected": "assertion_mismatch",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "assertion_mismatch"
+        },
+        {
+          "id": "H04",
+          "expected": "assertion_mismatch",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H05",
+          "expected": "assertion_mismatch",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "assertion_mismatch"
+        },
+        {
+          "id": "H06",
+          "expected": "missing_key",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H07",
+          "expected": "missing_key",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H08",
+          "expected": "missing_key",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H09",
+          "expected": "missing_key",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H10",
+          "expected": "missing_key",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H11",
+          "expected": "connection_refused",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H12",
+          "expected": "connection_refused",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "connection_refused"
+        },
+        {
+          "id": "H13",
+          "expected": "connection_refused",
+          "hard_limit": false,
+          "status": "invalid_citation",
+          "selected": null
+        },
+        {
+          "id": "H14",
+          "expected": "connection_refused",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "connection_refused"
+        },
+        {
+          "id": "H15",
+          "expected": "connection_refused",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "connection_refused"
+        },
+        {
+          "id": "H16",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H17",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H18",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H19",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H20",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H21",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H22",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H23",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H24",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H25",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H26",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H27",
+          "expected": "unclassified",
+          "hard_limit": false,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H28",
+          "expected": "unclassified",
+          "hard_limit": true,
+          "status": "ok",
+          "selected": "unclassified"
+        },
+        {
+          "id": "H29",
+          "expected": "unclassified",
+          "hard_limit": true,
+          "status": "ok",
+          "selected": "missing_key"
+        },
+        {
+          "id": "H30",
+          "expected": "unclassified",
+          "hard_limit": true,
+          "status": "ok",
+          "selected": "connection_refused"
+        }
+      ]
+    }
+  },
+  "runs": [
+    {
+      "run": "baseline-01",
+      "ids": [
+        "H01"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.047018,
+      "eval_count": 82
+    },
+    {
+      "run": "candidate-01",
+      "ids": [
+        "H01"
+      ],
+      "status": "ok",
+      "wall_seconds": 4.750079,
+      "eval_count": 66
+    },
+    {
+      "run": "baseline-02",
+      "ids": [
+        "H02"
+      ],
+      "status": "ok",
+      "wall_seconds": 9.78124,
+      "eval_count": 110
+    },
+    {
+      "run": "candidate-02",
+      "ids": [
+        "H02"
+      ],
+      "status": "ok",
+      "wall_seconds": 12.30392,
+      "eval_count": 110
+    },
+    {
+      "run": "baseline-03",
+      "ids": [
+        "H03"
+      ],
+      "status": "ok",
+      "wall_seconds": 8.063483,
+      "eval_count": 112
+    },
+    {
+      "run": "candidate-03",
+      "ids": [
+        "H03"
+      ],
+      "status": "ok",
+      "wall_seconds": 10.814217,
+      "eval_count": 114
+    },
+    {
+      "run": "baseline-04",
+      "ids": [
+        "H04"
+      ],
+      "status": "ok",
+      "wall_seconds": 7.23152,
+      "eval_count": 89
+    },
+    {
+      "run": "candidate-04",
+      "ids": [
+        "H04"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.430458,
+      "eval_count": 74
+    },
+    {
+      "run": "baseline-05",
+      "ids": [
+        "H05"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.165469,
+      "eval_count": 88
+    },
+    {
+      "run": "candidate-05",
+      "ids": [
+        "H05"
+      ],
+      "status": "ok",
+      "wall_seconds": 4.998509,
+      "eval_count": 74
+    },
+    {
+      "run": "baseline-06",
+      "ids": [
+        "H06"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.204461,
+      "eval_count": 72
+    },
+    {
+      "run": "candidate-06",
+      "ids": [
+        "H06"
+      ],
+      "status": "ok",
+      "wall_seconds": 4.474132,
+      "eval_count": 58
+    },
+    {
+      "run": "baseline-07",
+      "ids": [
+        "H07"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.196506,
+      "eval_count": 110
+    },
+    {
+      "run": "candidate-07",
+      "ids": [
+        "H07"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.355397,
+      "eval_count": 110
+    },
+    {
+      "run": "baseline-08",
+      "ids": [
+        "H08"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.119662,
+      "eval_count": 76
+    },
+    {
+      "run": "candidate-08",
+      "ids": [
+        "H08"
+      ],
+      "status": "ok",
+      "wall_seconds": 4.741011,
+      "eval_count": 63
+    },
+    {
+      "run": "baseline-09",
+      "ids": [
+        "H09"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.900968,
+      "eval_count": 80
+    },
+    {
+      "run": "candidate-09",
+      "ids": [
+        "H09"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.129855,
+      "eval_count": 80
+    },
+    {
+      "run": "baseline-10",
+      "ids": [
+        "H10"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.216252,
+      "eval_count": 85
+    },
+    {
+      "run": "candidate-10",
+      "ids": [
+        "H10"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.491046,
+      "eval_count": 71
+    },
+    {
+      "run": "baseline-11",
+      "ids": [
+        "H11"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.487809,
+      "eval_count": 83
+    },
+    {
+      "run": "candidate-11",
+      "ids": [
+        "H11"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.026105,
+      "eval_count": 68
+    },
+    {
+      "run": "baseline-12",
+      "ids": [
+        "H12"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.711024,
+      "eval_count": 126
+    },
+    {
+      "run": "candidate-12",
+      "ids": [
+        "H12"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.725028,
+      "eval_count": 126
+    },
+    {
+      "run": "baseline-13",
+      "ids": [
+        "H13"
+      ],
+      "status": "invalid_citation",
+      "wall_seconds": 5.763318,
+      "eval_count": 89
+    },
+    {
+      "run": "candidate-13",
+      "ids": [
+        "H13"
+      ],
+      "status": "invalid_citation",
+      "wall_seconds": 5.942786,
+      "eval_count": 89
+    },
+    {
+      "run": "baseline-14",
+      "ids": [
+        "H14"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.900233,
+      "eval_count": 91
+    },
+    {
+      "run": "candidate-14",
+      "ids": [
+        "H14"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.256682,
+      "eval_count": 77
+    },
+    {
+      "run": "baseline-15",
+      "ids": [
+        "H15"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.127799,
+      "eval_count": 96
+    },
+    {
+      "run": "candidate-15",
+      "ids": [
+        "H15"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.235772,
+      "eval_count": 107
+    },
+    {
+      "run": "baseline-16",
+      "ids": [
+        "H16"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.688216,
+      "eval_count": 94
+    },
+    {
+      "run": "candidate-16",
+      "ids": [
+        "H16"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.266289,
+      "eval_count": 79
+    },
+    {
+      "run": "baseline-17",
+      "ids": [
+        "H17"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.934261,
+      "eval_count": 99
+    },
+    {
+      "run": "candidate-17",
+      "ids": [
+        "H17"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.470157,
+      "eval_count": 101
+    },
+    {
+      "run": "baseline-18",
+      "ids": [
+        "H18"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.862926,
+      "eval_count": 102
+    },
+    {
+      "run": "candidate-18",
+      "ids": [
+        "H18"
+      ],
+      "status": "ok",
+      "wall_seconds": 7.133048,
+      "eval_count": 88
+    },
+    {
+      "run": "baseline-19",
+      "ids": [
+        "H19"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.016334,
+      "eval_count": 84
+    },
+    {
+      "run": "candidate-19",
+      "ids": [
+        "H19"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.505095,
+      "eval_count": 70
+    },
+    {
+      "run": "baseline-20",
+      "ids": [
+        "H20"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.950151,
+      "eval_count": 83
+    },
+    {
+      "run": "candidate-20",
+      "ids": [
+        "H20"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.721954,
+      "eval_count": 69
+    },
+    {
+      "run": "baseline-21",
+      "ids": [
+        "H21"
+      ],
+      "status": "ok",
+      "wall_seconds": 7.012091,
+      "eval_count": 84
+    },
+    {
+      "run": "candidate-21",
+      "ids": [
+        "H21"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.793553,
+      "eval_count": 70
+    },
+    {
+      "run": "baseline-22",
+      "ids": [
+        "H22"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.868104,
+      "eval_count": 90
+    },
+    {
+      "run": "candidate-22",
+      "ids": [
+        "H22"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.558885,
+      "eval_count": 77
+    },
+    {
+      "run": "baseline-23",
+      "ids": [
+        "H23"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.424355,
+      "eval_count": 94
+    },
+    {
+      "run": "candidate-23",
+      "ids": [
+        "H23"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.713524,
+      "eval_count": 79
+    },
+    {
+      "run": "baseline-24",
+      "ids": [
+        "H24"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.474789,
+      "eval_count": 72
+    },
+    {
+      "run": "candidate-24",
+      "ids": [
+        "H24"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.379517,
+      "eval_count": 58
+    },
+    {
+      "run": "baseline-25",
+      "ids": [
+        "H25"
+      ],
+      "status": "ok",
+      "wall_seconds": 5.841163,
+      "eval_count": 78
+    },
+    {
+      "run": "candidate-25",
+      "ids": [
+        "H25"
+      ],
+      "status": "ok",
+      "wall_seconds": 4.894921,
+      "eval_count": 64
+    },
+    {
+      "run": "baseline-26",
+      "ids": [
+        "H26"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.481361,
+      "eval_count": 77
+    },
+    {
+      "run": "candidate-26",
+      "ids": [
+        "H26"
+      ],
+      "status": "ok",
+      "wall_seconds": 7.188001,
+      "eval_count": 63
+    },
+    {
+      "run": "baseline-27",
+      "ids": [
+        "H27"
+      ],
+      "status": "ok",
+      "wall_seconds": 7.200091,
+      "eval_count": 90
+    },
+    {
+      "run": "candidate-27",
+      "ids": [
+        "H27"
+      ],
+      "status": "ok",
+      "wall_seconds": 6.141925,
+      "eval_count": 76
+    },
+    {
+      "run": "baseline-28",
+      "ids": [
+        "H28"
+      ],
+      "status": "ok",
+      "wall_seconds": 8.879277,
+      "eval_count": 110
+    },
+    {
+      "run": "candidate-28",
+      "ids": [
+        "H28"
+      ],
+      "status": "ok",
+      "wall_seconds": 9.904851,
+      "eval_count": 110
+    },
+    {
+      "run": "baseline-29",
+      "ids": [
+        "H29"
+      ],
+      "status": "ok",
+      "wall_seconds": 9.431809,
+      "eval_count": 110
+    },
+    {
+      "run": "candidate-29",
+      "ids": [
+        "H29"
+      ],
+      "status": "ok",
+      "wall_seconds": 7.649217,
+      "eval_count": 110
+    },
+    {
+      "run": "baseline-30",
+      "ids": [
+        "H30"
+      ],
+      "status": "ok",
+      "wall_seconds": 7.941866,
+      "eval_count": 126
+    },
+    {
+      "run": "candidate-30",
+      "ids": [
+        "H30"
+      ],
+      "status": "ok",
+      "wall_seconds": 7.246484,
+      "eval_count": 126
+    }
+  ]
+}

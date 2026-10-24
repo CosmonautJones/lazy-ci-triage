@@ -1,0 +1,66 @@
+{
+  "app_version": "0.2.2",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "bd1b44dab0d4391200120173e1447959a5afa542370514cf3061081ff89beb9e",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "synthetic.docs::test_glossary",
+        "location": "testcase #1",
+        "text": "Review the glossary entry for AssertionError\nThe guide discusses AssertionError as a vocabulary term.\nThe page heading is outdated and needs editorial review.",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "unclassified",
+        "quote": "Review the glossary entry for AssertionError\nThe guide discusses AssertionError as a vocabulary term.\nThe page heading is outdated and needs editorial review.",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "2ab78a15cf2b16dad55978005b37002ee5a748210c8b2b0e1260aa25f66b0b93",
+    "created_at": "2026-10-24T10:11:10.6614694Z",
+    "done_reason": "stop",
+    "total_duration": 5130994600,
+    "load_duration": 2724815700,
+    "prompt_eval_count": 378,
+    "prompt_eval_duration": 35631400,
+    "eval_count": 79,
+    "eval_duration": 265454500,
+    "wall_seconds": 5.266289
+  },
+  "raw_response": "{\"hypotheses\": [{\"test_id\": \"T001\", \"log_id\": \"L001\", \"family\": \"unclassified\", \"quote\": \"Review the glossary entry for AssertionError\\nThe guide discusses AssertionError as a vocabulary term.\\nThe page heading is outdated and needs editorial review.\" , \"uncertainty\": \"log_only_root_cause_unverified\"}]}"
+}

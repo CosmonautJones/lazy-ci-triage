@@ -1,0 +1,2 @@
+<testsuite tests="1" errors="1"><testcase classname="synthetic.handlers" name="test_handler"><error type="RuntimeError" message="KeyErrorHandler failed to initialize"><![CDATA[RuntimeError: KeyErrorHandler is disabled by configuration
+]]></error></testcase></testsuite>

@@ -1,0 +1,66 @@
+{
+  "app_version": "0.2.1",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "2eca8db6f90e5248b94c23a830536104535251cf9e416749c5b931b989acede0",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "tests/test_routes.py::test_zone",
+        "location": "line 1",
+        "text": "FAILED tests/test_routes.py::test_zone - KeyError: 'routing.zone'",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "missing_key",
+        "quote": "FAILED tests/test_routes.py::test_zone - KeyError: 'routing.zone'",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "0d2e3875070a4c03daf3f016283e411b2228e21506559e23c5421e97bc6ec009",
+    "created_at": "2026-10-24T10:09:42.5995479Z",
+    "done_reason": "stop",
+    "total_duration": 5733315400,
+    "load_duration": 2826335300,
+    "prompt_eval_count": 332,
+    "prompt_eval_duration": 33895600,
+    "eval_count": 80,
+    "eval_duration": 299953000,
+    "wall_seconds": 5.900968
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"missing_key\",\n      \"quote\": \"FAILED tests/test_routes.py::test_zone - KeyError: 'routing.zone'\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

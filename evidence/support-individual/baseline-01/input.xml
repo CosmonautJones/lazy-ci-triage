@@ -1,0 +1,1 @@
+<testsuite tests="1" failures="1"><testcase classname="synthetic.totals" name="test_total"><failure type="builtins.AssertionError" message="expected total 9, observed 12" /></testcase></testsuite>

@@ -1,0 +1,5 @@
+<testsuite tests="1" failures="1"><testcase classname="synthetic.labels" name="test_label"><failure type="AssertionError" message="assert &apos;KeyError&apos; == &apos;ready&apos;"><![CDATA[def test_label():
+    label = "KeyError"
+>   assert label == "ready"
+E   AssertionError: assert 'KeyError' == 'ready'
+]]></failure></testcase></testsuite>

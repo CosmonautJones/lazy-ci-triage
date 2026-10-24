@@ -1,0 +1,18 @@
+<testsuite>
+<testcase name="H25"><failure>ERROR tests/test_workspace.py::test_cleanup - fixture teardown failed</failure></testcase>
+<testcase name="H26"><failure>LookupError 'region'
+LookupError: 'region'</failure></testcase>
+<testcase name="H27"><failure>ERROR tests/test_latency.py::test_deadline - TimeoutError: [Errno 110] Connection timed out</failure></testcase>
+<testcase name="H28"><failure>Traceback (most recent call last):
+  File "tests/test_limits.py", line 18, in test_remaining
+    assert remaining == 0
+AssertionError: assert 2 == 0</failure></testcase>
+<testcase name="H29"><failure>Traceback (most recent call last):
+  File "tests/test_payload.py", line 24, in test_lookup
+    return payload["AssertionError"]
+builtins.KeyError: 'AssertionError'</failure></testcase>
+<testcase name="H30"><failure>Traceback (most recent call last):
+  File "tests/test_socket.py", line 31, in test_connect
+    sock.connect(address)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it</failure></testcase>
+</testsuite>

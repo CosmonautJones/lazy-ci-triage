@@ -1,0 +1,66 @@
+{
+  "app_version": "0.2.1",
+  "schema_version": 2,
+  "mode": "model",
+  "status": "ok",
+  "observed": {
+    "input_sha256": "e494c6c187b86dac37806535d0c927af36e8080d97c230f2233a8e410e236a81",
+    "failures": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "name": "tests/test_AssertionError_badge.py::test_status",
+        "location": "line 1",
+        "text": "FAILED tests/test_AssertionError_badge.py::test_status - RuntimeError: rendering failed",
+        "truncated": false
+      }
+    ]
+  },
+  "operational_recommendations": {
+    "status": "refused"
+  },
+  "model_hypotheses": {
+    "hypotheses": [
+      {
+        "test_id": "T001",
+        "log_id": "L001",
+        "family": "unclassified",
+        "quote": "FAILED tests/test_AssertionError_badge.py::test_status - RuntimeError: rendering failed",
+        "uncertainty": "log_only_root_cause_unverified"
+      }
+    ]
+  },
+  "runtime": {
+    "model": "qwen2.5-coder:1.5b",
+    "options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 32768,
+      "num_predict": 1800
+    },
+    "ollama_version": "0.18.0",
+    "model_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M"
+    },
+    "license_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "request_sha256": "00e5bf383e3e8e01e7b76616512389fe59b0158d3aa734c5a18f7708d695cac5",
+    "created_at": "2026-10-24T10:11:43.1134552Z",
+    "done_reason": "stop",
+    "total_duration": 5848462800,
+    "load_duration": 2867358000,
+    "prompt_eval_count": 339,
+    "prompt_eval_duration": 39150200,
+    "eval_count": 84,
+    "eval_duration": 336037300,
+    "wall_seconds": 6.016334
+  },
+  "raw_response": "{\n  \"hypotheses\": [\n    {\n      \"test_id\": \"T001\",\n      \"log_id\": \"L001\",\n      \"family\": \"unclassified\",\n      \"quote\": \"FAILED tests/test_AssertionError_badge.py::test_status - RuntimeError: rendering failed\",\n      \"uncertainty\": \"log_only_root_cause_unverified\"\n    }\n  ]\n}"
+}

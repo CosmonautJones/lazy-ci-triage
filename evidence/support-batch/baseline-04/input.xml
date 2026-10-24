@@ -1,0 +1,11 @@
+<testsuite>
+<testcase name="H19"><failure>FAILED tests/test_AssertionError_badge.py::test_status - RuntimeError: rendering failed</failure></testcase>
+<testcase name="H20"><failure>RuntimeError KeyErrorHandler failed to initialize
+RuntimeError: KeyErrorHandler is disabled by configuration</failure></testcase>
+<testcase name="H21"><failure>ERROR tests/test_connection_refused_icon.py::test_accessible_label - ValueError: missing aria label</failure></testcase>
+<testcase name="H22"><failure>RuntimeError No AssertionError or KeyError was raised.
+Validation stopped for an unrelated reason.
+The inventory snapshot could not be loaded.</failure></testcase>
+<testcase name="H23"><failure>FAILED tests/test_auth_probe.py::test_access - RuntimeError: No ConnectionRefusedError occurred; HTTP response status was 401</failure></testcase>
+<testcase name="H24"><failure>Worker stopped before output was written.</failure></testcase>
+</testsuite>

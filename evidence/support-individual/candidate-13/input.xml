@@ -1,0 +1,9 @@
+<testsuite tests="1" errors="1"><testcase classname="synthetic.client" name="test_request"><error type="requests.exceptions.ConnectionError" message="HTTPConnectionPool(host=&apos;service.invalid&apos;, port=8123): Max retries exceeded"><![CDATA[Traceback (most recent call last):
+  File "tests/test_client.py", line 42, in test_request
+    client.get("http://service.invalid:8123/ping")
+ConnectionRefusedError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded with url: /ping (Caused by NewConnectionError('Failed to establish a new connection: [Errno 111] Connection refused'))
+]]></error></testcase></testsuite>

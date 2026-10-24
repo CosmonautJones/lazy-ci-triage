@@ -1,0 +1,1 @@
+<testsuite tests="1" errors="1"><testcase classname="synthetic.settings" name="test_region"><error type="builtins.KeyError" message="&apos;region&apos;" /></testcase></testsuite>
