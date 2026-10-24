@@ -1,0 +1,273 @@
+[
+  {
+    "id": "H01",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" failures=\"1\"><testcase classname=\"synthetic.totals\" name=\"test_total\"><failure type=\"builtins.AssertionError\" message=\"expected total 9, observed 12\" /></testcase></testsuite>",
+    "expected_family": "assertion_mismatch",
+    "category": "qualified_exception_type",
+    "rationale": "The failure type explicitly identifies a qualified AssertionError even though the message uses ordinary comparison prose.",
+    "hard_limit": false
+  },
+  {
+    "id": "H02",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" failures=\"1\"><testcase classname=\"synthetic.limits\" name=\"test_remaining\"><failure type=\"\" message=\"\"><![CDATA[Traceback (most recent call last):\n  File \"tests/test_limits.py\", line 18, in test_remaining\n    assert remaining == 0\nAssertionError: assert 2 == 0\n]]></failure></testcase></testsuite>",
+    "expected_family": "assertion_mismatch",
+    "category": "traceback_terminal_exception",
+    "rationale": "A multiline traceback ends in an AssertionError, with the source assertion and its rendering present in the retained failure body.",
+    "hard_limit": false
+  },
+  {
+    "id": "H03",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" failures=\"1\"><testcase classname=\"synthetic.labels\" name=\"test_label\"><failure type=\"AssertionError\" message=\"assert &apos;KeyError&apos; == &apos;ready&apos;\"><![CDATA[def test_label():\n    label = \"KeyError\"\n>   assert label == \"ready\"\nE   AssertionError: assert 'KeyError' == 'ready'\n]]></failure></testcase></testsuite>",
+    "expected_family": "assertion_mismatch",
+    "category": "assertion_rendering_with_incidental_family",
+    "rationale": "The actual failure is an assertion; KeyError is a compared string value, not the raised exception.",
+    "hard_limit": false
+  },
+  {
+    "id": "H04",
+    "format": "pytest",
+    "input": "FAILED tests/test_records.py::test_sorted - assert ['pear', 'apple'] == ['apple', 'pear']\n",
+    "expected_family": "assertion_mismatch",
+    "category": "pytest_assertion_rendering",
+    "rationale": "The short summary directly reports an assertion comparison without spelling out AssertionError.",
+    "hard_limit": false
+  },
+  {
+    "id": "H05",
+    "format": "pytest",
+    "input": "FAILED tests/test_flags.py::test_explicit - builtins.AssertionError: enabled flag was false\n",
+    "expected_family": "assertion_mismatch",
+    "category": "pytest_qualified_exception",
+    "rationale": "The retained summary reason explicitly reports a qualified AssertionError with a custom message.",
+    "hard_limit": false
+  },
+  {
+    "id": "H06",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.settings\" name=\"test_region\"><error type=\"builtins.KeyError\" message=\"&apos;region&apos;\" /></testcase></testsuite>",
+    "expected_family": "missing_key",
+    "category": "qualified_missing_key_type",
+    "rationale": "The qualified exception type is KeyError and its message names the missing key.",
+    "hard_limit": false
+  },
+  {
+    "id": "H07",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.payload\" name=\"test_lookup\"><error type=\"\" message=\"\"><![CDATA[Traceback (most recent call last):\n  File \"tests/test_payload.py\", line 24, in test_lookup\n    return payload[\"AssertionError\"]\nbuiltins.KeyError: 'AssertionError'\n]]></error></testcase></testsuite>",
+    "expected_family": "missing_key",
+    "category": "qualified_traceback_with_incidental_family",
+    "rationale": "The terminal exception is builtins.KeyError; AssertionError appears only as the missing dictionary key and in the source statement.",
+    "hard_limit": false
+  },
+  {
+    "id": "H08",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.index\" name=\"test_numeric_key\"><error type=\"\" message=\"KeyError: 17\">Mapping lookup failed.</error></testcase></testsuite>",
+    "expected_family": "missing_key",
+    "category": "exception_in_message",
+    "rationale": "The message contains a direct KeyError exception form with a numeric key, while the type field is empty.",
+    "hard_limit": false
+  },
+  {
+    "id": "H09",
+    "format": "pytest",
+    "input": "FAILED tests/test_routes.py::test_zone - KeyError: 'routing.zone'\n",
+    "expected_family": "missing_key",
+    "category": "dotted_key_message",
+    "rationale": "The summary reason reports KeyError with a dotted string key.",
+    "hard_limit": false
+  },
+  {
+    "id": "H10",
+    "format": "pytest",
+    "input": "ERROR tests/test_cache.py::test_partition - builtins.KeyError: ('west', 3)\n",
+    "expected_family": "missing_key",
+    "category": "non_string_key",
+    "rationale": "The summary reports a qualified KeyError whose missing key is a tuple rather than a simple quoted word.",
+    "hard_limit": false
+  },
+  {
+    "id": "H11",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.transport\" name=\"test_open\"><error type=\"builtins.ConnectionRefusedError\" message=\"[Errno 111] Connection refused\" /></testcase></testsuite>",
+    "expected_family": "connection_refused",
+    "category": "qualified_refusal_type",
+    "rationale": "Both the qualified exception type and operating-system message directly identify a refused connection.",
+    "hard_limit": false
+  },
+  {
+    "id": "H12",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.socket\" name=\"test_connect\"><error type=\"\" message=\"\"><![CDATA[Traceback (most recent call last):\n  File \"tests/test_socket.py\", line 31, in test_connect\n    sock.connect(address)\nConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it\n]]></error></testcase></testsuite>",
+    "expected_family": "connection_refused",
+    "category": "platform_alternative_message",
+    "rationale": "The multiline body ends in ConnectionRefusedError with a Windows-style message that does not contain the exact phrase Connection refused.",
+    "hard_limit": false
+  },
+  {
+    "id": "H13",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.client\" name=\"test_request\"><error type=\"requests.exceptions.ConnectionError\" message=\"HTTPConnectionPool(host=&apos;service.invalid&apos;, port=8123): Max retries exceeded\"><![CDATA[Traceback (most recent call last):\n  File \"tests/test_client.py\", line 42, in test_request\n    client.get(\"http://service.invalid:8123/ping\")\nConnectionRefusedError: [Errno 111] Connection refused\n\nThe above exception was the direct cause of the following exception:\n\nrequests.exceptions.ConnectionError: HTTPConnectionPool(host='service.invalid', port=8123): Max retries exceeded with url: /ping (Caused by NewConnectionError('Failed to establish a new connection: [Errno 111] Connection refused'))\n]]></error></testcase></testsuite>",
+    "expected_family": "connection_refused",
+    "category": "wrapped_refusal",
+    "rationale": "A wrapper exception retains an explicit underlying ConnectionRefusedError and refusal message in its causal traceback.",
+    "hard_limit": false
+  },
+  {
+    "id": "H14",
+    "format": "pytest",
+    "input": "ERROR tests/test_probe.py::test_service - ConnectionRefusedError: [Errno 111] Connection refused\n",
+    "expected_family": "connection_refused",
+    "category": "pytest_refusal",
+    "rationale": "The ERROR short-summary reason directly reports a refused connection.",
+    "hard_limit": false
+  },
+  {
+    "id": "H15",
+    "format": "pytest",
+    "input": "FAILED tests/test_endpoint.py::test_ready - builtins.ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it\n",
+    "expected_family": "connection_refused",
+    "category": "qualified_platform_refusal",
+    "rationale": "The retained summary gives a qualified ConnectionRefusedError and an alternative platform message.",
+    "hard_limit": false
+  },
+  {
+    "id": "H16",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" failures=\"1\"><testcase classname=\"synthetic.docs\" name=\"test_glossary\"><failure type=\"\" message=\"Review the glossary entry for AssertionError\"><![CDATA[The guide discusses AssertionError as a vocabulary term.\nThe page heading is outdated and needs editorial review.\n]]></failure></testcase></testsuite>",
+    "expected_family": "unclassified",
+    "category": "prose_only_exception_mention",
+    "rationale": "An exception name appears only in documentation prose; no supported actual exception or assertion comparison is evidenced.",
+    "hard_limit": false
+  },
+  {
+    "id": "H17",
+    "format": "pytest",
+    "input": "FAILED docs/test_glossary.py::test_key_entry - documentation note: \"KeyError: 'region'\" is an example string; the page title is stale\n",
+    "expected_family": "unclassified",
+    "category": "quoted_documentation_exception",
+    "rationale": "The reason explicitly identifies the exception-form text as a quoted documentation example and attributes the issue to a stale title.",
+    "hard_limit": false
+  },
+  {
+    "id": "H18",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.examples\" name=\"test_example_text\"><error type=\"ValueError\" message=\"Invalid example text: &quot;ConnectionRefusedError: [Errno 111] Connection refused&quot;\"><![CDATA[ValueError: the quoted sample must be escaped before rendering.\n]]></error></testcase></testsuite>",
+    "expected_family": "unclassified",
+    "category": "quoted_exception_in_other_failure",
+    "rationale": "The actual exception is ValueError; the refusal text is clearly a quoted input sample.",
+    "hard_limit": false
+  },
+  {
+    "id": "H19",
+    "format": "pytest",
+    "input": "FAILED tests/test_AssertionError_badge.py::test_status - RuntimeError: rendering failed\n",
+    "expected_family": "unclassified",
+    "category": "incidental_exception_identifier_in_path",
+    "rationale": "AssertionError occurs only inside a test filename; the retained reason reports an unsupported RuntimeError.",
+    "hard_limit": false
+  },
+  {
+    "id": "H20",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.handlers\" name=\"test_handler\"><error type=\"RuntimeError\" message=\"KeyErrorHandler failed to initialize\"><![CDATA[RuntimeError: KeyErrorHandler is disabled by configuration\n]]></error></testcase></testsuite>",
+    "expected_family": "unclassified",
+    "category": "incidental_exception_identifier_in_message",
+    "rationale": "KeyError is merely a substring of the handler identifier KeyErrorHandler; the actual failure is RuntimeError.",
+    "hard_limit": false
+  },
+  {
+    "id": "H21",
+    "format": "pytest",
+    "input": "ERROR tests/test_connection_refused_icon.py::test_accessible_label - ValueError: missing aria label\n",
+    "expected_family": "unclassified",
+    "category": "incidental_failure_phrase_in_path",
+    "rationale": "The connection-related phrase appears in the filename only; the actual reason concerns an unsupported ValueError.",
+    "hard_limit": false
+  },
+  {
+    "id": "H22",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.audit\" name=\"test_inventory\"><error type=\"RuntimeError\" message=\"No AssertionError or KeyError was raised.\"><![CDATA[Validation stopped for an unrelated reason.\nThe inventory snapshot could not be loaded.\n]]></error></testcase></testsuite>",
+    "expected_family": "unclassified",
+    "category": "negative_exception_claim",
+    "rationale": "The message explicitly denies both named supported exceptions; no supported failure family has positive evidence.",
+    "hard_limit": false
+  },
+  {
+    "id": "H23",
+    "format": "pytest",
+    "input": "FAILED tests/test_auth_probe.py::test_access - RuntimeError: No ConnectionRefusedError occurred; HTTP response status was 401\n",
+    "expected_family": "unclassified",
+    "category": "negative_refusal_claim",
+    "rationale": "The summary explicitly denies refusal and supplies a response-status issue instead.",
+    "hard_limit": false
+  },
+  {
+    "id": "H24",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" failures=\"1\"><testcase classname=\"synthetic.worker\" name=\"test_complete\"><failure type=\"\" message=\"\">Worker stopped before output was written.</failure></testcase></testsuite>",
+    "expected_family": "unclassified",
+    "category": "absent_exception_evidence",
+    "rationale": "The failure record contains no exception, assertion comparison, or supported causal evidence.",
+    "hard_limit": false
+  },
+  {
+    "id": "H25",
+    "format": "pytest",
+    "input": "ERROR tests/test_workspace.py::test_cleanup - fixture teardown failed\n",
+    "expected_family": "unclassified",
+    "category": "ambiguous_summary",
+    "rationale": "The summary states that teardown failed but does not identify any supported cause.",
+    "hard_limit": false
+  },
+  {
+    "id": "H26",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.lookup\" name=\"test_region\"><error type=\"LookupError\" message=\"&apos;region&apos;\"><![CDATA[LookupError: 'region'\n]]></error></testcase></testsuite>",
+    "expected_family": "unclassified",
+    "category": "unsupported_related_exception",
+    "rationale": "LookupError is a broader distinct exception; a key-shaped message alone does not establish KeyError.",
+    "hard_limit": false
+  },
+  {
+    "id": "H27",
+    "format": "pytest",
+    "input": "ERROR tests/test_latency.py::test_deadline - TimeoutError: [Errno 110] Connection timed out\n",
+    "expected_family": "unclassified",
+    "category": "different_network_failure",
+    "rationale": "A connection timeout is explicit evidence of a different network failure, not a refused connection.",
+    "hard_limit": false
+  },
+  {
+    "id": "H28",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" failures=\"1\"><testcase classname=\"synthetic.limits\" name=\"test_remaining\"><failure type=\"\" message=\"\"><![CDATA[Traceback (most recent call last):\n  File \"tests/test_limits.py\", line 18, in test_remaining\n    assert remaining == 0\nAssertionError: assert 2 == 0\n]]></failure></testcase></testsuite>",
+    "expected_family": "unclassified",
+    "category": "indistinguishable_copied_assertion_example",
+    "rationale": "Authored as a copied documentation traceback embedded without any quotation marker or provenance. Its entire retained input is identical to H02, so the intended unclassified label cannot be inferred from this input alone.",
+    "hard_limit": true
+  },
+  {
+    "id": "H29",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.payload\" name=\"test_lookup\"><error type=\"\" message=\"\"><![CDATA[Traceback (most recent call last):\n  File \"tests/test_payload.py\", line 24, in test_lookup\n    return payload[\"AssertionError\"]\nbuiltins.KeyError: 'AssertionError'\n]]></error></testcase></testsuite>",
+    "expected_family": "unclassified",
+    "category": "indistinguishable_copied_keyerror_example",
+    "rationale": "Authored as a copied example traceback without an observable example marker. Its entire retained input is identical to H07; this measures an evidence limit rather than a resolvable classification mistake.",
+    "hard_limit": true
+  },
+  {
+    "id": "H30",
+    "format": "junit",
+    "input": "<testsuite tests=\"1\" errors=\"1\"><testcase classname=\"synthetic.socket\" name=\"test_connect\"><error type=\"\" message=\"\"><![CDATA[Traceback (most recent call last):\n  File \"tests/test_socket.py\", line 31, in test_connect\n    sock.connect(address)\nConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it\n]]></error></testcase></testsuite>",
+    "expected_family": "unclassified",
+    "category": "indistinguishable_copied_refusal_example",
+    "rationale": "Authored as an unmarked copied example; its entire retained input is identical to H12. The intended provenance-dependent label is impossible to recover from the supported record fields alone.",
+    "hard_limit": true
+  }
+]
+

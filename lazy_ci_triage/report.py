@@ -14,7 +14,7 @@ def render_report(report):
         raise ValueError("Only schema-version-2 reports can be rendered by this version.")
     observed = report["observed"]
     lines = ["# Lazy CI Triage", "", f"Status: **{report['status']}** | Mode: **{report['mode']}**", "",
-             "Citation checks are not proof of a diagnosis. Lexical eligibility is not semantic entailment.", "",
+             "Citation checks are not proof of a diagnosis. Structural eligibility is not semantic entailment.", "",
              "Model selections can be wrong or irrelevant. Human review is required.", "",
              "Operational recommendations: refused. No model-suggested commands are executed.", "",
              "## Observed in supplied file", "",

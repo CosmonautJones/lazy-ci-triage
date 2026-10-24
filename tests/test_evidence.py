@@ -15,10 +15,19 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class EvidenceReplayTests(unittest.TestCase):
-    def test_oct24_current_model_records_match_input_prompt_and_renderer(self):
+    def assert_historical_literal_citations(self, selection, dataset):
+        """Provenance replay, not retroactive acceptance under a changed policy."""
+        by_id = {failure.log_id: failure for failure in dataset.failures}
+        self.assertEqual(len(selection["hypotheses"]), len(dataset.failures))
+        self.assertEqual({item["test_id"] for item in selection["hypotheses"]}, {f.test_id for f in dataset.failures})
+        for item in selection["hypotheses"]:
+            self.assertEqual(by_id[item["log_id"]].test_id, item["test_id"])
+            self.assertIn(item["quote"], by_id[item["log_id"]].text)
+            self.assertEqual(item["uncertainty"], "log_only_root_cause_unverified")
+
+    def test_oct24_historical_records_match_input_and_frozen_baseline_prompt(self):
         import hashlib
-        from lazy_ci_triage.brief import build_prompt
-        from lazy_ci_triage.report import render_report
+        frozen = json.loads((ROOT / "evidence/oct24-baseline-prompts.json").read_text())
         cases = [("junit", "junit.xml", "junit"), ("pytest", "pytest.log", "pytest"),
                  ("lexical-trap", "lexical-trap.log", "pytest"),
                  ("parameter-delimiter", "parameter-delimiter.log", "pytest"),
@@ -31,10 +40,10 @@ class EvidenceReplayTests(unittest.TestCase):
                 self.assertEqual(report["observed"], json.loads(json.dumps(asdict(dataset))))
                 self.assertEqual(report["app_version"], "0.2.1")
                 self.assertEqual(report["status"], "ok")
-                self.assertEqual(validate_brief(json.loads(report["raw_response"]), dataset), report["model_hypotheses"])
-                prompt_hash = hashlib.sha256(json.dumps(build_prompt(dataset), sort_keys=True).encode()).hexdigest()
+                self.assertEqual(json.loads(report["raw_response"]), report["model_hypotheses"])
+                self.assert_historical_literal_citations(report["model_hypotheses"], dataset)
+                prompt_hash = hashlib.sha256(json.dumps(frozen["requests"][run], sort_keys=True).encode()).hexdigest()
                 self.assertEqual(report["runtime"]["request_sha256"], prompt_hash)
-                self.assertEqual((folder / "report.md").read_text(encoding="utf-8"), render_report(report))
         parameter = json.loads((ROOT / "evidence/oct24-parameter-delimiter/report.json").read_text())
         self.assertEqual(parameter["observed"]["failures"][0]["name"], "tests/test_parameters.py::test_label[a - b]")
         short = json.loads((ROOT / "evidence/oct24-short-detail/report.json").read_text())
@@ -62,7 +71,8 @@ class EvidenceReplayTests(unittest.TestCase):
                 self.assertEqual(report["status"], "ok")
                 self.assertEqual(report["operational_recommendations"]["status"], "refused")
                 selection = json.loads(report["raw_response"])
-                self.assertEqual(validate_brief(selection, dataset), report["model_hypotheses"])
+                self.assertEqual(selection, report["model_hypotheses"])
+                self.assert_historical_literal_citations(selection, dataset)
                 count += len(selection["hypotheses"])
         self.assertEqual(count, 9)
 
@@ -77,11 +87,14 @@ class EvidenceReplayTests(unittest.TestCase):
                 with self.assertRaises(BriefError):
                     validate_brief(json.loads(report["raw_response"]), dataset)
 
-    def test_real_lexical_trap_is_accepted_but_disagrees_with_abstention_rubric(self):
-        report = json.loads((ROOT / "evidence/v2c-lexical-trap/report.json").read_text())
-        self.assertEqual(report["model_hypotheses"]["hypotheses"][0]["family"], "missing_key")
-        self.assertIn("actual cause unknown", report["observed"]["failures"][0]["text"])
-        self.assertIn("not semantic entailment", (ROOT / "evidence/v2c-lexical-trap/report.md").read_text())
+    def test_historical_false_lexical_trap_is_rejected_by_current_policy(self):
+        dataset = parse_input((ROOT / "fixtures/lexical-trap.log").read_bytes(), "pytest")
+        for run in ["v2c-lexical-trap", "oct24-lexical-trap"]:
+            report = json.loads((ROOT / "evidence" / run / "report.json").read_text())
+            self.assertEqual(report["model_hypotheses"]["hypotheses"][0]["family"], "missing_key")
+            self.assertIn("actual cause unknown", report["observed"]["failures"][0]["text"])
+            with self.assertRaises(BriefError):
+                validate_brief(report["model_hypotheses"], dataset)
 
     def test_historical_real_runs_match_inputs_but_old_prose_schema_is_rejected(self):
         for run, fixture, kind in [("junit-refined", "junit.xml", "junit"),

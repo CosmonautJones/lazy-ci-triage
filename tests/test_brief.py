@@ -138,11 +138,11 @@ class BriefTests(unittest.TestCase):
         item["hypotheses"][0]["family"] = "unclassified"
         self.assertEqual(validate_brief(item, self.dataset), item)
 
-    def test_lexical_cue_is_not_a_semantic_truth_guarantee(self):
-        dataset = parse_input(b"FAILED a.py::test_docs - text mentions KeyError as an example; actual cause unknown", "pytest")
+    def test_exception_shaped_copy_is_not_a_semantic_truth_guarantee(self):
+        dataset = parse_input(b"FAILED a.py::test_docs - KeyError: 'copied documentation example'", "pytest")
         item = example()
-        item["hypotheses"][0].update(family="missing_key", quote="text mentions KeyError as an example; actual cause unknown")
-        # A cue can occur in irrelevant or hostile text; acceptance is not entailment.
+        item["hypotheses"][0].update(family="missing_key", quote="KeyError: 'copied documentation example'")
+        # A copied example can mimic failure syntax; acceptance is not entailment.
         brief = validate_brief(item, dataset)
         rendered = render_report(report_for(dataset, brief))
         self.assertIn("not semantic entailment", rendered)
