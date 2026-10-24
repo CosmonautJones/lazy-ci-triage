@@ -1,12 +1,12 @@
 # Publication plan — prepared October 24, 2026
 
-**Preparation only. Nothing published or accepted.** Reviewed software/evidence baseline is `e6def752a09090993bfaca9e5add34e441691df4` (0.2.2), independent PASS/74 tests. This pass changes submission prose only; code, fixtures, saved inference and 56-second demo remain unchanged.
+**Preparation only. Nothing published or accepted.** Prior reviewed software/evidence baseline `e6def752a09090993bfaca9e5add34e441691df4` and entry-prose candidate `81e245a` remain in history. The requested three-review follow-up fixes reproduced parser performance/control boundaries and adds a concrete saved input/report to the 56-second demo. All original inference, frozen cases and unfavorable outcomes remain unchanged; 78 tests pass. Final exact-source/artifact signoffs are recorded in the external three-review handoff.
 
 ## Proposed destinations, pending explicit approval
 
 - Public repository: **`CosmonautJones/lazy-ci-triage`** on the existing authenticated GitHub account. The account was confirmed read-only; repository name availability and write permission must be verified before creation. Proposed URL is `https://github.com/CosmonautJones/lazy-ci-triage`, not an existing deliverable.
 - Project/fixture license: existing **MIT**. Preserve LICENSE and NOTICE. Qwen weights remain separately Apache 2.0 and excluded from publication.
-- Video: **same GitHub repository, release `v0.2.2`, asset `lazy-ci-triage-demo.mp4`**. This avoids another account or paid host. GitHub releases support downloadable assets; the current MP4 is only 325,809 bytes. Link the public release and direct MP4 in DEV, label it a silent 56-second edited replay. Verify anonymous download/playback before publishing the post. This is a proposed downloadable-video destination, not a streaming embed or an already published release. [GitHub release documentation](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
+- Video: **same GitHub repository, release `v0.2.2`, asset `lazy-ci-triage-demo.mp4`**. This avoids another account or paid host. GitHub releases support downloadable assets; the current MP4 is only 327,748 bytes. Link the public release and direct MP4 in DEV, label it a silent 56-second edited replay. Verify anonymous download/playback before publishing the post. This is a proposed downloadable-video destination, not a streaming embed or an already published release. [GitHub release documentation](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
 - DEV: user's existing account, exact template headings with `devchallenge` and `hf26challenge`, `fully_autonomous` disclosure, approved title/body and working code/demo links. No partner prize category claimed. DEV account/publisher identity remains unverified and must be chosen by the user; no new account or credential linking is authorized.
 
 ## Timing

@@ -7,9 +7,11 @@ ai_disclosure_level: fully_autonomous
 
 *Unpublished review draft, written primarily by an AI agent. Public links and publication still require human approval.*
 
+*Prepared for the [Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady](https://dev.to/challenges/hacktoberfest-week3-2026-10-19).*
+
 ## What I Built
 
-An early version of Lazy CI Triage linked a real inventory error to a rounding explanation. The citation existed. The explanation was wrong.
+An early version of Lazy CI Triage linked a synthetic inventory failure record to a rounding explanation. The citation existed. The explanation was wrong.
 
 That failure shaped this small project for **Slow and Steady**: automate a little of the evidence-gathering chore before debugging, while keeping guesses visibly separate from the supplied log.
 
@@ -21,7 +23,7 @@ The report shows parsed observations first and unverified model selections after
 
 **[DEMO VIDEO LINK — insert approved public URL]**
 
-The 56-second video is an edited replay of actual local inference results, clearly labeled as a replay. It shows both the improvement and the failures.
+The 56-second video shows a supplied failure line, the earlier CLI command and its actual saved report excerpt, followed by the comparison results and failures. It is clearly labeled as an edited replay, not live capture.
 
 Inference used Qwen2.5-Coder 1.5B Instruct Q4_K_M through Ollama 0.18.0, on an RTX 3090 with 24 GiB VRAM and a Ryzen 7 5800X. The paired individual runs took 4.474–12.304 seconds each, including loading. Those timings describe these recordings, not a speed guarantee.
 
@@ -37,7 +39,7 @@ From the repository, the tests run without model weights:
 python -m unittest discover -s tests -v
 ```
 
-The build environment passed 74 tests, including the optional CommonMark check. Saved fixtures, request payloads, raw model responses, rejected attempts and measurements are included. Re-running inference requires an existing compatible local model; setup and exact digest are documented in the README.
+The build environment passed 78 tests, including the optional CommonMark check and regressions for malformed-input stalls and decoded XML controls. Saved fixtures, request payloads, raw model responses, rejected attempts and measurements are included. Re-running inference requires an existing compatible local model; setup and exact digest are documented in the README.
 
 ## How I Built It
 

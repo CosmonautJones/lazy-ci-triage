@@ -1,6 +1,6 @@
 # Current v0.2.2 demo script — October 24
 
-`evidence/lazy-ci-triage-demo.mp4` is a 56-second silent edited replay of saved actual inference/comparison results. It is labeled as a replay, not live terminal capture. Historical videos remain separately named. Below is an optional 90-second live plan, plus actual inference wait; never present an edited time cut as live latency.
+`evidence/lazy-ci-triage-demo.mp4` is a 56-second silent edited replay of saved actual inference/comparison results. It now displays the literal line from `fixtures/lexical-trap.log`, the earlier executed CLI form and a formatted excerpt of `evidence/support-demo-lexical-trap/report.md`/JSON: observed T001/L001 from summary line 2, the exact quoted line, `unclassified`, fixed uncertainty and operational refusal. It is labeled as a replay, not live terminal capture; pause these cards to read. Historical videos remain separately named, including the prior summary-only v0.2.2 video. Below is an optional 90-second live plan, plus actual inference wait; never present an edited time cut as live latency.
 
 Use authored synthetic inputs, relative paths and a clean terminal. Exclude unrelated windows, accounts, usernames, hardware IDs and hostnames. Start only the existing local runtime/cache as described in README; no model download is needed on the build machine.
 

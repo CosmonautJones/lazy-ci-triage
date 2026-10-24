@@ -103,3 +103,11 @@ Two final real CLI runs: JUnit15.357190s, three tentative families; original lex
 Full suite with artifact integrity coverage: **74 tests in10.111s, OK, no skips**. Saved `evidence/test-results.txt`. Compileall and whitespace checks passed. New edited replay is H.2641280x720,56.000s,325809bytes, SHA256 `9325a9d5d6ba3a43297d8170ef37bc738408376480fe36314ce68e44ca59fcf9`; prior video retained as v0.2.1. It shows both false-label reduction and coverage loss plus weak batch results. Representative metric card visually inspected. No live-capture, human-baseline or accuracy guarantee.
 
 The frozen candidate will receive fresh independent code/evidence/demo/draft review. Final exact hash, verdict and clean-checkout evidence are recorded in the external handoff/bundle so the reviewed source can remain unchanged. The earlier Library helper failure remains unresolved; no retry, bypass or delivery claim in this pass.
+
+## Requested three independent reviews
+
+Initial exact candidate `81e245abe8e6fc7ae37374895538bd55b47fc4f2` received separate independent code, evidence and entry reviews. Initial verdicts BLOCK/PASS/BLOCK are preserved externally, not counted as three passes. Code review reproduced a pytest regex stall and decoded XML controls; entry review required a concrete example in the video. Evidence review replayed all70 comparison/stress records and validated both archives, metrics and source ZIP tests without finding a discrepancy.
+
+See `docs/three-review-fixes.md` for full dispositions and RED/GREEN evidence. Also fixed a reproduced related whitespace-run delimiter stall. Four new tests then passed; full suite **78 tests in10.315s, OK/no skips**. This is deterministic parser repair plus media clarification: prompt/schema/classification, frozen cases, model records and measured comparisons are unchanged. No new inference, downloads, installation, public action or Library route attempt.
+
+Replaced the current video with a56-second edited replay showing actual saved input, earlier CLI and report excerpt; preserved old summary video. Current SHA256 `a7e10f143c6c5d4099b30c3d8247271fe4248cd84509da130965882a28f804d3`. Final affected rechecks and all-three exact-set signoffs occur externally after the candidate/archive are frozen; final handoff must name their exact hashes rather than imply the old reviews covered changed files.

@@ -8,6 +8,8 @@ import xml.etree.ElementTree as ET
 MAX_BYTES = 256 * 1024
 MAX_FAILURES = 20
 MAX_EXCERPT = 4000
+CONTROL_CHARACTERS = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]")
+PYTEST_REASON_SEPARATOR = re.compile(r"\s+-\s+")
 
 
 class InputError(ValueError):
@@ -39,7 +41,7 @@ def parse_input(data: bytes, kind: str) -> Dataset:
         text = data.decode("utf-8-sig")
     except UnicodeDecodeError as exc:
         raise InputError("Input must be UTF-8 text.") from exc
-    if re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]", text):
+    if CONTROL_CHARACTERS.search(text):
         raise InputError("Control characters are not supported; use plain uncolored logs.")
     records = _junit(text) if kind == "junit" else _pytest(text)
     if len(records) > MAX_FAILURES:
@@ -85,8 +87,12 @@ def _junit(text: str) -> list[tuple[str, str, str]]:
         for child in bad:
             parts.append(" ".join(filter(None, [child.get("type"), child.get("message")]))
                          + "\n" + "".join(child.itertext()))
-        excerpt = "\n".join(parts).strip()
-        records.append((name, f"testcase #{ordinal}", excerpt))
+        excerpt = "\n".join(parts)
+        # XML character references are decoded after the raw-source check.
+        # Check before strip() can erase a decoded C1 control such as U+0085.
+        if CONTROL_CHARACTERS.search(name) or CONTROL_CHARACTERS.search(excerpt):
+            raise InputError("Control characters are not supported in decoded JUnit fields.")
+        records.append((name, f"testcase #{ordinal}", excerpt.strip()))
     return records
 
 
@@ -96,7 +102,10 @@ def _pytest(text: str) -> list[tuple[str, str, str]]:
         parts = pytest_summary_parts(line)
         if parts:
             records.append((parts[0], f"line {line_number}", line))
-    summaries = [line for line in text.splitlines() if re.match(r"^=+.*=+$", line)]
+    # Equivalent delimiter shape without overlapping regex repetitions on
+    # adversarial '=' prefixes that do not end in '='.
+    summaries = [line for line in text.splitlines()
+                 if len(line) >= 2 and line.startswith("=") and line.endswith("=")]
     counts = [sum(int(count) for count in re.findall(r"\b(\d+) (?:failed|errors?)\b", line))
               for line in summaries if re.search(r"\b\d+ (?:passed|failed|errors?|skipped)\b", line)]
     if counts and counts[-1] != len(records):
@@ -123,11 +132,13 @@ def pytest_summary_parts(line: str) -> tuple[str, str] | None:
             if depth == 0:
                 raise InputError("Ambiguous pytest parameter brackets; use JUnit XML.")
             depth -= 1
-        elif char.isspace() and depth == 0:
-            separator = re.match(r"\s+-\s+", body[index:])
+        elif char.isspace() and depth == 0 and (index == 0 or not body[index - 1].isspace()):
+            # Scan each whitespace run once and avoid copying the remaining
+            # body at every potential delimiter position.
+            separator = PYTEST_REASON_SEPARATOR.match(body, index)
             if separator:
                 node = body[:index].rstrip()
-                reason = body[index + separator.end():]
+                reason = body[separator.end():]
                 break
     if depth:
         raise InputError("Ambiguous pytest parameter brackets; use JUnit XML.")
