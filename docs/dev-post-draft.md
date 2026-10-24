@@ -13,7 +13,7 @@ ai_disclosure_level: fully_autonomous
 
 A citation can be real and still sit beside a bad explanation. The first local CI brief in this project did exactly that: it linked a real inventory error to a rounding hypothesis. Another run suggested a SQL query where the supplied log established only a `KeyError`.
 
-Lazy CI Triage started as a small way to reduce the chore before debugging: read a failure file, identify the tests and collect the lines worth inspecting. Its current version keeps that job small. Python extracts observed metadata and verbatim source excerpts. A local model selects an exact excerpt and a tentative broad failure family for each failed test. The report puts those two sources of information in separate sections.
+Lazy CI Triage started as a small way to reduce the chore before debugging: read a failure file, identify the tests and collect the lines worth inspecting. Its current version keeps that job small. Python extracts metadata and normalized test detail. A local model selects a literal option from that detail and a tentative broad failure family for each failed test. The report puts those two sources of information in separate sections.
 
 "Observed" means the file was parsed into metadata and normalized detail. For JUnit, XML values are decoded and failure type/message/text are joined; a quote matches that normalized record, not necessarily raw XML bytes. It does not prove tests ran, a named file exists or the text is truthful. "Model hypothesis" means an unverified category selection. The tool issues no operational recommendations and runs no suggested commands.
 
@@ -25,7 +25,7 @@ That is the Slow and Steady idea: get a bounded evidence index for the task you 
 
 The local video, `evidence/lazy-ci-triage-demo.mp4`, is an edited walkthrough of saved actual inference results, explicitly labeled as a replay rather than live terminal capture. Original synthetic inputs, raw responses, rejected attempts and measured timings are included with the code. The current comparison is in `docs/quality-comparison.md`.
 
-The model is Qwen2.5-Coder 1.5B Instruct Q4_K_M, served by Ollama 0.18.0 on an RTX 3090 with 24 GiB VRAM and an AMD Ryzen 7 5800X. Every run records the model digest, options, input hash, wall time and token counts. These are tiny synthetic examples, not a latency benchmark or productivity study.
+The model is Qwen2.5-Coder 1.5B Instruct Q4_K_M, served by Ollama 0.18.0 on an RTX 3090 with 24 GiB VRAM and an AMD Ryzen 7 5800X. Every inference run records the model digest, options, input hash, wall time and token counts. A no-detail refusal makes no model request and has no inference metrics. These are tiny synthetic examples, not a latency benchmark or productivity study.
 
 The useful screen to pause on is the boundary between the two report sections. A missing-key example contains the parsed test name and error detail first; the model's “possible missing-key failure” label comes afterward, with uncertainty and a link back to the quoted detail. Neither the label nor the generic review question becomes an observed fact.
 
@@ -56,7 +56,7 @@ The family checks are deliberately modest. `KeyError` must appear as a textual c
 
 Real inference exposed another small-model weakness: even when it selected “unclassified,” it sometimes paraphrased the requested quote. Those attempts were rejected and preserved. The final extractive format offers literal quote choices to constrain that failure channel. It still cannot guarantee that the selected quote is representative or that a selected category is useful.
 
-In the final five-fixture run, all nine source records had valid paired quote selections. An ambiguous status-code message yielded “unclassified.” But a deliberate trap still yielded a misleading missing-key label: its text mentioned `KeyError` only as an example and said the actual cause was unknown. The label passed the lexical checks. It remained an unverified model selection, not an observed fact. That is a useful boundary to show in a demo, rather than hide behind a passing validation count.
+In the earlier v0.2 five-fixture batch, all nine source records had valid paired quote selections. An ambiguous status-code message yielded "unclassified." But a deliberate trap still yielded a misleading missing-key label: its text mentioned `KeyError` only as an example and said the actual cause was unknown. The October 24 rerun preserved that same misleading label while also confirming the short-detail and parameter-ID fixes. The label passed the lexical checks. It remained an unverified model selection, not an observed fact. That is a useful boundary to show in a demo, rather than hide behind a passing validation count.
 
 The CLI reads one explicitly named synthetic/public file, calls only a numeric loopback endpoint and writes Markdown plus JSON. Hostile source text is escaped, and rejected raw output stays in audit JSON rather than appearing as accepted advice. No agent tools, auto-fixes, runtime installation or model pull happen inside the application.
 

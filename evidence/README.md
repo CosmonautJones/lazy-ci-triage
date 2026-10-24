@@ -4,7 +4,7 @@
 
 `v2-*`, `v2b-*` and `v2c-*` retain historical v0.2 attempts, including four model rejections. The four older folders without a v2 prefix are **historical v0.1 prose output**, and their old statuses/wording are not claims of current behavior. The current validator refuses that old prose schema. The historical measurements and initial limitations below are preserved for comparison.
 
-All records here came from real local model inference on authored synthetic inputs on 2026-10-23. They are not canned responses or test-server output. Files named `report.json` preserve raw response, accepted selection or rejection, input records/hash, model digest, request hash, options and measurements; `report.md` is the renderer's output. No private logs or personal paths are included.
+The historical v0.1/v0.2 inference records were generated locally on authored synthetic inputs on October 23. The `oct24-*` records are current October 24 results: five actual inference runs and one explicit refusal before inference. Inference responses are not canned or test-server output; the no-detail record has no model response. `report.json` preserves input/hash, accepted selection or refusal, and raw response/metrics when inference occurred; `report.md` is the corresponding renderer output. No private logs or personal paths are included.
 
 [Current local demo video](lazy-ci-triage-demo.mp4): a clearly labeled edited walkthrough of actual v0.2 saved results, not live terminal capture. The original 56-second v0.1 walkthrough is retained as `lazy-ci-triage-v0.1-demo.mp4`. Installed Pillow and FFmpeg 8.1.1 are editing tools, not application dependencies. No accounts or desktop windows were recorded. See `docs/demo-script.md` for a current live-recording plan.
 
