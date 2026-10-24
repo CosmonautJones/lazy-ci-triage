@@ -6,7 +6,7 @@
 
 The historical v0.1/v0.2 inference records were generated locally on authored synthetic inputs on October 23. The `oct24-*` records are current October 24 results: five actual inference runs and one explicit refusal before inference. Inference responses are not canned or test-server output; the no-detail record has no model response. `report.json` preserves input/hash, accepted selection or refusal, and raw response/metrics when inference occurred; `report.md` is the corresponding renderer output. No private logs or personal paths are included.
 
-[Current local demo video](lazy-ci-triage-demo.mp4): a clearly labeled edited walkthrough of actual v0.2 saved results, not live terminal capture. The original 56-second v0.1 walkthrough is retained as `lazy-ci-triage-v0.1-demo.mp4`. Installed Pillow and FFmpeg 8.1.1 are editing tools, not application dependencies. No accounts or desktop windows were recorded. See `docs/demo-script.md` for a current live-recording plan.
+[Current local demo video](lazy-ci-triage-demo.mp4): a clearly labeled edited walkthrough of actual October 24 v0.2.1 results, not live terminal capture. Older walkthroughs are retained as `lazy-ci-triage-v0.1-demo.mp4` and `lazy-ci-triage-v0.2-demo.mp4`. Installed Pillow and FFmpeg 8.1.1 are editing tools, not application dependencies. No accounts or desktop windows were recorded. See `docs/demo-script.md` for a current live-recording plan.
 
 ## Environment
 
