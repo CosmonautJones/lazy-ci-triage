@@ -1,3 +1,5 @@
+> Historical preparation document. See [publication provenance](../PUBLICATION.md) and [final article](dev-entry.md) for the approved publication version.
+
 # Remaining submission review — October 24, 2026
 
 This is a preparation checklist, not an entry, eligibility determination or acceptance of terms. No repository, video or DEV article has been published by this task.
@@ -18,7 +20,7 @@ This is a preparation checklist, not an entry, eligibility determination or acce
 - v0.2.2 bounded support pass: 30 independently frozen cases, 60 individual comparison calls, 10 retained multi-record stress calls and two current CLI demos. Wrong specific selections fell 7 to 2 while correct specific coverage fell 12/15 to 9/15. Unmarked copied examples and poor batch reliability remain visible. See `structural-support-evaluation.md`; no general accuracy claim.
 - Unpublished DEV draft: `docs/dev-post-draft.md`.
 - Local edited demo: `evidence/lazy-ci-triage-demo.mp4`, clearly labeled as recorded-result replay.
-- Prior independent software/evidence **PASS** at `e6def752a09090993bfaca9e5add34e441691df4` and later prose candidate `81e245a` remain preserved. The requested three-review follow-up fixes a reproduced pytest parsing stall, related delimiter-scan stall and decoded XML control boundary, with four RED/GREEN regressions (78 total tests). The refreshed seven-card video includes an actual saved input/CLI/report example. All model inputs, outputs and unfavorable evaluation results remain preserved. Final three-review exact-artifact signoffs are supplied externally after freezing the candidate.
+- Prior independent software/evidence **PASS** at `0dbba9ce3547d60ee118942caab64a4e6aba58d4` and later prose candidate `2770d45` remain preserved. The requested three-review follow-up fixes a reproduced pytest parsing stall, related delimiter-scan stall and decoded XML control boundary, with four RED/GREEN regressions (78 total tests). The refreshed seven-card video includes an actual saved input/CLI/report example. All model inputs, outputs and unfavorable evaluation results remain preserved. Final three-review exact-artifact signoffs are supplied externally after freezing the candidate.
 
 ## Exact remaining human decisions and approvals
 

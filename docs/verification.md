@@ -106,7 +106,7 @@ The frozen candidate will receive fresh independent code/evidence/demo/draft rev
 
 ## Requested three independent reviews
 
-Initial exact candidate `81e245abe8e6fc7ae37374895538bd55b47fc4f2` received separate independent code, evidence and entry reviews. Initial verdicts BLOCK/PASS/BLOCK are preserved externally, not counted as three passes. Code review reproduced a pytest regex stall and decoded XML controls; entry review required a concrete example in the video. Evidence review replayed all70 comparison/stress records and validated both archives, metrics and source ZIP tests without finding a discrepancy.
+Initial exact candidate `2770d454f86e7740685f8f6eddc3ce855fbe2862` received separate independent code, evidence and entry reviews. Initial verdicts BLOCK/PASS/BLOCK are preserved externally, not counted as three passes. Code review reproduced a pytest regex stall and decoded XML controls; entry review required a concrete example in the video. Evidence review replayed all70 comparison/stress records and validated both archives, metrics and source ZIP tests without finding a discrepancy.
 
 See `docs/three-review-fixes.md` for full dispositions and RED/GREEN evidence. Also fixed a reproduced related whitespace-run delimiter stall. Four new tests then passed; full suite **78 tests in10.315s, OK/no skips**. This is deterministic parser repair plus media clarification: prompt/schema/classification, frozen cases, model records and measured comparisons are unchanged. No new inference, downloads, installation, public action or Library route attempt.
 

@@ -1,0 +1,13 @@
+# Publication provenance
+
+The original reviewed repository is preserved locally. Four commits were rewritten solely to replace personal author and committer emails with the noreply address shown by the authenticated GitHub settings page. Every rewritten commit preserves its original file tree, author/committer dates and message. No earlier personal-email commit is an ancestor of the public branch.
+
+Public software snapshot: `5a7727956c5432c7fc3229d577c73c1403c58420` (version 0.2.2). Original reviewed snapshot: `500c3a87a3360c818d889e6908379ddeea708c55`. The original identifier in historical saved analysis/review records describes what was reviewed; it is not a downloadable public commit. See `publication-commit-map.json` for all mappings. The pinned baseline `f28d2e6ad7777d782c75dbf47013de0336eb2ee0` is unchanged and retained in public history.
+
+The subsequent publication documentation commit adds the approved final article, appendix, historical user-facing review record and this provenance note. It updates active commit references and links. It changes no product modules, tests, fixtures, raw inference records or demo bytes. The 78-test claim remains a historical recorded run, not a new test run after documentation edits. No new inference was performed.
+
+The ten reviewers assessed the original article SHA-256 `6edc9a41734bc15e01c945b4bbac79c9166e00c09e96885faccf98e514b075cc`; they did not re-review publication URL/privacy adaptations. `docs/reviewed-ten-agent-record.md` is preserved verbatim as a historical record, including its then-pending decisions. Eligibility, terms, publication and noreply replacement were confirmed by the user before publication. No personal transcripts, raw agent prompts, private vault notes, weights, credentials or runtime cache are published.
+
+Reproduction: clone with Git history, download/extract the evidence supplement beside the clone, check out the public software snapshot above, then run its two offline analysis scripts with the printed `--repo ../../lazy-ci-triage` arguments and new output directories. A source ZIP alone lacks baseline Git history. Saved rule outputs retain their original hashes; the script HEAD adaptation changes only the expected email-rewritten commit. Full results, including batch failures and copied-input limits, remain available.
+
+Project source and authored fixtures: MIT. External Qwen weights: separately Apache 2.0, not distributed. No model weights or runtime are bundled. The video is a 56-second silent edited replay of saved inference, not live capture. See `NOTICE.md` and `docs/demo-release-description.md`.

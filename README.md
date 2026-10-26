@@ -91,10 +91,10 @@ Markdown shows observations first and unverified selections separately. Blank-li
 
 ## Evidence and drafts
 
-[Current quality comparison](docs/quality-comparison.md), [measured runs](evidence/README.md), [demo video](evidence/lazy-ci-triage-demo.mp4), [DEV draft](docs/dev-post-draft.md), [demo script](docs/demo-script.md), [verification ledger](docs/verification.md), [original independent review](docs/independent-review.md).
+[Current quality comparison](docs/quality-comparison.md), [measured runs](evidence/README.md), [demo video](evidence/lazy-ci-triage-demo.mp4), [final DEV article](docs/dev-entry.md), [evidence appendix](docs/evidence-appendix.md), [demo script](docs/demo-script.md), [verification ledger](docs/verification.md), [original independent review](docs/independent-review.md).
 
 The video is an edited walkthrough of actual saved inference, labeled as a replay. Older v0.1/v0.2/v0.2.1 reports/videos are historical; `oct24-*` records preserve v0.2.1 behavior. The new structural-support comparison identifies candidate and baseline separately. Raw failures and rejected attempts remain available. The current code rejects the old prose schema and the old prose-only lexical-trap label rather than translating them into observed facts. Copied exception-shaped examples remain a limit.
 
-Nothing is published or submitted. Public code/demo links and contest entry remain human approval steps. DEV draft disclosure remains `fully_autonomous` unless meaningfully rewritten by a human. Any code changes after October 26, 2026 06:59 UTC must be disclosed here. See the [precise remaining submission checklist and attachment status](docs/submission-review.md).
+The code, edited demo and evidence are prepared for approved public release. DEV post and contest visibility require separate verification; publication is not proof of contest acceptance. See [publication provenance](PUBLICATION.md). DEV draft disclosure remains `fully_autonomous` unless meaningfully rewritten by a human. Any code changes after October 26, 2026 06:59 UTC must be disclosed here. See the [precise remaining submission checklist and attachment status](docs/submission-review.md).
 
 MIT for project code and authored fixtures; see [LICENSE](LICENSE) and [NOTICE](NOTICE.md). The model remains separately licensed.

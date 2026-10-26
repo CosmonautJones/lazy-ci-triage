@@ -1,6 +1,8 @@
+> Historical preparation document. See [publication provenance](../PUBLICATION.md) and [final article](dev-entry.md) for the approved publication version.
+
 # Publication plan — prepared October 24, 2026
 
-**Preparation only. Nothing published or accepted.** Prior reviewed software/evidence baseline `e6def752a09090993bfaca9e5add34e441691df4` and entry-prose candidate `81e245a` remain in history. The requested three-review follow-up fixes reproduced parser performance/control boundaries and adds a concrete saved input/report to the 56-second demo. All original inference, frozen cases and unfavorable outcomes remain unchanged; 78 tests pass. Final exact-source/artifact signoffs are recorded in the external three-review handoff.
+**Preparation only. Nothing published or accepted.** Prior reviewed software/evidence baseline `0dbba9ce3547d60ee118942caab64a4e6aba58d4` and entry-prose candidate `2770d45` remain in history. The requested three-review follow-up fixes reproduced parser performance/control boundaries and adds a concrete saved input/report to the 56-second demo. All original inference, frozen cases and unfavorable outcomes remain unchanged; 78 tests pass. Final exact-source/artifact signoffs are recorded in the external three-review handoff.
 
 ## Proposed destinations, pending explicit approval
 

@@ -1,6 +1,6 @@
 # Three independent review findings and fixes
 
-Initial frozen candidate: `81e245abe8e6fc7ae37374895538bd55b47fc4f2`; prior reviewed software/evidence baseline `e6def752a09090993bfaca9e5add34e441691df4`. Three fresh agents reviewed code, evidence and entry/media independently before seeing each other's findings. Initial PASS1 was BLOCK, PASS2 PASS, PASS3 BLOCK. Initial reports and reproduction evidence remain outside this checkout under `review-three/`; no unfavorable model output or prior archive was removed.
+Initial frozen candidate: `2770d454f86e7740685f8f6eddc3ce855fbe2862`; prior reviewed software/evidence baseline `0dbba9ce3547d60ee118942caab64a4e6aba58d4`. Three fresh agents reviewed code, evidence and entry/media independently before seeing each other's findings. Initial PASS1 was BLOCK, PASS2 PASS, PASS3 BLOCK. Initial reports and reproduction evidence remain outside this checkout under `review-three/`; no unfavorable model output or prior archive was removed.
 
 ## Parser boundary repairs
 

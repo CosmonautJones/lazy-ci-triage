@@ -1,3 +1,5 @@
+> Historical preparation document. See [publication provenance](../PUBLICATION.md) and [final article](dev-entry.md) for the approved publication version.
+
 ---
 title: "Lazy CI Triage: a small local experiment in reading failing tests"
 published: false
